@@ -1,0 +1,524 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-10T14:49:23.219033+00:00",
+  "title": "Design System: La Trace",
+  "extensions": {
+    "colorMeta": {
+      "clay": {
+        "role": "primary",
+        "displayName": "Saibro",
+        "canonical": "oklch(54.4% 0.138 40.2)",
+        "tonalRamp": [
+          "oklch(15% 0.138 40.2)",
+          "oklch(26% 0.138 40.2)",
+          "oklch(37% 0.138 40.2)",
+          "oklch(48% 0.138 40.2)",
+          "oklch(59% 0.138 40.2)",
+          "oklch(70% 0.138 40.2)",
+          "oklch(82% 0.138 40.2)",
+          "oklch(95% 0.138 40.2)"
+        ]
+      },
+      "clay-deep": {
+        "role": "secondary",
+        "displayName": "Saibro Escuro",
+        "canonical": "oklch(46.0% 0.124 40.4)",
+        "tonalRamp": [
+          "oklch(15% 0.124 40.4)",
+          "oklch(26% 0.124 40.4)",
+          "oklch(37% 0.124 40.4)",
+          "oklch(48% 0.124 40.4)",
+          "oklch(59% 0.124 40.4)",
+          "oklch(70% 0.124 40.4)",
+          "oklch(82% 0.124 40.4)",
+          "oklch(95% 0.124 40.4)"
+        ]
+      },
+      "groove": {
+        "role": "secondary",
+        "displayName": "Sulco",
+        "canonical": "oklch(37.9% 0.104 39.8)",
+        "tonalRamp": [
+          "oklch(15% 0.104 39.8)",
+          "oklch(26% 0.104 39.8)",
+          "oklch(37% 0.104 39.8)",
+          "oklch(48% 0.104 39.8)",
+          "oklch(59% 0.104 39.8)",
+          "oklch(70% 0.104 39.8)",
+          "oklch(82% 0.104 39.8)",
+          "oklch(95% 0.104 39.8)"
+        ]
+      },
+      "mark-core": {
+        "role": "secondary",
+        "displayName": "Núcleo da Marca",
+        "tonalRamp": [
+          "oklch(15% 0.12 40)",
+          "oklch(26% 0.12 40)",
+          "oklch(37% 0.12 40)",
+          "oklch(48% 0.12 40)",
+          "oklch(59% 0.12 40)",
+          "oklch(70% 0.12 40)",
+          "oklch(82% 0.12 40)",
+          "oklch(95% 0.12 40)"
+        ]
+      },
+      "ball": {
+        "role": "tertiary",
+        "displayName": "Bola",
+        "canonical": "oklch(86.1% 0.174 112.4)",
+        "tonalRamp": [
+          "oklch(15% 0.174 112.4)",
+          "oklch(26% 0.174 112.4)",
+          "oklch(37% 0.174 112.4)",
+          "oklch(48% 0.174 112.4)",
+          "oklch(59% 0.174 112.4)",
+          "oklch(70% 0.174 112.4)",
+          "oklch(82% 0.174 112.4)",
+          "oklch(95% 0.174 112.4)"
+        ]
+      },
+      "ball-highlight": {
+        "role": "tertiary",
+        "displayName": "Brilho da Bola",
+        "tonalRamp": [
+          "oklch(15% 0.15 112)",
+          "oklch(26% 0.15 112)",
+          "oklch(37% 0.15 112)",
+          "oklch(48% 0.15 112)",
+          "oklch(59% 0.15 112)",
+          "oklch(70% 0.15 112)",
+          "oklch(82% 0.15 112)",
+          "oklch(95% 0.15 112)"
+        ]
+      },
+      "ball-shade": {
+        "role": "tertiary",
+        "displayName": "Sombra da Bola",
+        "tonalRamp": [
+          "oklch(15% 0.15 112)",
+          "oklch(26% 0.15 112)",
+          "oklch(37% 0.15 112)",
+          "oklch(48% 0.15 112)",
+          "oklch(59% 0.15 112)",
+          "oklch(70% 0.15 112)",
+          "oklch(82% 0.15 112)",
+          "oklch(95% 0.15 112)"
+        ]
+      },
+      "strata-brick-tint": {
+        "role": "material",
+        "displayName": "Estrato: Tijolo (tint)",
+        "tonalRamp": [
+          "oklch(15% 0.1 40)",
+          "oklch(26% 0.1 40)",
+          "oklch(37% 0.1 40)",
+          "oklch(48% 0.1 40)",
+          "oklch(59% 0.1 40)",
+          "oklch(70% 0.1 40)",
+          "oklch(82% 0.1 40)",
+          "oklch(95% 0.1 40)"
+        ]
+      },
+      "strata-limestone": {
+        "role": "material",
+        "displayName": "Estrato: Calcário",
+        "tonalRamp": [
+          "oklch(15% 0.02 80)",
+          "oklch(26% 0.02 80)",
+          "oklch(37% 0.02 80)",
+          "oklch(48% 0.02 80)",
+          "oklch(59% 0.02 80)",
+          "oklch(70% 0.02 80)",
+          "oklch(82% 0.02 80)",
+          "oklch(95% 0.02 80)"
+        ]
+      },
+      "strata-limestone-ink": {
+        "role": "material",
+        "displayName": "Estrato: Tinta do Calcário",
+        "tonalRamp": [
+          "oklch(15% 0.03 55)",
+          "oklch(26% 0.03 55)",
+          "oklch(37% 0.03 55)",
+          "oklch(48% 0.03 55)",
+          "oklch(59% 0.03 55)",
+          "oklch(70% 0.03 55)",
+          "oklch(82% 0.03 55)",
+          "oklch(95% 0.03 55)"
+        ]
+      },
+      "strata-clinker": {
+        "role": "material",
+        "displayName": "Estrato: Clínquer",
+        "tonalRamp": [
+          "oklch(15% 0.01 40)",
+          "oklch(26% 0.01 40)",
+          "oklch(37% 0.01 40)",
+          "oklch(48% 0.01 40)",
+          "oklch(59% 0.01 40)",
+          "oklch(70% 0.01 40)",
+          "oklch(82% 0.01 40)",
+          "oklch(95% 0.01 40)"
+        ]
+      },
+      "strata-clinker-tint": {
+        "role": "material",
+        "displayName": "Estrato: Clínquer (tint)",
+        "tonalRamp": [
+          "oklch(15% 0.01 40)",
+          "oklch(26% 0.01 40)",
+          "oklch(37% 0.01 40)",
+          "oklch(48% 0.01 40)",
+          "oklch(59% 0.01 40)",
+          "oklch(70% 0.01 40)",
+          "oklch(82% 0.01 40)",
+          "oklch(95% 0.01 40)"
+        ]
+      },
+      "strata-gravel": {
+        "role": "material",
+        "displayName": "Estrato: Cascalho",
+        "tonalRamp": [
+          "oklch(15% 0.02 65)",
+          "oklch(26% 0.02 65)",
+          "oklch(37% 0.02 65)",
+          "oklch(48% 0.02 65)",
+          "oklch(59% 0.02 65)",
+          "oklch(70% 0.02 65)",
+          "oklch(82% 0.02 65)",
+          "oklch(95% 0.02 65)"
+        ]
+      },
+      "strata-gravel-tint": {
+        "role": "material",
+        "displayName": "Estrato: Cascalho (tint)",
+        "tonalRamp": [
+          "oklch(15% 0.02 65)",
+          "oklch(26% 0.02 65)",
+          "oklch(37% 0.02 65)",
+          "oklch(48% 0.02 65)",
+          "oklch(59% 0.02 65)",
+          "oklch(70% 0.02 65)",
+          "oklch(82% 0.02 65)",
+          "oklch(95% 0.02 65)"
+        ]
+      },
+      "strata-gravel-ink": {
+        "role": "material",
+        "displayName": "Estrato: Tinta do Cascalho",
+        "tonalRamp": [
+          "oklch(15% 0.02 55)",
+          "oklch(26% 0.02 55)",
+          "oklch(37% 0.02 55)",
+          "oklch(48% 0.02 55)",
+          "oklch(59% 0.02 55)",
+          "oklch(70% 0.02 55)",
+          "oklch(82% 0.02 55)",
+          "oklch(95% 0.02 55)"
+        ]
+      },
+      "strata-stone": {
+        "role": "material",
+        "displayName": "Estrato: Pedras",
+        "tonalRamp": [
+          "oklch(15% 0.015 60)",
+          "oklch(26% 0.015 60)",
+          "oklch(37% 0.015 60)",
+          "oklch(48% 0.015 60)",
+          "oklch(59% 0.015 60)",
+          "oklch(70% 0.015 60)",
+          "oklch(82% 0.015 60)",
+          "oklch(95% 0.015 60)"
+        ]
+      },
+      "strata-stone-tint": {
+        "role": "material",
+        "displayName": "Estrato: Pedras (tint)",
+        "tonalRamp": [
+          "oklch(15% 0.015 60)",
+          "oklch(26% 0.015 60)",
+          "oklch(37% 0.015 60)",
+          "oklch(48% 0.015 60)",
+          "oklch(59% 0.015 60)",
+          "oklch(70% 0.015 60)",
+          "oklch(82% 0.015 60)",
+          "oklch(95% 0.015 60)"
+        ]
+      },
+      "chalk": {
+        "role": "neutral",
+        "displayName": "Cal",
+        "canonical": "oklch(95.4% 0.019 83.1)",
+        "tonalRamp": [
+          "oklch(15% 0.019 83.1)",
+          "oklch(26% 0.019 83.1)",
+          "oklch(37% 0.019 83.1)",
+          "oklch(48% 0.019 83.1)",
+          "oklch(59% 0.019 83.1)",
+          "oklch(70% 0.019 83.1)",
+          "oklch(82% 0.019 83.1)",
+          "oklch(95% 0.019 83.1)"
+        ]
+      },
+      "chalk-soft": {
+        "role": "neutral",
+        "displayName": "Cal Suja",
+        "canonical": "oklch(89.6% 0.033 67.4)",
+        "tonalRamp": [
+          "oklch(15% 0.033 67.4)",
+          "oklch(26% 0.033 67.4)",
+          "oklch(37% 0.033 67.4)",
+          "oklch(48% 0.033 67.4)",
+          "oklch(59% 0.033 67.4)",
+          "oklch(70% 0.033 67.4)",
+          "oklch(82% 0.033 67.4)",
+          "oklch(95% 0.033 67.4)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "O h1 do hero; a largura anima de 62% a 72% quando a Marca 01 afunda."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Títulos de capítulo (h2); o h3 do Guga usa a mesma receita, maior."
+      },
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "\"la trace\" na barra do topo, largura expandida."
+      },
+      "mark-number": {
+        "displayName": "Número da Marca",
+        "purpose": "\"Marca 01…04\" ao lado de cada oval."
+      },
+      "lede": {
+        "displayName": "Lede",
+        "purpose": "Frase de abertura de cada capítulo, até 34ch."
+      },
+      "feature": {
+        "displayName": "Feature",
+        "purpose": "O h3 \"Guga\", clímax do capítulo das lendas."
+      },
+      "scoreboard": {
+        "displayName": "Placar",
+        "purpose": "Tamanho único do placar; hierarquia só por peso, caixa e tabular-nums."
+      },
+      "small": {
+        "displayName": "Small",
+        "purpose": "Texto do rodapé (aviso e créditos)."
+      },
+      "label-lg": {
+        "displayName": "Label grande",
+        "purpose": "Rótulos das camadas do corte; também número do ticket e rótulo do ticket no celular."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Parágrafos de capítulo, até 52ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Navegação, CTA, legendas, camadas; caixa alta, peso 700."
+      }
+    },
+    "shadows": [
+      {
+        "name": "pouso",
+        "value": "0 18px 36px -18px rgb(60 20 5 / 0.7)",
+        "purpose": "O ticket do fechamento, pousado no saibro."
+      },
+      {
+        "name": "foto-no-chao",
+        "value": "0 30px 60px -30px rgb(60 20 5 / 0.6)",
+        "purpose": "A foto da marca em Terre Battue."
+      },
+      {
+        "name": "sombra-da-bola",
+        "value": "0 6px 10px -4px rgb(60 20 5 / 0.55)",
+        "purpose": "A bola do traço."
+      },
+      {
+        "name": "marca-afundada",
+        "value": "inset 0 0 0 2px rgb(246 239 226 / 0.55)",
+        "purpose": "Anel de cal na borda do oval da marca."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-state",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Transições de estado (CTA, nav, ticket), sempre em 220ms."
+      },
+      {
+        "name": "duration-state",
+        "value": "220ms",
+        "purpose": "Duração única de hover/foco."
+      },
+      {
+        "name": "ease-sink",
+        "value": "expo.out (GSAP), forçado a 1 no fim do trecho",
+        "purpose": "Oval da marca afundando (scale 0→1) e voo da bola até a Marca 01."
+      },
+      {
+        "name": "ease-scrub",
+        "value": "linear (ScrollTrigger scrub: true)",
+        "purpose": "Parallax da foto (-12% → 0), afastamento das camadas (14px por camada), desenho do coração."
+      },
+      {
+        "name": "hero-pin",
+        "value": "+=180% de scroll; saque 0–78%, voo até 90%, marca 88–96%",
+        "purpose": "O saque conduzido pelo scroll no hero fixo."
+      },
+      {
+        "name": "scroll-hint",
+        "value": "1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite",
+        "purpose": "O fio da dica 'Role para sacar'; desligado com reduced-motion."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "estado final estático",
+        "purpose": "Quadro do impacto, traço completo, todas as marcas visíveis; sem Lenis nem pin."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "720px",
+        "purpose": "max-width: uma coluna, nav escondida, traço pela margem direita."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "CTA de linha",
+      "kind": "button",
+      "refersTo": "cta-line",
+      "description": "O CTA principal sobre o saibro: fita de cal de 3px que inverte no hover.",
+      "html": "<div class=\"ds-court\"><a class=\"ds-cta-line\" href=\"#\">Garanta seu ingresso <svg class=\"ds-arrow\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h13M13 6l6 6-6 6\"/></svg></a></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;}.ds-cta-line{display:inline-flex;align-items:center;gap:.6em;font-family:var(--font-text);font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;font-size:1.125rem;padding:1em 1.4em;border:3px solid var(--chalk);color:var(--chalk);transition:background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-cta-line:hover{background:var(--chalk);color:var(--clay-deep);}.ds-cta-line:hover .ds-arrow{transform:translateX(4px);}.ds-cta-line:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}.ds-arrow{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:square;transition:transform 220ms cubic-bezier(0.16, 1, 0.3, 1);}"
+    },
+    {
+      "name": "CTA discreto",
+      "kind": "button",
+      "refersTo": "cta-quiet",
+      "description": "O CTA da barra do topo: só texto sublinhado.",
+      "html": "<div class=\"ds-court\"><a class=\"ds-cta-quiet\" href=\"#\">Garanta seu ingresso</a></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;}.ds-cta-quiet{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--chalk);padding:.55em 0;border-bottom:2px solid currentColor;transition:color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-cta-quiet:hover{color:var(--chalk-soft);}.ds-cta-quiet:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}"
+    },
+    {
+      "name": "Navegação do topo",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Wordmark expandido, nomes das quadras e CTA discreto, sobre degradê do saibro.",
+      "html": "<header class=\"ds-topbar\"><a class=\"ds-wordmark\" href=\"#\">la trace</a><nav class=\"ds-nav\"><a href=\"#\">Le Service</a><a href=\"#\">Terre Battue</a><a href=\"#\">Les Légendes</a></nav></header>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 24px 1.75rem;background:linear-gradient(var(--clay) 55%,transparent);color:var(--chalk);}.ds-wordmark{font-family:var(--font-display);font-size:1.25rem;font-weight:800;font-stretch:150%;letter-spacing:-.02em;text-decoration:none;color:inherit;}.ds-nav{display:flex;gap:1.5rem;}.ds-nav a{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:inherit;padding-block:.55em;border-bottom:2px solid transparent;transition:border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-nav a:hover{border-color:var(--chalk);}.ds-nav a:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}"
+    },
+    {
+      "name": "A Marca",
+      "kind": "custom",
+      "refersTo": "mark-oval",
+      "description": "O oval da bola no saibro com o número da seção; abre cada capítulo.",
+      "html": "<div class=\"ds-court\"><div class=\"ds-mark\"><span class=\"ds-oval\"></span><p class=\"ds-caption\"><span class=\"ds-num\">Marca 01</span> o saque toca o saibro</p></div></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);}.ds-mark{display:flex;flex-direction:column;gap:.9rem;}.ds-oval{display:block;width:110px;aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse at 45% 50%,#7c3013,var(--clay-deep) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgb(246 239 226 / .55);transform-origin:0 50%;transition:transform 600ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-mark:hover .ds-oval{transform:scale(1.08);}.ds-caption{margin:0;max-width:22ch;font-family:var(--font-text);font-size:.8125rem;font-weight:700;line-height:1.35;text-transform:uppercase;letter-spacing:.06em;}.ds-num{display:block;font-family:var(--font-display);font-size:1.5rem;font-weight:600;font-stretch:140%;letter-spacing:-.01em;}"
+    },
+    {
+      "name": "O Ticket",
+      "kind": "button",
+      "refersTo": "ticket",
+      "description": "O CTA final em forma de ingresso, com a Marca 04 no canhoto.",
+      "html": "<div class=\"ds-court\"><a class=\"ds-ticket\" href=\"#\"><span class=\"ds-stub\"><span class=\"ds-oval\"></span><span class=\"ds-num\">Marca 04</span></span><span class=\"ds-label\">Garanta seu ingresso</span><svg class=\"ds-arrow\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 12h13M13 6l6 6-6 6\"/></svg></a></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;}.ds-ticket{display:inline-flex;align-items:stretch;background:var(--chalk);color:var(--clay-deep);text-decoration:none;box-shadow:0 18px 36px -18px rgb(60 20 5 / .7);transition:transform 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-ticket:hover{transform:translateY(-3px);}.ds-ticket:hover .ds-arrow{transform:translateX(4px);}.ds-ticket:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}.ds-stub{display:grid;justify-items:center;align-content:center;gap:.35rem;padding:.9rem 1.2rem;border-right:2px dashed rgb(143 58 24 / .5);}.ds-oval{display:block;width:72px;aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse at 45% 50%,#7c3013,var(--clay-deep) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgb(246 239 226 / .55);}.ds-num{font-family:var(--font-display);font-size:.875rem;font-weight:600;font-stretch:140%;text-transform:uppercase;}.ds-label{align-self:center;white-space:nowrap;padding:1.1rem .6rem 1.1rem 1.4rem;font-family:var(--font-text);font-size:1.125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;}.ds-ticket .ds-arrow{align-self:center;margin-right:1.4rem;width:1.4em;height:1.4em;}.ds-arrow{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:square;transition:transform 220ms cubic-bezier(0.16, 1, 0.3, 1);}"
+    },
+    {
+      "name": "O Placar",
+      "kind": "card",
+      "refersTo": "scoreboard-row",
+      "description": "Lista de lendas num tamanho só; a linha do Guga é invertida.",
+      "html": "<div class=\"ds-court\"><dl class=\"ds-score\"><div class=\"ds-row\"><dt>Rafael Nadal</dt><dd><strong>14</strong> títulos, de 2005 a 2022.</dd></div><div class=\"ds-row ds-row--guga\"><dt>Gustavo Kuerten</dt><dd><strong>3</strong> títulos: 1997, 2000 e 2001.</dd></div></dl></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);}.ds-score{display:grid;margin:0;border-top:2px solid var(--chalk);}.ds-row{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(0,2fr);gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgb(246 239 226 / .45);font-size:1.125rem;}.ds-row dt{font-weight:700;text-transform:uppercase;letter-spacing:.04em;}.ds-row dd{margin:0;}.ds-row strong{font-variant-numeric:tabular-nums;}.ds-row--guga{background:var(--chalk);color:var(--clay-deep);padding-inline:1rem;margin-inline:-1rem;}"
+    },
+    {
+      "name": "O Corte da Quadra",
+      "kind": "custom",
+      "refersTo": "strata-limestone",
+      "description": "As camadas reais da quadra em faixas de largura total, altura proporcional à espessura.",
+      "html": "<ol class=\"ds-strata\"><li class=\"ds-l ds-brick\"><span>Tijolo moído</span><span>1–2 mm</span></li><li class=\"ds-l ds-lime\"><span>Calcário branco</span><span>6–7 cm</span></li><li class=\"ds-l ds-clinker\"><span>Clínquer</span><span>7–8 cm</span></li><li class=\"ds-l ds-gravel\"><span>Cascalho</span><span>30 cm ou mais</span></li><li class=\"ds-l ds-stone\"><span>Pedras e dreno</span><span>até ~80 cm</span></li></ol>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-strata{display:grid;margin:0;padding:0;list-style:none;}.ds-l{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 24px;font-family:var(--font-text);font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:transform 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-strata:hover .ds-l:nth-child(2){transform:translateY(4px);}.ds-strata:hover .ds-l:nth-child(3){transform:translateY(8px);}.ds-strata:hover .ds-l:nth-child(4){transform:translateY(12px);}.ds-strata:hover .ds-l:nth-child(5){transform:translateY(16px);}.ds-l span{padding:.3em .6em;background:var(--tint);}.ds-l span:last-child{font-variant-numeric:tabular-nums;font-weight:400;}.ds-brick{--tint:#5a210b;background:var(--clay-deep);color:var(--chalk);padding-block:.6rem;}.ds-lime{--tint:#ece3d2;background:linear-gradient(rgb(236 227 210 / .72),rgb(236 227 210 / .72)),#ece3d2;color:#3a2a20;padding-block:1.6rem;}.ds-clinker{--tint:#28221f;background:linear-gradient(rgb(40 34 31 / .55),rgb(40 34 31 / .55)),#3b3330;color:var(--chalk);padding-block:1.8rem;}.ds-gravel{--tint:#a0968a;background:linear-gradient(rgb(160 150 138 / .7),rgb(160 150 138 / .7)),#93877b;color:#1f1813;padding-block:3.4rem;}.ds-stone{--tint:#463f39;background:linear-gradient(rgb(70 63 57 / .68),rgb(70 63 57 / .68)),#5e554d;color:var(--chalk);padding-block:2.4rem;}"
+    },
+    {
+      "name": "O Traço e a Bola",
+      "kind": "custom",
+      "refersTo": "court-ball",
+      "description": "O fio de cal da trajetória da bola, terminando numa marca.",
+      "html": "<div class=\"ds-court\"><svg viewBox=\"0 0 300 120\" class=\"ds-trace\"><path d=\"M10,100 Q160,0 260,90\"/></svg><span class=\"ds-ball\"></span></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{position:relative;background:var(--clay);padding:24px;}.ds-trace{width:100%;height:auto;overflow:visible;}.ds-trace path{fill:none;stroke:var(--chalk);stroke-width:1.5;stroke-linecap:round;opacity:.85;stroke-dasharray:400;stroke-dashoffset:0;transition:stroke-dashoffset 900ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-court:hover .ds-trace path{stroke-dashoffset:400;}.ds-ball{position:absolute;right:18%;bottom:22%;width:16px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3f7a2,#d4dc3a 55%,#9fa524);box-shadow:0 6px 10px -4px rgb(60 20 5 / .55);}"
+    }
+  ],
+  "narrative": {
+    "northStar": "A página é a quadra",
+    "overview": "O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o traço da bola, que nasce no saque real do hero e desce a página ligando as marcas.\n\nA densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos) e de parallax conduzido pelo scroll, não de cartões ou sombras de interface. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro \"hype\", logo oficial ou imitação do site oficial.",
+    "keyCharacteristics": [
+      "Fundo saibro contínuo; o rodapé desce um tom (saibro escuro), nunca muda de material.",
+      "Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo.",
+      "Marcas ovais numeradas (\"Marca 01…04\") como sistema de seção e de navegação do traço.",
+      "Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo.",
+      "Tipografia que estica: Anybody em largura condensada (62%) nos títulos e expandida (140–150%) nos números e no wordmark.",
+      "Movimento conduzido pelo scroll; com `prefers-reduced-motion`, o estado final completo e estático."
+    ],
+    "rules": [
+      {
+        "name": "The Drenched Rule",
+        "body": "A superfície é a cor. Nenhuma seção ganha fundo branco, cinza ou cartão; o saibro corre do topo ao rodapé, e só o rodapé escurece um tom.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Ball Rule",
+        "body": "O amarelo-esverdeado existe apenas na bola. Nenhum botão, destaque ou ícone usa essa cor.",
+        "section": "colors"
+      },
+      {
+        "name": "The Material Stays Underground Rule",
+        "body": "As cores de estrato pertencem só ao Corte da Quadra. Elas descrevem o que está debaixo do saibro e não sobem para fundos, textos ou destaques em outras partes da página.",
+        "section": "colors"
+      },
+      {
+        "name": "The Chalk Is Line Rule",
+        "body": "O creme é a cal da quadra: texto, linhas, traço e inversões. Não existe segunda cor de texto sobre o saibro além do creme e do creme sujo.",
+        "section": "colors"
+      },
+      {
+        "name": "The Stretch Rule",
+        "body": "A largura do Anybody carrega o sentido: condensada (62%) para títulos, expandida (125–150%) para wordmark, números de marca e títulos do rodapé. Não usar a largura normal (100%) da display.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Size Scoreboard Rule",
+        "body": "Placares e números aparecem num único tamanho de texto (1,125rem no placar); a hierarquia vem só do peso, da caixa e de `tabular-nums`, nunca de um número gigante.",
+        "section": "typography"
+      },
+      {
+        "name": "The Warm Shadow Rule",
+        "body": "Toda sombra é `rgb(60 20 5)`, a cor de saibro na sombra, com deslocamento negativo igual a metade do desfoque. Nada de sombras pretas, neutras ou deslocadas em bloco.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** manter o saibro (`clay`) como fundo contínuo de todas as seções; escurecer para `clay-deep` só no rodapé.",
+      "**Do** estruturar seções com linhas de quadra em cal, de espessura `line` (`clamp(6px, 0.7vw, 10px)`), e fechar cada capítulo numa linha de base.",
+      "**Do** abrir cada seção narrativa com uma Marca numerada e ligá-la ao traço do rali.",
+      "**Do** usar o Anybody condensado (62%) nos títulos e expandido (125–150%) em números e wordmark.",
+      "**Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados, `expo.out` para marcas que afundam e easing linear (`scrub`) para parallax.",
+      "**Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque."
+    ],
+    "donts": [
+      "**Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas do corte, o único creme sólido é o ticket e a linha do Guga.",
+      "**Don't** usar o amarelo da bola em qualquer outro elemento.",
+      "**Don't** deixar o traço do rali cruzar títulos ou parágrafos; ele corre pela borda livre.",
+      "**Don't** usar sombras pretas, neutras ou em bloco; toda sombra é saibro na sombra.",
+      "**Don't** usar neon, modo escuro, o logo oficial ou a linguagem visual do site oficial de Roland-Garros.",
+      "**Don't** escrever texto corrido sobre o saibro em cor diferente da cal: o contraste do saibro com a cal é 4,63:1, sem folga para tons mais escuros."
+    ]
+  }
+}

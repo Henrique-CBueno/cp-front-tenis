@@ -4,7 +4,6 @@
   --clay-deep: #8f3a18;
   --chalk: #f6efe2;
   --chalk-soft: #ecd9c6;
-  --green: #1f5c3a;
 
   --font-display: 'Anybody Variable', sans-serif;
   --font-text: 'Schibsted Grotesk', sans-serif;
@@ -110,24 +109,6 @@ a {
   color: var(--clay-deep);
 }
 
-.cta--solid {
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
-  padding: 1.1em 1.6em;
-  background: var(--chalk);
-  color: var(--clay-deep);
-  border: 3px solid var(--chalk);
-  box-shadow: 0 18px 36px -18px rgb(60 20 5 / 0.7);
-}
-
-.cta--solid:hover {
-  background: transparent;
-  color: var(--chalk);
-}
-
-.cta--solid:hover .cta__arrow {
-  transform: translateX(4px);
-}
-
 .cta__arrow {
   width: 1.2em;
   height: 1.2em;
@@ -138,25 +119,7 @@ a {
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cta--line:hover .cta--solid {
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
-  padding: 1.1em 1.6em;
-  background: var(--chalk);
-  color: var(--clay-deep);
-  border: 3px solid var(--chalk);
-  box-shadow: 0 18px 36px -18px rgb(60 20 5 / 0.7);
-}
-
-.cta--solid:hover {
-  background: transparent;
-  color: var(--chalk);
-}
-
-.cta--solid:hover .cta__arrow {
-  transform: translateX(4px);
-}
-
-.cta__arrow {
+.cta--line:hover .cta__arrow {
   transform: translateX(4px);
 }
 
@@ -524,11 +487,11 @@ h2 {
   display: grid;
   margin: 0;
   padding: 0 0 3.5rem; /* espaço para as camadas se afastarem */
+  list-style: none;
 }
 
 .terre {
   padding-bottom: clamp(3rem, 6vh, 5rem);
-  list-style: none;
 }
 
 .strata__layer {
@@ -546,8 +509,9 @@ h2 {
 }
 
 .strata__layer span {
-  /* halo na cor da própria camada: o rótulo continua legível sobre a textura */
-  text-shadow: 0 0 3px var(--tint), 0 0 10px var(--tint), 0 0 18px var(--tint);
+  /* etiqueta na cor da própria camada: o rótulo continua legível sobre a textura */
+  padding: 0.3em 0.6em;
+  background: var(--tint);
 }
 
 .strata__layer span:last-child {

@@ -1,10 +1,5 @@
 # Identidade visual
 
-Esta pasta vai receber o moodboard (prints das referências), `paleta.md` e `tipografia.md`.
-
-A fonte de verdade do design system é o **`DESIGN.md` na raiz** do projeto, gerado pela skill impeccable (`shape`).
-O contexto do produto fica no **`PRODUCT.md`** (impeccable `init`).
-
-Direção decidida no grilling (Q10): **editorial oficial** (laranja saibro ≈ `#BB5522`, verde, azul-marinho,
-creme/bege, branco) **com toques das affiches** (grão, textura de papel e de saibro, tipografia expressiva).
-Referências em `../pesquisa/referencias-visuais.md`.
+- **Direção escolhida:** `brief-direcao.md` ("La Trace": a página é a quadra de saibro). Opções e esboços da rodada em `rodada-direcao/`.
+- **Design system final:** o [`DESIGN.md`](../../DESIGN.md) na raiz (paleta, tipografia, componentes, motion e regras), escrito **no fim**, a partir da página construída, pelo documentador da impeccable. Os tokens em formato de máquina estão em `.impeccable/design.json`.
+- Decisões de tipografia e contraste: `../decisoes/007-tipografia-e-contraste.md`.
