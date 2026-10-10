@@ -70,3 +70,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - "MARCA 01" quebrava em duas linhas no reduced-motion → `nowrap`.
 - A estimativa do instante do impacto (quadro 76) estava cedo: pela grade dos quadros, o contato é no quadro 82.
 - **Bug achado na revisão:** a bola pousava na borda esquerda da marca, e não dentro dela. O ponto de pouso era medido com `getBoundingClientRect` numa marca que começa em `scale(0)` (largura medida = 0). Corrigido com as medidas de layout (`offset*`).
+
+## #15 · O traço cortava o texto (2026-10-10)
+- **Sintoma (screenshot):** curvas S entre as marcas passavam por cima de títulos e parágrafos, principalmente no celular, e o rali começava solto, sem sair da Marca 01.
+- **Correção:** roteamento por tela. No desktop, o traço sai na horizontal e desce na coluna vazia; no celular, desce pela margem direita. O início foi ligado à Marca 01. Ver `decisoes/010`.
+- **Também:** o texto passava por baixo da navegação transparente (o topo ganhou um degradê de saibro), e "MARCA 03" estourava a borda no celular (largura da legenda).

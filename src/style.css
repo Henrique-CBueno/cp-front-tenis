@@ -61,7 +61,8 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1rem var(--gutter);
+  padding: 1rem var(--gutter) 1.75rem;
+  background: linear-gradient(var(--clay) 55%, transparent);
 }
 
 .wordmark {
@@ -224,12 +225,15 @@ a {
   will-change: transform, opacity;
 }
 
-/* Marca 01: o oval que a bola deixa no saibro */
-.mark {
+/* A Marca: o oval que a bola deixa no saibro. A 01 fica no hero; as outras abrem cada seção. */
+.mark--hero {
   position: absolute;
   left: 41%;
   top: 50%;
   z-index: 0;
+}
+
+.mark {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -250,7 +254,7 @@ a {
 
 .mark__caption {
   margin: 0;
-  max-width: 18ch;
+  max-width: 22ch;
   font-size: 0.8125rem;
   font-weight: 700;
   line-height: 1.35;
@@ -342,6 +346,97 @@ h1 {
   align-self: end;
 }
 
+/* Navegação mínima: os nomes das quadras */
+.topnav {
+  display: flex;
+  gap: clamp(1rem, 2.4vw, 2.25rem);
+  margin-inline: auto;
+}
+
+.topnav a {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  padding-block: 0.55em;
+  border-bottom: 2px solid transparent;
+  transition: border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.topnav a:hover {
+  border-color: var(--chalk);
+}
+
+/* O rali: depois do saque, um traço contínuo desce a página ligando as marcas */
+.rally {
+  position: relative;
+  isolation: isolate;
+}
+
+.rally__trace {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.rally__trace path {
+  fill: none;
+  stroke: var(--chalk);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  opacity: 0.85;
+}
+
+.chapter {
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: 1.5rem;
+  padding: clamp(5rem, 12vh, 9rem) var(--gutter);
+}
+
+.chapter--right {
+  justify-items: end;
+  text-align: right;
+}
+
+.chapter .mark {
+  margin-bottom: 0.5rem;
+}
+
+.chapter--right .mark {
+  align-items: flex-end;
+}
+
+.chapter--right .mark__oval {
+  transform-origin: 100% 50%;
+}
+
+h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 9vw, 7.5rem);
+  font-weight: 500;
+  font-stretch: 62%;
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.chapter__lede {
+  max-width: 34ch;
+  margin: 0;
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
 /* Rodapé */
 .footer {
   background: var(--clay-deep);
@@ -405,11 +500,25 @@ h1 {
     inset: 28% 0 21% 0;
   }
 
-  .mark {
+  .mark--hero {
     left: var(--gutter);
     top: 80.5%;
     flex-direction: row;
     align-items: center;
+  }
+
+  .topnav {
+    display: none;
+  }
+
+  /* no celular o texto fica à esquerda, mas as marcas seguem alternando de lado */
+  .chapter--right {
+    justify-items: start;
+    text-align: left;
+  }
+
+  .chapter--right .mark {
+    justify-self: end;
   }
 
   .court__hint {

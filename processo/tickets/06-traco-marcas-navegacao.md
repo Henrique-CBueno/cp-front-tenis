@@ -4,11 +4,15 @@
 
 **Blocked by:** 04
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] O traço é um único path contínuo, desenhado progressivamente com o scroll
-- [ ] Componente de Marca numerada reutilizável pelas seções
-- [ ] Navegação mínima com âncoras para as seções, foco visível no teclado
-- [ ] Scroll suave sem sequestro (Lenis), âncoras funcionando
-- [ ] Com reduced-motion, o traço e as marcas aparecem completos
-- [ ] Log da etapa em `processo/prompts/`
+- [x] O traço é um único path contínuo, desenhado progressivamente com o scroll
+- [x] Componente de Marca numerada reutilizável pelas seções
+- [x] Navegação mínima com âncoras para as seções, foco visível no teclado
+- [x] Scroll suave sem sequestro (Lenis), âncoras funcionando
+- [x] Com reduced-motion, o traço e as marcas aparecem completos
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. O traço contínuo tem roteamento por tela para não cruzar o texto; as Marcas 02–04 afundam com o traço; a navegação usa âncoras via Lenis. 4 testes novos no Playwright. As seções 07–09 já têm esqueleto com título e marca para receber o conteúdo.
