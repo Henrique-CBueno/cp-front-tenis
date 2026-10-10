@@ -28,9 +28,12 @@ export function createHero({ section, manifest, serveCanvas }) {
   function measureFlight() {
     const from = serveCanvas.pointAt(manifest.contact);
     if (!from) return false;
-    const box = markOval.getBoundingClientRect();
-    const origin = section.getBoundingClientRect();
-    const to = { x: box.left - origin.left + box.width * 0.35, y: box.top - origin.top + box.height / 2 };
+    // medidas de layout (offset*), não getBoundingClientRect: a marca começa em scale(0)
+    const mark = markOval.offsetParent;
+    const to = {
+      x: mark.offsetLeft + markOval.offsetLeft + markOval.offsetWidth * 0.4,
+      y: mark.offsetTop + markOval.offsetTop + markOval.offsetHeight / 2,
+    };
     const peak = { x: interpolate(from.x, to.x, 0.55), y: Math.min(from.y, to.y) - section.clientHeight * 0.08 };
     trace.setAttribute('viewBox', `0 0 ${section.clientWidth} ${section.clientHeight}`);
     tracePath.setAttribute('d', `M${from.x},${from.y} Q${peak.x},${peak.y} ${to.x},${to.y}`);
