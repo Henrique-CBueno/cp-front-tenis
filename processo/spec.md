@@ -102,7 +102,7 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
   4. a exportação é em WebP com alpha;
   5. um manifesto lista os conjuntos (contagem, dimensões, caminho) e é consumido pelo módulo Sequência do Saque.
 
-  Top pick de vídeo: Pexels cottonbro 10340706 (fundo preto). Plano B: Pexels Shkraba 4902146.
+  Vídeo escolhido: **Mixkit 873** (câmera lenta, ~100 quadros no saque, trecho ~2,4–6,8 s, 720p). O fundo (céu, alambrado) é removido com rembg. Ver decisão 006.
 - **Direção visual "La Trace":** estratégia de cor Drenched, com saibro `#b9532c` como superfície, linhas/creme `#f6efe2`, saibro escuro `#8f3a18` e verde `#1f5c3a` como acento raro. Números e anos aparecem num tamanho único, com hierarquia por peso e caixa. As fontes são escolhidas no build, com ponto de vista e fora da lista de fontes padrão de IA, servidas localmente.
 - **Conteúdo:** fatos verificados em fonte antes de entrar (títulos, datas, o coração do Guga em 2001). Nada de estatística inventada. Os títulos são em francês e o texto corrido em PT-BR.
 - **CTA:** "Garanta seu ingresso" → link externo para a área de ingressos do site oficial, em nova aba. Aparece discreto na primeira dobra e principal no fechamento.
@@ -140,7 +140,7 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
 
 ## Further Notes
 
-- **Bloqueio humano:** a escolha do vídeo do saque é do aluno (ele precisa assistir aos candidatos). É pré-requisito do pipeline de assets e do ticket do hero.
+- **Vídeo do saque:** escolhido pelo aluno (Mixkit 873, decisão 006) após comparar as folhas de contato dos 3 candidatos.
 - **Prazo de 2 dias:** o hero (saque + parallax + Marca 01) é o primeiro e mais arriscado ticket. Fallback combinado: se o recorte ou o parallax não ficarem bons, a sequência de quadros vai sozinha, com o fundo do próprio vídeo.
 - **Fatos a verificar antes de publicar:** os títulos de Nadal, Evert e Borg; os anos do Guga; o coração desenhado em 2001; a data de fundação (1891) e a abertura a estrangeiros (1925).
 - **Licenças:** o CC BY-SA do Wikimedia exige atribuição e que a versão editada mantenha a licença.

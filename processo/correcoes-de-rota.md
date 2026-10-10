@@ -36,3 +36,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 ## #7 · Não fiquei com a direção sorteada (2026-10-10)
 - **Sorteio:** "Ordre de Jeu" (a página como programa do dia).
 - **Escolhi:** "La Trace" (a página como a quadra; cada seção é uma marca da bola).
+
+## #8 · O top pick da pesquisa não era o melhor vídeo (2026-10-10)
+- **Pesquisa (só pelas descrições):** o top pick era o cottonbro, pelo fundo preto que facilita o recorte.
+- **Ao olhar os quadros** (folhas de contato geradas pela IA): o cottonbro corta a raquete e o golpe tem ~12 quadros. O Mixkit é câmera lenta, com ~100 quadros.
+- **Correção:** escolhi o **Mixkit 873**. Lição: avaliar o material de verdade, e não a descrição. O critério certo era a fluidez do scrub, não a facilidade do recorte.
