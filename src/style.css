@@ -671,9 +671,8 @@ h2 {
   display: flex;
   width: max-content;
   margin: 0;
-  /* a primeira data começa no meio da tela, onde a bola pousa; a última termina no meio também,
-     com espaço à direita para a bola sair */
-  padding: 0 max(var(--gutter), calc(50vw - var(--step))) 0 calc(50vw - var(--gutter) - 1.15rem);
+  /* depois da última data a linha continua um trecho, por onde a bola sai */
+  padding: 0 max(var(--gutter), 18vw) 0 0;
   list-style: none;
   will-change: transform;
 }

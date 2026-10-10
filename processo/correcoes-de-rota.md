@@ -160,3 +160,12 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O que a IA fez:** sem movimento, a Histoire não prende e as datas ficam em várias linhas, então o caminho "entrar pela 1ª e sair pela última" não existe. Nesse modo, o traço segue passando por trás da seção, como na rodada 2, e as datas já aparecem como marcas feitas.
 - **Por quê:** é um estado estático que continua legível e sem duas bolas. Inventar uma bola parada no meio de uma grade de datas exigiria um caminho só para esse modo.
 - **Fica para eu revisar** se quiser a bola visível ali.
+
+## #29 · Não gostei da Histoire nova e pedi para voltar ao layout antigo (2026-10-10)
+- **O que a IA tinha feito no ticket 23:** levou 1891 para o meio da tela, para o traço descer direto até a data, e os pulos não deixavam rastro.
+- **Minha reação:** "gostava de como era antes". Eu só queria que a bola chegasse e saísse da linha do tempo, com o rastro ficando para trás junto com o scroll lateral.
+- **Correção:**
+  - 1891 voltou para a esquerda;
+  - o traço da chegada e um arco a cada pulo agora moram dentro da linha do tempo e correm com ela;
+  - a linha ganhou um trecho a mais depois de 2020, para a bola sair.
+- **Lição:** a IA mudou o layout para facilitar a geometria do traço, sem perguntar. Uma mudança de layout que não foi pedida precisa ser perguntada antes.

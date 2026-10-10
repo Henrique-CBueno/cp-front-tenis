@@ -28,10 +28,10 @@ function hopAlong(section, ball, dots, f, axis) {
 }
 
 // posição de um elemento nas coordenadas da seção (medidas de layout: não mudam com o translate da linha)
-function localOf(el, section) {
+function localOf(el, ancestor) {
   let x = 0;
   let y = 0;
-  for (let node = el; node && node !== section; node = node.offsetParent) {
+  for (let node = el; node && node !== ancestor; node = node.offsetParent) {
     x += node.offsetLeft;
     y += node.offsetTop;
   }
@@ -53,14 +53,42 @@ export function runTimeline(section) {
   ball.className = 'court__ball timeline__ball';
   ball.setAttribute('aria-hidden', 'true');
   ball.dataset.timelineBall = '';
-  // a entrada e a saída do traço, desenhadas por cima da cena (o traço do rali corre por trás dela)
+  // O rastro da bola na cena: a chegada, os arcos de cada pulo e a saída. Mora dentro da linha do tempo,
+  // então corre para a esquerda junto com as datas no scroll lateral (o traço do rali corre por trás da cena).
   const svgNS = 'http://www.w3.org/2000/svg';
   const trace = document.createElementNS(svgNS, 'svg');
   trace.classList.add('histoire__trace');
   trace.setAttribute('aria-hidden', 'true');
   const [entryPath, exitPath] = [0, 1].map(() => trace.appendChild(document.createElementNS(svgNS, 'path')));
-  section.append(trace, ball);
+  const hops = dots.slice(1).map(() => trace.appendChild(document.createElementNS(svgNS, 'path')));
+  track.append(trace);
+  section.append(ball);
   section.dataset.dock = '';
+
+  // os arcos dos pulos, nas coordenadas da linha: a mesma parábola que a bola faz em hopAlong
+  // (x linear e a altura 4t(1-t)·lift é uma Bézier quadrática com o controle a 2·lift)
+  let hopLengths = [];
+  function layoutHops(axis) {
+    const lift = axis === 'x' ? 30 : 18;
+    const c = dots.map((dot) => {
+      const d = localOf(dot, track);
+      return { x: d.x + d.width / 2, y: d.y };
+    });
+    hopLengths = hops.map((path, i) => {
+      const [a, b] = [c[i], c[i + 1]];
+      const control = axis === 'x' ? { x: (a.x + b.x) / 2, y: a.y - 2 * lift } : { x: a.x + 2 * lift, y: (a.y + b.y) / 2 };
+      path.setAttribute('d', `M${a.x},${a.y} Q${control.x},${control.y} ${b.x},${b.y}`);
+      return path.getTotalLength();
+    });
+    drawHops();
+  }
+  let drawnTo = 0; // o rastro dos pulos fica: só cresce
+  function drawHops() {
+    hops.forEach((path, i) => {
+      const length = hopLengths[i] || 0;
+      path.style.strokeDasharray = `${length * gsap.utils.clamp(0, 1, drawnTo - i)} ${length + 1}`;
+    });
+  }
 
   // as datas são marcas: nascem quando a bola toca nelas
   gsap.set(dots, { yPercent: -50, scale: 0 });
@@ -78,6 +106,10 @@ export function runTimeline(section) {
     const n = dots.length - 1;
     const clamped = gsap.utils.clamp(0, n, f);
     hopAlong(section, ball, dots, clamped, axis);
+    if (clamped > drawnTo) {
+      drawnTo = clamped;
+      drawHops();
+    }
     for (let i = reached + 1; i <= Math.floor(clamped + 0.06); i++) touch(i);
     reached = Math.max(reached, Math.floor(clamped + 0.06));
   }
@@ -87,16 +119,30 @@ export function runTimeline(section) {
     return { x: d.x + d.width / 2, y: d.y };
   };
   const headBottom = () => localOf(head, section).y + head.offsetHeight;
-  const overlay = { trace, entryPath, exitPath, ball };
+  // onde termina o texto do título e da frase (o bloco ocupa a largura toda; o texto, não)
+  const headTextRight = () => {
+    const origin = section.getBoundingClientRect();
+    const range = document.createRange();
+    range.selectNodeContents(head);
+    return Math.max(...[...range.getClientRects()].map((r) => r.right - origin.left));
+  };
+  const trackAt = () => localOf(track, section);
 
   gsap.matchMedia().add('(max-width: 720px)', () => {
     const lastIndex = dots.length - 1;
     section.rallyDock = {
       el: section,
-      overlay,
+      overlay: {
+        trace,
+        entryPath,
+        exitPath,
+        ball,
+        shift: { entry: () => ({ x: -trackAt().x, y: -trackAt().y }), exit: () => ({ x: -trackAt().x, y: -trackAt().y }) },
+      },
       frame: () => section,
       total: () => 0,
       points: () => {
+        layoutHops('y');
         const first = dotAt(0);
         const last = dotAt(lastIndex);
         const trackBox = localOf(track, section);
@@ -137,18 +183,28 @@ export function runTimeline(section) {
     const lastIndex = dots.length - 1;
     section.rallyDock = {
       el: section,
-      overlay,
+      overlay: {
+        trace,
+        entryPath,
+        exitPath,
+        ball,
+        // a saída é desenhada com a linha já no fim do scroll lateral
+        shift: { entry: () => ({ x: -trackAt().x, y: -trackAt().y }), exit: () => ({ x: -trackAt().x + distance(), y: -trackAt().y }) },
+      },
       frame: () => (section.parentElement.classList.contains('pin-spacer') ? section.parentElement : section),
       total: () => st.end - st.start,
       points: () => {
+        layoutHops('x');
         const first = dotAt(0);
         const last = dotAt(lastIndex);
         const lastItem = localOf(items[lastIndex], section);
         const endX = last.x - distance();
-        // sai pela linha, para a direita do texto da última data, e só então desce
+        // sai correndo pelo trecho de linha depois de 2020, para a direita do texto dela, e só então desce
         const outX = Math.min(section.clientWidth - 60, endX + items[lastIndex].offsetWidth);
+        // chega pela direita do título e da frase e desce pelo vão entre o texto e a linha até 1891
+        const inX = Math.min(section.clientWidth * 0.6, headTextRight() + 48);
         return {
-          entry: [{ x: first.x, y: headBottom() + 8 }, { ...first, contact: true }],
+          entry: [{ x: inX, y: headBottom() + 8 }, { ...first, contact: true }],
           exit: [{ x: endX, y: last.y, contact: true }, { x: outX, y: last.y + 8 }, { x: outX, y: lastItem.y + lastItem.height + 16 }],
         };
       },

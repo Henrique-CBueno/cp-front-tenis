@@ -159,11 +159,14 @@ export function createRally({ container, start }) {
     });
 
     for (const d of docks) {
-      const { trace, entryPath, exitPath } = d.dock.overlay;
-      trace.setAttribute('viewBox', `0 0 ${d.dock.el.clientWidth} ${d.dock.el.clientHeight}`);
-      for (const [p, off] of [[entryPath, d.offIn], [exitPath, d.offOut]]) {
+      const { trace, entryPath, exitPath, shift } = d.dock.overlay;
+      const host = trace.parentElement;
+      trace.setAttribute('viewBox', `0 0 ${host.offsetWidth} ${host.offsetHeight}`);
+      // o desenho pode morar num elemento que se move dentro da cena (a linha do tempo): shift leva das
+      // coordenadas da cena para as dele, na entrada e na saída
+      for (const [p, off, s] of [[entryPath, d.offIn, shift.entry()], [exitPath, d.offOut, shift.exit()]]) {
         p.setAttribute('d', rally.d);
-        p.setAttribute('transform', `translate(0 ${-off})`);
+        p.setAttribute('transform', `translate(${s.x} ${s.y - off})`);
       }
       d.lin = lengthForY(d.inY);
       d.lout = lengthForY(d.outY);
