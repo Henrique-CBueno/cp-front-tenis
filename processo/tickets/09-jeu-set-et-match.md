@@ -4,9 +4,13 @@
 
 **Blocked by:** 06
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] A última Marca/CTA é inequívoca e acessível pelo teclado
-- [ ] O rodapé lista cada asset usado com autor e licença
-- [ ] O smoke test do `href` do CTA continua verde
-- [ ] Log da etapa em `processo/prompts/`
+- [x] A última Marca/CTA é inequívoca e acessível pelo teclado
+- [x] O rodapé lista cada asset usado com autor e licença
+- [x] O smoke test do `href` do CTA continua verde
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. A última marca leva ao CTA principal (sólido). O rodapé tem créditos completos e as fontes dos fatos.

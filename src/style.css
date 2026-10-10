@@ -110,6 +110,24 @@ a {
   color: var(--clay-deep);
 }
 
+.cta--solid {
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  padding: 1.1em 1.6em;
+  background: var(--chalk);
+  color: var(--clay-deep);
+  border: 3px solid var(--chalk);
+  box-shadow: 0 18px 36px -18px rgb(60 20 5 / 0.7);
+}
+
+.cta--solid:hover {
+  background: transparent;
+  color: var(--chalk);
+}
+
+.cta--solid:hover .cta__arrow {
+  transform: translateX(4px);
+}
+
 .cta__arrow {
   width: 1.2em;
   height: 1.2em;
@@ -120,7 +138,25 @@ a {
   transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.cta--line:hover .cta__arrow {
+.cta--line:hover .cta--solid {
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  padding: 1.1em 1.6em;
+  background: var(--chalk);
+  color: var(--clay-deep);
+  border: 3px solid var(--chalk);
+  box-shadow: 0 18px 36px -18px rgb(60 20 5 / 0.7);
+}
+
+.cta--solid:hover {
+  background: transparent;
+  color: var(--chalk);
+}
+
+.cta--solid:hover .cta__arrow {
+  transform: translateX(4px);
+}
+
+.cta__arrow {
   transform: translateX(4px);
 }
 
@@ -659,6 +695,20 @@ h3 {
   text-wrap: pretty;
 }
 
+/* Jeu, Set et Match: a última marca é o ingresso */
+.match {
+  min-height: 90svh;
+}
+
+.match .cta--solid {
+  margin-top: 1rem;
+}
+
+.match__note {
+  margin: 0;
+  font-size: 0.875rem;
+}
+
 /* Rodapé */
 .footer {
   background: var(--clay-deep);
@@ -669,6 +719,10 @@ h3 {
 .footer__disclaimer {
   max-width: 60ch;
   margin: 0 0 2.5rem;
+}
+
+.footer__credits + .footer__credits {
+  margin-top: 2.5rem;
 }
 
 .footer__credits h2 {
@@ -682,6 +736,8 @@ h3 {
 }
 
 .footer__credits ul {
+  display: grid;
+  gap: 0.5rem;
   margin: 0;
   padding: 0;
   list-style: none;
