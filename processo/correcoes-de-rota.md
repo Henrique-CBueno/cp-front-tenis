@@ -41,3 +41,13 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Pesquisa (só pelas descrições):** o top pick era o cottonbro, pelo fundo preto que facilita o recorte.
 - **Ao olhar os quadros** (folhas de contato geradas pela IA): o cottonbro corta a raquete e o golpe tem ~12 quadros. O Mixkit é câmera lenta, com ~100 quadros.
 - **Correção:** escolhi o **Mixkit 873**. Lição: avaliar o material de verdade, e não a descrição. O critério certo era a fluidez do scrub, não a facilidade do recorte.
+
+## #9 · A cor do brief reprovou no contraste (2026-10-10)
+- O saibro `#b9532c` com texto creme dava 4,23:1 (< 4,5:1). Escureci a superfície para `#b04e29` (4,63:1). Ver `decisoes/007`.
+
+## #10 · Primeiro screenshot: título tímido e linha cruzando o texto no mobile (2026-10-10)
+- **1ª versão:** h1 fino (peso 300) e pequeno demais para o esboço, e no mobile a linha central da quadra passava por cima do parágrafo.
+- **Correção:** peso 500 e tamanho maior; no mobile a linha foi para 88% da largura, com o texto limitado antes dela. Evidências em `evidencias/01/`.
+
+## #11 · O detector da impeccable deu falso positivo (2026-10-10)
+- O `impeccable detect` acusou uma "hierarquia tipográfica plana" (h1 = 16px), porque leu o HTML sem o CSS, que é importado via JS pelo Vite. Na página renderizada, o h1 tem ~168px. Achado ignorado, com justificativa.

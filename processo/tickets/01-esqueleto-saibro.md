@@ -4,13 +4,17 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `npm run dev` e `npm run build` funcionam; o build servido localmente mostra a página
-- [ ] Saibro `#b9532c` cobre a primeira dobra; linhas/creme `#f6efe2` como cor de texto e estrutura
-- [ ] CTA "Garanta seu ingresso" com `href` do site oficial, `target=_blank` e `rel=noopener`
-- [ ] Rodapé com "projeto acadêmico, sem vínculo com a Fédération Française de Tennis" e a seção de créditos
-- [ ] Sem logo oficial: wordmark tipográfico próprio
-- [ ] Smoke test Playwright sobre o build: console sem erros + `href` do CTA correto
-- [ ] Vitest roda (mesmo sem testes do domínio ainda)
-- [ ] Log da etapa em `processo/prompts/`
+- [x] `npm run dev` e `npm run build` funcionam; o build servido localmente mostra a página
+- [x] Saibro `#b9532c` cobre a primeira dobra; linhas/creme `#f6efe2` como cor de texto e estrutura
+- [x] CTA "Garanta seu ingresso" com `href` do site oficial, `target=_blank` e `rel=noopener`
+- [x] Rodapé com "projeto acadêmico, sem vínculo com a Fédération Française de Tennis" e a seção de créditos
+- [x] Sem logo oficial: wordmark tipográfico próprio
+- [x] Smoke test Playwright sobre o build: console sem erros + `href` do CTA correto
+- [x] Vitest roda (mesmo sem testes do domínio ainda)
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. Os 2 smoke tests do Playwright passaram; o Vitest roda (sem testes de domínio ainda, que entram no ticket 02). A revisão de código não achou nenhum bug. Pendente para o aluno: confirmar no navegador que `tickets.rolandgarros.com` é a bilheteria oficial.

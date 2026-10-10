@@ -1,0 +1,236 @@
+:root {
+  /* La Trace: o saibro é a superfície. #b04e29 é o saibro do brief (#b9532c) escurecido para o creme passar 4.5:1. */
+  --clay: #b04e29;
+  --clay-deep: #8f3a18;
+  --chalk: #f6efe2;
+  --chalk-soft: #ecd9c6;
+  --green: #1f5c3a;
+
+  --font-display: 'Anybody Variable', sans-serif;
+  --font-text: 'Schibsted Grotesk', sans-serif;
+
+  --gutter: clamp(1rem, 4vw, 3.5rem);
+  --line: clamp(6px, 0.7vw, 10px);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--clay);
+  color: var(--chalk);
+  font-family: var(--font-text);
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--chalk-soft) var(--clay-deep);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  line-height: 1.5;
+  overflow-x: clip;
+}
+
+::selection {
+  background: var(--chalk);
+  color: var(--clay-deep);
+}
+
+:focus-visible {
+  outline: 3px solid var(--chalk);
+  outline-offset: 4px;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+}
+
+/* Barra do topo */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem var(--gutter);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 800;
+  font-stretch: 150%;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+
+/* CTA */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  font-family: var(--font-text);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition:
+    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta--quiet {
+  font-size: 0.8125rem;
+  padding: 0.55em 0;
+  border-bottom: 2px solid currentColor;
+}
+
+.cta--quiet:hover {
+  color: var(--chalk-soft);
+}
+
+.cta--line {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  padding: 1em 1.4em;
+  border: 3px solid var(--chalk);
+}
+
+.cta--line:hover {
+  background: var(--chalk);
+  color: var(--clay-deep);
+}
+
+.cta__arrow {
+  width: 1.2em;
+  height: 1.2em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2.5;
+  stroke-linecap: square;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cta--line:hover .cta__arrow {
+  transform: translateX(4px);
+}
+
+/* A quadra: primeira dobra */
+.court {
+  position: relative;
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: 1fr auto;
+  padding: 6rem var(--gutter) var(--gutter);
+  isolation: isolate;
+}
+
+.court__lines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.court__line {
+  position: absolute;
+  background: var(--chalk);
+}
+
+/* Linha de base e linha central de saque, como fitas pintadas sobre o saibro */
+.court__line--base {
+  left: 0;
+  right: 0;
+  top: 71%;
+  height: var(--line);
+}
+
+.court__line--center {
+  top: 0;
+  bottom: 29%;
+  left: 61%;
+  width: var(--line);
+}
+
+.court__title {
+  align-self: start;
+  max-width: 58%;
+}
+
+h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4.5rem, 13vw, 10.5rem);
+  font-weight: 500;
+  font-stretch: 62%;
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+
+.court__lede {
+  max-width: 34ch;
+  margin: 1.5rem 0 0;
+  font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
+  line-height: 1.45;
+  text-wrap: pretty;
+}
+
+.court > .cta--line {
+  justify-self: end;
+  align-self: end;
+}
+
+/* Rodapé */
+.footer {
+  background: var(--clay-deep);
+  padding: clamp(3rem, 8vw, 6rem) var(--gutter) 2rem;
+  font-size: 0.9375rem;
+}
+
+.footer__disclaimer {
+  max-width: 60ch;
+  margin: 0 0 2.5rem;
+}
+
+.footer__credits h2 {
+  margin: 0 0 0.75rem;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.footer__credits ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 70ch;
+  color: var(--chalk-soft);
+}
+
+@media (max-width: 720px) {
+  .court__title {
+    max-width: calc(88% - var(--gutter));
+  }
+
+  .court__line--center {
+    top: 5.5rem;
+    left: 88%;
+  }
+
+  .court > .cta--line {
+    justify-self: stretch;
+    justify-content: space-between;
+  }
+}
