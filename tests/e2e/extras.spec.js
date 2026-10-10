@@ -111,8 +111,9 @@ const pinOf = (page) =>
     let y = 0;
     for (let n = dot; n && n !== sec; n = n.offsetParent) y += n.offsetTop;
     // o pin começa quando a bola pousa em 1891 (no meio da tela); espera, a linha corre, espera em 2020
+    // e dá o último pulo até a ponta da linha
     const start = top + y - innerHeight / 2;
-    return { start, end: start + spacer.offsetHeight - sec.offsetHeight, hold: innerHeight * 0.25 };
+    return { start, end: start + spacer.offsetHeight - sec.offsetHeight, hold: innerHeight * 0.25, out: innerHeight * 0.3 };
   });
 
 async function glideTo(page, y) {
@@ -147,9 +148,11 @@ test('Histoire: uma bola só do começo ao fim; ela espera na 1ª data e na últ
     await glideTo(page, pin.start + (pin.end - pin.start) * f);
     expect(await visibleBalls(page)).toBe(1);
   }
-  await glideTo(page, pin.end - pin.hold * 0.5); // espera em 2020
+  await glideTo(page, pin.end - pin.out - pin.hold * 0.5); // espera em 2020
   expect(await visibleBalls(page)).toBe(1);
   expect(await ballOnDot(page, -1)).toBeLessThan(14);
+  await glideTo(page, pin.end - pin.out * 0.5); // o último pulo, para a ponta da linha
+  expect(await visibleBalls(page)).toBe(1);
   for (const y of [pin.end + 200, pin.end + 700]) {
     await glideTo(page, y);
     expect(await visibleBalls(page)).toBe(1);
@@ -217,4 +220,24 @@ test.describe('Histoire no celular', () => {
       expect(hits).toEqual([]);
     }
   });
+});
+
+test('Histoire: as marcas ficam no centro da linha e o traço da chegada termina na bola', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('load');
+  const pin = await pinOf(page);
+  await glideTo(page, pin.start + pin.hold * 0.5);
+  const geometry = await page.evaluate(() => {
+    const sec = document.querySelector('#histoire');
+    const track = sec.querySelector('[data-timeline-track]');
+    const line = getComputedStyle(track, '::before');
+    const lineY = track.getBoundingClientRect().top + parseFloat(line.top) + parseFloat(line.height) / 2;
+    const dot = sec.querySelector('.timeline__dot').getBoundingClientRect();
+    const entry = sec.querySelector('.histoire__trace path');
+    const drawn = parseFloat(getComputedStyle(entry).strokeDasharray.split(',')[0]);
+    const end = entry.getPointAtLength(drawn).matrixTransform(entry.getScreenCTM());
+    return { lineY, dotY: dot.top + dot.height / 2, traceEndY: end.y };
+  });
+  expect(Math.abs(geometry.dotY - geometry.lineY)).toBeLessThan(1.5);
+  expect(geometry.traceEndY).toBeLessThan(geometry.dotY + 2);
 });

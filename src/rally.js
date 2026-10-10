@@ -168,8 +168,9 @@ export function createRally({ container, start }) {
         p.setAttribute('d', rally.d);
         p.setAttribute('transform', `translate(${s.x} ${s.y - off})`);
       }
-      d.lin = lengthForY(d.inY);
-      d.lout = lengthForY(d.outY);
+      // exatos (a tabela tem um ponto a cada ~25 px): o traço da chegada termina na bola, sem passar dela
+      d.lin = exactLengthForY(d.inY);
+      d.lout = exactLengthForY(d.outY);
     }
   }
 
@@ -202,6 +203,17 @@ export function createRally({ container, start }) {
         opacity: y > -15 && y < d.dock.el.clientHeight + 15 ? 1 : 0,
       });
     }
+  }
+
+  // o comprimento do traço em que ele chega à altura y, por bisseção (o traço só desce: y cresce com o comprimento)
+  function exactLengthForY(y) {
+    let [lo, hi] = [0, length];
+    for (let i = 0; i < 30; i++) {
+      const mid = (lo + hi) / 2;
+      if (path.getPointAtLength(mid).y < y) lo = mid;
+      else hi = mid;
+    }
+    return hi;
   }
 
   function lengthForY(y) {

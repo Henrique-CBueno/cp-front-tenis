@@ -65,7 +65,8 @@ export function runTimeline(section) {
   section.dataset.dock = '';
 
   // as datas são marcas: nascem quando a bola toca nelas
-  gsap.set(dots, { yPercent: -50, scale: 0 });
+  // (o CSS já centra a data na linha com translateY(-50%); o GSAP assume esse deslocamento como yPercent)
+  gsap.set(dots, { y: 0, yPercent: -50, scale: 0 });
   const made = dots.map(() => false);
   function touch(i) {
     if (made[i]) return;
@@ -88,22 +89,6 @@ export function runTimeline(section) {
     return { x: d.x + d.width / 2, y: d.y };
   };
   const trackAt = () => localOf(track, section);
-  // a saída: pelo vão entre o texto da penúltima data e a última, e para baixo até passar os textos
-  function exitPoints(shiftX) {
-    const last = items[lastIndex];
-    const box = localOf(last, section);
-    const before = items[lastIndex - 1].getBoundingClientRect();
-    const range = document.createRange();
-    range.selectNodeContents(items[lastIndex - 1]);
-    const textRight = Math.max(...[...range.getClientRects()].map((r) => r.right)) - before.left + localOf(items[lastIndex - 1], section).x;
-    const x = (textRight + box.x) / 2 - shiftX;
-    const lastDot = dotAt(lastIndex);
-    return [
-      { x: lastDot.x - shiftX, y: lastDot.y, contact: true },
-      { x, y: lastDot.y + 24 },
-      { x, y: box.y + box.height + 16 },
-    ];
-  }
   const shift = { entry: () => ({ x: -trackAt().x, y: -trackAt().y }) };
   const passed = () => dots.forEach((_, i) => touch(i));
 
@@ -139,13 +124,21 @@ export function runTimeline(section) {
   gsap.matchMedia().add('(min-width: 721px)', () => {
     // medidas de layout (offset*), que não mudam com o translate já aplicado
     const distance = () => Math.max(0, track.offsetLeft + track.offsetWidth - section.clientWidth);
+    // a ponta da linha, com a linha já no fim do scroll lateral: no meio do trecho a mais depois de 2020
+    const lineEnd = () => {
+      const last = localOf(items[lastIndex], section);
+      const right = section.clientWidth;
+      const after = last.x + last.width - distance();
+      return { x: Math.min(right - 40, after + (right - after) * 0.55), y: dotAt(lastIndex).y };
+    };
     const hold = () => window.innerHeight * 0.25; // a espera em 1891 e em 2020
+    const out = () => window.innerHeight * 0.3; // o último pulo, de 2020 até o fim da linha
     const travelAt = (t) => gsap.utils.clamp(0, 1, (t - hold()) / Math.max(1, distance()));
     const st = ScrollTrigger.create({
       trigger: section,
       // o pin começa quando 1891 chega ao meio da tela: é onde a ponta do traço (e a bola) está
       start: () => `top ${window.innerHeight / 2 - dotAt(0).y}px`,
-      end: () => `+=${distance() + 2 * hold()}`,
+      end: () => `+=${distance() + 2 * hold() + out()}`,
       pin: true,
       invalidateOnRefresh: true,
       onUpdate: (self) => gsap.set(track, { x: -distance() * travelAt(self.progress * (self.end - self.start)) }),
@@ -158,11 +151,38 @@ export function runTimeline(section) {
       total: () => st.end - st.start,
       points: () => {
         const first = dotAt(0);
-        // desce reto pela esquerda (o título está à direita) e pousa em 1891
-        return { entry: [{ x: first.x, y: first.y - 120 }, { ...first, contact: true }], exit: exitPoints(distance()) };
+        const end = lineEnd();
+        const lastItem = localOf(items[lastIndex], section);
+        // desce reto pela esquerda (o título está à direita) e pousa em 1891; no fim, cai da ponta da linha
+        return {
+          entry: [{ x: first.x, y: first.y - 120 }, { ...first, contact: true }],
+          exit: [{ ...end, contact: true }, { x: end.x, y: lastItem.y + lastItem.height + 16 }],
+        };
       },
-      // u: de 0 (pouso em 1891) a 1 (saída de 2020), ao longo do pin inteiro
-      hop: (u) => hopTo(travelAt(u * (st.end - st.start)) * lastIndex, 'x'),
+      // u: de 0 (pouso em 1891) a 1 (a bola na ponta da linha), ao longo do pin inteiro
+      hop: (u) => {
+        const t = u * (st.end - st.start);
+        const leave = 2 * hold() + distance();
+        if (t < leave) {
+          hopTo(travelAt(t) * lastIndex, 'x');
+          return;
+        }
+        // o último pulo segue para a direita, como os outros: de 2020 até a ponta da linha
+        hopTo(lastIndex, 'x');
+        const f = gsap.utils.clamp(0, 1, (t - leave) / out());
+        const from = dotAt(lastIndex);
+        const a = { x: from.x - distance(), y: from.y };
+        const b = lineEnd();
+        const lift = 4 * f * (1 - f) * 30;
+        const ground = f > 0.94;
+        gsap.set(ball, {
+          x: a.x + (b.x - a.x) * f,
+          y: a.y - lift,
+          scaleX: ground ? 1.18 : 1,
+          scaleY: ground ? 0.74 : 1,
+          opacity: 1,
+        });
+      },
       passed,
     };
     return () => {

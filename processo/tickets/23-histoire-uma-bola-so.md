@@ -17,3 +17,8 @@
 - [x] O traço chega à 1ª data e sai da última, sem cruzar texto
 - [x] Celular e reduced-motion
 - [x] Log da etapa em `processo/prompts/`
+
+**Histórico:** feito em 4 versões, cada uma depois de uma correção minha (correções de rota #29, #30 e #31; prompts 30–34). A versão final:
+- o título fica à direita e a bola desce pela esquerda até 1891;
+- a bola pula de data em data sem arcos;
+- no fim, dá um último pulo até a ponta da linha e cai dali.
