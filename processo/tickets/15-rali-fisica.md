@@ -4,10 +4,14 @@
 
 **Blocked by:** 14
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Vitest: a altura é 0 nos pontos de quique e máxima no meio de cada arco
-- [ ] Mini marcas persistem no saibro depois do quique; o pó tem vida curta e não pesa (meta de fps mantida)
-- [ ] Achatamento perto do chão; sombra coerente com a altura
-- [ ] Reduced-motion: marcas já presentes, sem pó nem achatamento
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Vitest: a altura é 0 nos pontos de quique e máxima no meio de cada arco
+- [x] Mini marcas persistem no saibro depois do quique; o pó tem vida curta e não pesa (meta de fps mantida)
+- [x] Achatamento perto do chão; sombra coerente com a altura
+- [x] Reduced-motion: marcas já presentes, sem pó nem achatamento
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. A altura da bola foi testada no módulo; sombra, achatamento, mini marcas e pó estão no rally.js; 2 testes E2E.

@@ -62,3 +62,41 @@ describe('Trajeto do Rali: o traço desenhado', () => {
     expect(buildRallyPath(points).d).toBe(buildRallyPath(points).d);
   });
 });
+
+describe('Trajeto do Rali: a altura da bola', () => {
+  const contacts = points.filter((p) => p.contact);
+
+  it('lista os pontos de contato com o chão, na ordem', () => {
+    expect(buildRallyPath(points).contacts.map((c) => c.y)).toEqual(contacts.map((c) => c.y));
+  });
+
+  it('a bola está no chão em cada contato', () => {
+    const path = buildRallyPath(points);
+    for (const c of contacts) expect(path.heightAt(c.y)).toBeCloseTo(0, 6);
+  });
+
+  it('a altura é máxima no meio de cada arco entre dois contatos', () => {
+    const path = buildRallyPath(points);
+    for (let i = 1; i < contacts.length; i++) {
+      const [a, b] = [contacts[i - 1], contacts[i]];
+      const mid = (a.y + b.y) / 2;
+      const peak = path.heightAt(mid);
+      expect(peak).toBeGreaterThan(0);
+      for (const t of [0.1, 0.3, 0.7, 0.9]) {
+        expect(path.heightAt(a.y + (b.y - a.y) * t)).toBeLessThan(peak);
+      }
+    }
+  });
+
+  it('um arco mais longo sobe mais alto', () => {
+    const path = buildRallyPath(points);
+    const peak = (a, b) => path.heightAt((a.y + b.y) / 2);
+    // 0→700 é mais longo que 700→1000
+    expect(peak(contacts[0], contacts[1])).toBeGreaterThan(peak(contacts[1], contacts[2]));
+  });
+
+  it('antes do primeiro e depois do último contato a bola está no chão', () => {
+    const path = buildRallyPath(points);
+    expect(path.heightAt(1300)).toBe(0);
+  });
+});

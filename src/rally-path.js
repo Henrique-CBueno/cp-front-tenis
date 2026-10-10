@@ -2,6 +2,7 @@
 // - passa exatamente por cada ponto de passagem;
 // - nunca vai além dos pontos vizinhos, então não invade o espaço reservado ao texto;
 // - como y só cresce, a ponta do traço pode seguir o scroll.
+// Os pontos marcados com contact: true são onde a bola toca o chão; entre eles, heightAt dá a altura do arco.
 
 // Inclinações dx/dy em cada ponto, zeradas nos extremos locais para não haver "estouro" entre os pontos.
 function slopes(points) {
@@ -65,5 +66,18 @@ export function buildRallyPath(points) {
     d += ` C${r(a.x + (m[i] * h) / 3)},${r(a.y + h / 3)} ${r(b.x - (m[i + 1] * h) / 3)},${r(b.y - h / 3)} ${r(b.x)},${r(b.y)}`;
   }
 
-  return { d, pointAtY };
+  // Entre dois contatos a bola faz um arco: altura 0 no chão, máxima no meio (parábola). Arcos mais longos sobem mais.
+  const contacts = points.filter((p) => p.contact);
+  function heightAt(y) {
+    for (let i = 1; i < contacts.length; i++) {
+      const [a, b] = [contacts[i - 1], contacts[i]];
+      if (y < a.y || y > b.y) continue;
+      const t = (y - a.y) / (b.y - a.y);
+      const peak = Math.min(Math.hypot(b.x - a.x, b.y - a.y) * 0.18, 140);
+      return 4 * t * (1 - t) * peak;
+    }
+    return 0;
+  }
+
+  return { d, pointAtY, contacts, heightAt };
 }

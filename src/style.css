@@ -373,6 +373,50 @@ h1 {
   z-index: -1;
 }
 
+/* o chão do rali: mini marcas dos quiques e o pó, no mesmo plano do traço */
+.rally__ground {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.rally__bounce {
+  position: absolute;
+  width: 34px;
+  aspect-ratio: 2.2;
+  margin: -7.7px 0 0 -17px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 45% 50%, #7c3013, var(--clay-deep) 60%, transparent 72%);
+  box-shadow: inset 0 0 0 1.5px rgb(246 239 226 / 0.45);
+  transform: scale(0);
+}
+
+.rally__dust {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #c9673a;
+}
+
+/* a sombra da bola fica no chão, sobre o traço; a bola sobe acima dela */
+.rally__shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 22px;
+  height: 8px;
+  margin: -4px 0 0 -11px;
+  border-radius: 50%;
+  background: rgb(60 20 5 / 0.55);
+  filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+}
+
 .rally {
   position: relative;
   isolation: isolate;

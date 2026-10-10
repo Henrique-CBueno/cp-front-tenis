@@ -35,3 +35,26 @@ for (const [name, viewport] of [['desktop', { width: 1440, height: 900 }], ['cel
     });
   });
 }
+
+test('cada quique deixa uma marca no saibro, que fica depois que a bola passa', async ({ page }) => {
+  await page.goto('/');
+  const firstBounce = page.locator('.rally__bounce').first();
+  await expect(firstBounce).toHaveCount(1);
+  const scaleOf = () => firstBounce.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).a);
+  expect(await scaleOf()).toBe(0);
+
+  await page.locator('#histoire').scrollIntoViewIfNeeded();
+  await expect.poll(scaleOf, { timeout: 4000 }).toBe(1);
+});
+
+test.describe('quiques com prefers-reduced-motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('todas as marcas dos quiques já estão no saibro', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    const scales = await page.locator('.rally__bounce').evaluateAll((els) => els.map((el) => new DOMMatrix(getComputedStyle(el).transform).a));
+    expect(scales.length).toBeGreaterThan(3);
+    expect(scales.every((s) => s === 1)).toBe(true);
+  });
+});

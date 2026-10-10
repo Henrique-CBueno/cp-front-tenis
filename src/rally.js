@@ -15,6 +15,9 @@ export function createRally({ container, start }) {
   const svg = container.querySelector('[data-rally-trace]');
   const path = container.querySelector('[data-rally-path]');
   const ball = container.querySelector('[data-rally-ball]');
+  const shadow = container.querySelector('[data-rally-shadow]');
+  const ground = container.querySelector('[data-rally-ground]');
+  let bounceMarks = [];
   const marks = [...container.querySelectorAll('[data-chapter-mark]')].map((mark) => ({
     oval: mark.querySelector('.mark__oval'),
     caption: mark.querySelector('.mark__caption'),
@@ -76,7 +79,7 @@ export function createRally({ container, start }) {
       const bounces = Number(station.respiro.dataset.bounces || 1);
       for (let k = 1; k <= bounces; k++) {
         const t = k / (bounces + 1);
-        points.push({ x: fromX + (toX - fromX) * t, y: box.y + box.height * t, contact: true });
+        points.push({ x: fromX + (toX - fromX) * t, y: box.y + box.height * t, contact: true, bounce: true });
       }
     });
 
@@ -88,7 +91,21 @@ export function createRally({ container, start }) {
     svg.setAttribute('viewBox', `0 0 ${container.clientWidth} ${container.clientHeight}`);
     for (const mark of marks) mark.y = centerOf(mark.oval).y;
 
-    rally = buildRallyPath(waypoints());
+    const points = waypoints();
+    rally = buildRallyPath(points);
+
+    // uma mini marca no saibro para cada quique dos respiros (as marcas das seções já existem no layout)
+    ground.replaceChildren();
+    bounceMarks = points
+      .filter((p) => p.bounce)
+      .map((p) => {
+        const el = document.createElement('span');
+        el.className = 'rally__bounce';
+        el.style.left = `${p.x}px`;
+        el.style.top = `${p.y}px`;
+        ground.append(el);
+        return { el, x: p.x, y: p.y };
+      });
     path.setAttribute('d', rally.d);
     length = path.getTotalLength();
     path.style.strokeDasharray = `${length} ${length}`;
@@ -105,22 +122,67 @@ export function createRally({ container, start }) {
     return found ? found.at : length;
   }
 
+  // A nuvem de pó do quique: alguns grãos de saibro que saltam e somem. Curta e barata.
+  function dust(x, y) {
+    for (let i = 0; i < 7; i++) {
+      const grain = document.createElement('span');
+      grain.className = 'rally__dust';
+      grain.style.left = `${x}px`;
+      grain.style.top = `${y}px`;
+      ground.append(grain);
+      const angle = Math.PI + (Math.PI * (i + 0.5)) / 7; // para cima, em leque
+      const reach = 18 + Math.random() * 22;
+      gsap.to(grain, {
+        x: Math.cos(angle) * reach,
+        y: Math.sin(angle) * reach * 0.6,
+        scale: 0.3,
+        opacity: 0,
+        duration: 0.7 + Math.random() * 0.3,
+        ease: 'expo.out',
+        onComplete: () => grain.remove(),
+      });
+    }
+  }
+
   // target: a altura, no container, onde a ponta do traço deve estar (o meio da tela).
   // instant: pula a inércia (reduced-motion, ou o estado final).
   function render(target, { instant = false } = {}) {
     if (!rally) measure();
+    const previous = head;
     head = instant || head === null || !Number.isFinite(target) ? target : head + (target - head) * INERTIA;
 
     const drawn = lengthForY(head);
     path.style.strokeDashoffset = length - drawn;
 
-    const tip = rally.pointAtY(Math.min(head, lengthAtY[lengthAtY.length - 1].y));
-    gsap.set(ball, { x: tip.x, y: tip.y, opacity: drawn > 0 && drawn < length ? 1 : 0 });
+    // o traço é o chão (a sombra corre sobre ele); a bola sobe acima da sombra conforme a altura do arco
+    const groundY = Math.min(head, lengthAtY[lengthAtY.length - 1].y);
+    const tip = rally.pointAtY(groundY);
+    const height = rally.heightAt(groundY);
+    const visible = drawn > 0 && drawn < length;
+    const squash = height < 6 ? 1 - (6 - height) / 6 : 1; // 0 no chão, 1 no ar
+    gsap.set(ball, {
+      x: tip.x,
+      y: tip.y - height * 0.6,
+      scaleX: (1 + height / 420) * (1 + 0.2 * (1 - squash)),
+      scaleY: (1 + height / 420) * (1 - 0.28 * (1 - squash)),
+      opacity: visible ? 1 : 0,
+    });
+    gsap.set(shadow, {
+      x: tip.x,
+      y: tip.y,
+      scale: Math.max(0.45, 1 - height / 220),
+      opacity: visible ? Math.max(0.12, 0.5 - height / 320) : 0,
+    });
 
-    for (const mark of marks) {
+    // pó quando a ponta passa por um contato, descendo a página
+    if (Number.isFinite(previous) && Number.isFinite(head) && head > previous) {
+      for (const c of rally.contacts) if (c.y > previous && c.y <= head) dust(c.x, c.y);
+    }
+
+    for (const mark of [...marks, ...bounceMarks]) {
       const sink = easeOut(gsap.utils.clamp(0, 1, (head - mark.y + 40) / 110));
-      gsap.set(mark.oval, { scale: sink });
-      gsap.set(mark.caption, { opacity: sink, y: (1 - sink) * 12 });
+      gsap.set(mark.oval || mark.el, { scale: sink });
+      if (mark.caption) gsap.set(mark.caption, { opacity: sink, y: (1 - sink) * 12 });
     }
   }
 
