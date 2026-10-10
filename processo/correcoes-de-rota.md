@@ -86,3 +86,7 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O traço do rali cruzava o coração e o placar.** O roteamento mudou de novo e ficou mais simples: o traço sempre corre pela **borda da página**, do lado da próxima marca (no celular, sempre a direita), e atravessa até a marca no respiro acima dela. Uma regra só, para qualquer tela.
 - **Texto corrigido antes de publicar:** escrevi "semanas depois, era campeão", mas a final foi poucos dias depois das oitavas. Ficou "dias depois", que a fonte sustenta.
 - **Teste quebrado por mudança anterior:** um teste do ticket 05 procurava `.mark__caption`, que desde o ticket 06 casa com 4 elementos. O seletor agora aponta para a marca do hero.
+
+## #18 · Revisão final: recaptura e 8 correções (2026-10-10)
+- A primeira evidência foi recusada (foto lazy vazia no mobile), porque eu só tinha validado o desktop. Ver `revisao-final.md`.
+- O revisor pediu 8 correções. 6 ficaram resolvidas e 2 parciais por limitação de material. O lote causou 3 regressões novas (R1–R3).

@@ -1,6 +1,8 @@
 import { gsap } from 'gsap';
 
-const easeOut = gsap.parseEase('expo.out');
+const expoOut = gsap.parseEase('expo.out');
+// o expo.out do GSAP termina em 0,999; no fim do trecho o estado precisa ser exatamente o final
+const easeOut = (t) => (t >= 1 ? 1 : expoOut(t));
 
 // O traço corre pela borda da página (onde nunca há conteúdo) e atravessa para cada marca no respiro acima
 // dela. No desktop o texto alterna de lado, então a borda é a do lado da próxima marca; no celular o texto
@@ -83,7 +85,7 @@ export function createRally({ container, start }) {
     gsap.set(ball, { x: tip.x, y: tip.y, opacity: drawn > 0 && drawn < length ? 1 : 0 });
 
     for (const mark of marks) {
-      const sink = easeOut(gsap.utils.clamp(0, 1, (headY - mark.y + 40) / 160));
+      const sink = easeOut(gsap.utils.clamp(0, 1, (headY - mark.y + 40) / 110));
       gsap.set(mark.oval, { scale: sink });
       gsap.set(mark.caption, { opacity: sink, y: (1 - sink) * 12 });
     }

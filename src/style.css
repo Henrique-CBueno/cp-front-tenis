@@ -186,7 +186,7 @@ a {
 .court__stadium {
   position: absolute;
   z-index: -3;
-  inset: 0 0 29% 30%;
+  inset: 0 0 20% 30%;
   overflow: hidden;
   mix-blend-mode: multiply;
   opacity: 0.36;
@@ -221,9 +221,9 @@ a {
   z-index: -1;
   /* canvas é elemento substituído: top + bottom não esticam, a altura precisa ser explícita */
   right: 2%;
-  bottom: 29%;
+  bottom: 20%;
   width: min(58%, 1040px);
-  height: 62%;
+  height: 70%;
   -webkit-mask-image: linear-gradient(to top, transparent, #000 16%);
   mask-image: linear-gradient(to top, transparent, #000 16%);
 }
@@ -265,7 +265,7 @@ a {
 .mark--hero {
   position: absolute;
   left: 41%;
-  top: 50%;
+  top: 58%;
   z-index: 0;
 }
 
@@ -342,13 +342,13 @@ a {
 .court__line--base {
   left: 0;
   right: 0;
-  top: 71%;
+  top: 80%;
   height: var(--line);
 }
 
 .court__line--center {
   top: 0;
-  bottom: 29%;
+  bottom: 20%;
   left: 61%;
   width: var(--line);
 }
@@ -361,7 +361,7 @@ a {
 h1 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(4.5rem, 13vw, 10.5rem);
+  font-size: clamp(5.5rem, 13vw, 10.5rem);
   font-weight: 500;
   font-stretch: 62%;
   line-height: 0.82;
@@ -462,7 +462,7 @@ h1 {
 h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(3rem, 9vw, 7.5rem);
+  font-size: clamp(3.5rem, 9vw, 7.5rem);
   font-weight: 500;
   font-stretch: 62%;
   line-height: 0.85;
@@ -524,6 +524,10 @@ h2 {
   display: grid;
   margin: 0;
   padding: 0 0 3.5rem; /* espaço para as camadas se afastarem */
+}
+
+.terre {
+  padding-bottom: clamp(3rem, 6vh, 5rem);
   list-style: none;
 }
 
@@ -547,7 +551,8 @@ h2 {
 }
 
 .strata__layer--brick {
-  background: var(--clay-deep);
+  background: var(--clay-deep) url('/img/saibro.webp') center / 700px auto;
+  background-blend-mode: multiply;
   color: var(--chalk);
   padding-block: 0.6rem;
 }
@@ -655,14 +660,13 @@ h2 {
   margin-inline: auto;
 }
 
-/* o coração é um sulco riscado no saibro: fundo escuro e um brilho fino na borda de cima */
+/* o coração é um sulco riscado no saibro com a ponta da raquete: um traço só, à mão */
 .guga__groove {
   fill: none;
   stroke: #6e2a10;
-  stroke-width: 11;
+  stroke-width: 9;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 -2px 0 rgb(246 239 226 / 0.55)) drop-shadow(0 2px 1px rgb(60 20 5 / 0.35));
 }
 
 .guga__heart figcaption {
@@ -695,13 +699,99 @@ h3 {
   text-wrap: pretty;
 }
 
-/* Jeu, Set et Match: a última marca é o ingresso */
-.match {
-  min-height: 90svh;
+/* Cada capítulo termina numa linha de base: a página inteira é quadra */
+.chapter {
+  position: relative;
 }
 
-.match .cta--solid {
+.chapter:not(.match)::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--line);
+  background: var(--chalk);
+}
+
+/* 2. a marca fica no traço: oval e número na mesma linha */
+.chapter .mark {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.chapter--right .mark {
+  flex-direction: row-reverse;
+}
+
+/* Jeu, Set et Match: termina como começou, numa quadra; a última marca é o ingresso */
+.match {
+  min-height: 100svh;
+  isolation: isolate;
+}
+
+.match__lines {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.match__lines .court__line--base {
+  top: 80%;
+}
+
+.match__lines .court__line--center {
+  top: 0;
+  bottom: 20%;
+}
+
+.ticket {
+  display: inline-flex;
+  align-items: stretch;
   margin-top: 1rem;
+  background: var(--chalk);
+  color: var(--clay-deep);
+  text-decoration: none;
+  box-shadow: 0 18px 36px -18px rgb(60 20 5 / 0.7);
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ticket:hover {
+  transform: translateY(-3px);
+}
+
+.ticket__stub {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.35rem;
+  padding: 0.9rem 1.2rem;
+  border-right: 2px dashed rgb(143 58 24 / 0.5);
+}
+
+.ticket__stub .mark__number {
+  font-size: 0.875rem;
+}
+
+.ticket__label {
+  align-self: center;
+  padding: 1.1rem 0.6rem 1.1rem 1.4rem;
+  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ticket .cta__arrow {
+  align-self: center;
+  margin-right: 1.4rem;
+  width: 1.4em;
+  height: 1.4em;
+}
+
+.ticket:hover .cta__arrow {
+  transform: translateX(4px);
 }
 
 .match__note {
@@ -757,8 +847,16 @@ h3 {
   }
 
   /* No celular a linha de base desce, para o saque caber entre o texto e ela */
-  .court__line--base {
+  .court .court__line--base {
     top: 79%;
+  }
+
+  .ticket__label {
+    padding-inline: 1rem 0.4rem;
+  }
+
+  .ticket .cta__arrow {
+    margin-right: 1rem;
   }
 
   .court__line--center {

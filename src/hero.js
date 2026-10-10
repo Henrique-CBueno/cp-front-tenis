@@ -8,7 +8,9 @@ const FLIGHT_END = 0.9;
 const MARK_END = 0.96;
 
 const phase = (p, start, end) => clamp(0, 1, mapRange(start, end, 0, 1, p));
-const easeOut = gsap.parseEase('expo.out');
+const expoOut = gsap.parseEase('expo.out');
+// o expo.out do GSAP termina em 0,999; no fim do trecho o estado precisa ser exatamente o final
+const easeOut = (t) => (t >= 1 ? 1 : expoOut(t));
 
 export function createHero({ section, manifest, serveCanvas }) {
   const stadium = section.querySelector('[data-stadium] img');

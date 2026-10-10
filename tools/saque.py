@@ -21,7 +21,7 @@ OUT = ROOT / 'public/frames'
 MANIFEST = ROOT / 'src/frames-manifest.json'
 
 START, DURATION = 2.4, 4.4  # trecho do saque (s)
-STATIC_FRAME = 80  # braço estendido, raquete subindo: o quadro estático (reduced-motion)
+STATIC_FRAME = 89  # follow-through, raquete inteira à vista: o quadro estático (reduced-motion)
 CONTACT_FRAME = 82  # contato raquete-bola, logo acima da borda do vídeo
 CONTACT_POINT = (560, -24)  # posição do contato no vídeo original (px), estimada pela grade dos quadros 74-80
 DESKTOP_COUNT = 90
