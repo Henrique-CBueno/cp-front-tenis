@@ -1,0 +1,127 @@
+{
+  "title": "Escolha o mundo visual",
+  "question": "O sorteio escolheu o Ordre de Jeu (o programa do dia). Fique com ele, pegue uma alternativa ou sorteie de novo.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Ordre de Jeu: o programa do dia",
+      "kicker": "THE ROLL",
+      "lineage": "Programa oficial impresso e quadro da ordem de jogo de Roland Garros",
+      "thesis": "A página inteira é o programa do dia: cada seção é um jogo marcado numa quadra, e o ingresso é o canhoto.",
+      "palette": ["#b6552f", "#efe6d2", "#13233f", "#1f5c3a"],
+      "materials": ["papel de programa impresso", "réguas e tabelas tipográficas", "foto em retícula"],
+      "viewport": "À esquerda, a capa do programa com o saque em quadros conduzido pelo scroll; à direita, a tabela Ordre de jeu (quadra → seção) e um canhoto de ingresso funcional.",
+      "risk": "Pode virar uma planilha se as tabelas não tiverem a coragem tipográfica de um programa impresso.",
+      "raised": [
+        {"from": "challenger-timetable", "raise": "A Ordre de jeu usa um único tamanho de tipo; a hierarquia vem só de peso, caixa, inversão e régua."},
+        {"from": "challenger-neon", "raise": "A trajetória da bola é um traço contínuo que liga as quadras do programa de cima a baixo."},
+        {"from": "challenger-minihompy", "raise": "Contadores honestos e pequenos: número do jogo, set e placar como marcas discretas, nunca como badges."}
+      ],
+      "html": "/home/henrique-bueno/FIAP/cp-front-tenis/.impeccable/decision/assigned.html"
+    },
+    {
+      "id": "model-pick",
+      "label": "La Trace: a marca no saibro",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "A quadra de saibro, as linhas brancas e o ritual do árbitro que desce para conferir a marca da bola",
+      "thesis": "A página é a quadra: as linhas fazem o grid, e cada seção é uma marca deixada pela bola no saibro.",
+      "palette": ["#b9532c", "#f6efe2", "#8f3a18", "#1f5c3a"],
+      "materials": ["pó de tijolo com grão", "fitas de linha brancas", "marcas ovais da bola"],
+      "viewport": "Saibro em tela cheia com as linhas cruzando; o jogador saca e, no impacto, a primeira marca aparece ao lado da linha.",
+      "risk": "É a leitura mais literal do tema, e a direção onde a maioria das páginas de tênis no saibro acaba caindo.",
+      "html": "/home/henrique-bueno/FIAP/cp-front-tenis/.impeccable/decision/pick.html"
+    },
+    {
+      "id": "challenger-film",
+      "label": "Película 16mm",
+      "verdict": "competitive",
+      "lineage": "Filme 16mm revelado à mão, com riscos e vazamentos de luz",
+      "thesis": "O saque é uma tira de filme: cada quadro tem número de borda e o quadro ativo acende com vazamento laranja.",
+      "palette": ["#0d0c0b", "#2a2723", "#d9d3c7", "#e0782f"],
+      "materials": ["emulsão prata", "perfurações", "vazamento de luz laranja"],
+      "viewport": "Uma tira vertical de três quadros com o quadro do impacto aceso; código de borda RG·1997.",
+      "case": "Funde muito bem com a sequência de frames e com a nostalgia das transmissões de 1997; perde clareza no ingresso e no saibro.",
+      "risk": "Escuro e cinematográfico demais para um torneio diurno no saibro.",
+      "html": "/home/henrique-bueno/FIAP/cp-front-tenis/.impeccable/decision/film.html",
+      "hero": "https://impeccable.style/worlds/cards/cinema-cinematography-editing-hand-processed-film-bloom-hero.webp"
+    },
+    {
+      "id": "challenger-splitflap",
+      "label": "Quadro de palhetas",
+      "verdict": "competitive",
+      "lineage": "Quadro de embarque split-flap",
+      "thesis": "A ordem de jogo como quadro de palhetas: as seções entram virando letra por letra.",
+      "palette": ["#1d4a33", "#132f21", "#f4f1e8", "#d8692e"],
+      "materials": ["palhetas foscas", "moldura de aço", "lâmpada âmbar"],
+      "viewport": "O quadro ocupa a tela com as colunas Court · Match · Statut, a linha ao vivo em laranja e o CTA embaixo.",
+      "case": "Clareza alta (a ordem de jogo vira o índice da página); identificação menor, porque o fã reconhece aeroporto, não tênis.",
+      "risk": "Remete a aeroporto e briga com o saque como foco.",
+      "html": "/home/henrique-bueno/FIAP/cp-front-tenis/.impeccable/decision/splitflap.html",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse-hero.webp"
+    },
+    {
+      "id": "challenger-spread",
+      "label": "Página dupla Brodovitch",
+      "verdict": "competitive",
+      "lineage": "Harper's Bazaar sob Alexey Brodovitch",
+      "thesis": "O arco do saque numa página é respondido pelo título em Didot na outra, através da dobra.",
+      "palette": ["#f7f2e8", "#2b2b2b", "#141414", "#b6552f"],
+      "materials": ["papel branco quente", "fotogravura cinza", "fios em Didot"],
+      "viewport": "Página dupla: o jogador inclinado à esquerda e o título inclinado à direita espelhando o gesto.",
+      "case": "Combina com a direção editorial que você aprovou no Q10; perde em clareza do torneio e do saibro.",
+      "risk": "É o 'editorial de luxo', a cara mais comum desse tipo de página.",
+      "html": "/home/henrique-bueno/FIAP/cp-front-tenis/.impeccable/decision/spread.html",
+      "hero": "https://impeccable.style/worlds/cards/brand-identity-canon-brodovitch-bazaar-spread-hero.webp"
+    },
+    {
+      "id": "challenger-timetable",
+      "label": "Tabela em lâminas",
+      "verdict": "declined",
+      "lineage": "Tabela de horários de bolso sobre mesa de luz",
+      "thesis": "Tudo num tamanho de tipo só, sobre lâminas inclinadas.",
+      "palette": ["#d9a520", "#1e1e1e", "#f3ecd9", "#c0392b"],
+      "materials": ["vidro tingido", "papel goldenrod"],
+      "viewport": "Lâminas inclinadas a 11 graus com tabelas.",
+      "case": "Funde mal: o fã não se reconhece numa tabela de companhia aérea.",
+      "risk": "Ilegível como narrativa.",
+      "kept": "Disciplina de um tamanho único de tipo nas tabelas da Ordre de jeu."
+    },
+    {
+      "id": "challenger-neon",
+      "label": "Circuito de neon",
+      "verdict": "declined",
+      "lineage": "Letreiro de neon dobrado à mão",
+      "thesis": "Um traço de vidro contínuo que acende.",
+      "palette": ["#0a0a12", "#3b5bff", "#e0412b"],
+      "materials": ["tubo de vidro", "gás"],
+      "viewport": "Palavra em neon num ambiente escuro.",
+      "case": "Funde mal: noite e neon contradizem o saibro sob o sol.",
+      "risk": "Fica parecendo um bar.",
+      "kept": "Um traço contínuo: a trajetória da bola ligando as seções."
+    },
+    {
+      "id": "challenger-minihompy",
+      "label": "Quarto Minihompy",
+      "verdict": "declined",
+      "lineage": "Cyworld minihompy",
+      "thesis": "Um quarto isométrico que o visitante decora.",
+      "palette": ["#f6d5e5", "#c9e4f6", "#fff6d6"],
+      "materials": ["papel de parede pastel", "adesivos"],
+      "viewport": "Uma sala isométrica cercada de painéis.",
+      "case": "Funde mal: não tem nada a ver com o fã de tênis.",
+      "risk": "Fica infantil.",
+      "kept": "Contadores pequenos e honestos como chrome."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "canon": true,
+  "canonCard": {
+    "label": "O padrão da categoria",
+    "thesis": "O site de torneio que todo mundo faz, executado com perfeição.",
+    "palette": ["#ffffff", "#00503c", "#c8582a", "#111111"],
+    "materials": ["foto grande de estádio", "grid limpo de cards"],
+    "viewport": "Foto grande com título por cima, botão, e uma fileira de cards embaixo.",
+    "risk": "Indistinguível do site oficial e de qualquer template de esporte."
+  },
+  "steer": true
+}
