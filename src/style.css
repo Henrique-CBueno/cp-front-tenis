@@ -704,7 +704,7 @@ h2 {
 
 /* Le Score: os números no mesmo placar de uma medida só */
 .numeros {
-  grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.36fr);
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.6fr);
   justify-items: stretch;
 }
 
@@ -730,7 +730,7 @@ h2 {
 
 /* Les Légendes: um placar num tamanho só; a hierarquia vem do peso e da caixa */
 .legendes {
-  grid-template-columns: minmax(9rem, 0.38fr) minmax(0, 1fr);
+  grid-template-columns: minmax(9rem, 0.62fr) minmax(0, 1fr);
   justify-items: stretch;
   row-gap: clamp(3rem, 8vh, 5rem);
 }
@@ -818,42 +818,31 @@ h2 {
   width: var(--line);
   background: var(--chalk);
   transform-origin: top;
+  --cut: linear-gradient(#000 calc(var(--line-top) - 0.75rem), transparent 0 calc(var(--line-top) + var(--line-gap)), #000 0);
+  -webkit-mask-image: var(--cut);
+  mask-image: var(--cut);
 }
 
-.face__title,
-.face__line {
-  /* fundo de saibro: a rede passa por trás do texto, sem riscá-lo */
-  width: fit-content;
-  margin-inline: auto;
-  padding: 0.15em 0.6em;
-  background: var(--clay);
-}
-
-.face__title {
-  position: absolute;
-  top: clamp(4.5rem, 10vh, 6.5rem);
-  left: 0;
-  right: 0;
-  z-index: 4;
-  font-size: 1rem;
-  font-weight: 700;
-  font-stretch: 140%;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+/* a frase é o título da cena; a rede se interrompe atrás dela, em vez de riscá-la */
+.face {
+  --line-top: clamp(4.5rem, 10vh, 6.5rem);
+  --line-gap: 4.75rem;
 }
 
 .face__line {
   position: absolute;
-  top: calc(clamp(4.5rem, 10vh, 6.5rem) + 2.25rem);
-  left: 0;
-  right: 0;
+  top: var(--line-top);
+  left: var(--gutter);
+  right: var(--gutter);
   z-index: 4;
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 3vw, 2.75rem);
   font-weight: 500;
   font-stretch: 75%;
+  line-height: 1.1;
+  letter-spacing: normal;
   text-align: center;
+  text-wrap: balance;
 }
 
 .face__line strong {
@@ -900,6 +889,14 @@ h2 {
   /* como o sacador do hero, os dois nascem do saibro: a borda de baixo da foto se dissolve */
   -webkit-mask-image: linear-gradient(to top, transparent, #000 28%);
   mask-image: linear-gradient(to top, transparent, #000 28%);
+}
+
+/* a foto do Guga acaba num corte reto à esquerda: essa borda também se dissolve no saibro */
+.face__player--guga img {
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 28%), linear-gradient(to right, transparent, #000 24%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to top, transparent, #000 28%), linear-gradient(to right, transparent, #000 24%);
+  mask-composite: intersect;
 }
 
 /* os dois encostam na rede: o braço do Guga e a raquete do Nadal quase se tocam */
@@ -1072,22 +1069,36 @@ h3 {
 .champion__media {
   position: relative;
   display: grid;
-  place-items: center;
+  justify-items: center;
+  align-items: end;
   aspect-ratio: 4 / 5;
   overflow: hidden;
-  background: var(--clay-deep);
-  box-shadow: inset 0 0 0 1px rgb(246 239 226 / 0.25);
+}
+
+/* o troféu fica de pé numa marca: a mesma depressão oval das Marcas 01–04, afundada no saibro */
+.champion__media::before {
+  content: '';
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 9%;
+  aspect-ratio: 2.2;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 45% 50%, #7c3013, var(--clay-deep) 60%, transparent 72%);
+  box-shadow: inset 0 0 0 2px rgb(246 239 226 / 0.55);
 }
 
 .champion__trophy {
-  width: 58%;
+  position: relative;
+  margin-bottom: 19%;
+  width: 66%;
   height: auto;
-  filter: drop-shadow(0 18px 24px rgb(40 12 2 / 0.55));
+  filter: drop-shadow(0 6px 5px rgb(40 12 2 / 0.5)); /* curta: o card recorta o que passa da borda */
   transition: transform var(--rise);
 }
 
 .champion--lenglen .champion__trophy {
-  width: 46%;
+  width: 54%;
 }
 
 .champion__wave,
@@ -1099,7 +1110,7 @@ h3 {
 }
 
 .champion__wave {
-  background: var(--clay);
+  background: var(--clay-deep);
   transition: -webkit-mask-position var(--rise) 0.1s, mask-position var(--rise) 0.1s;
 }
 
@@ -1138,6 +1149,93 @@ h3 {
 
 .champion__cup {
   font-size: 0.9375rem;
+}
+
+/* Em Les Légendes o oval fica no centro do espaço da bola; o número da marca sai do fluxo e fica ao lado */
+@media (min-width: 721px) {
+  .legendes .lane .mark {
+    position: relative;
+  }
+
+  .legendes .lane .mark .mark__caption {
+    position: absolute;
+    left: calc(100% + 0.9rem);
+    top: 0;
+    white-space: nowrap;
+  }
+}
+
+/* No desktop a bola desce pelo meio do Palmarès: os campeões ficam dos dois lados de um vão central, como os
+   dois lados da rede, cada card com a foto virada para o vão. Lê-se da esquerda para a direita, de cima para baixo. */
+@media (min-width: 721px) {
+  .palmares {
+    --vao: clamp(12rem, 18vw, 18rem);
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .palmares > :not(.lane) {
+    grid-column: 1;
+  }
+
+  .palmares > .lane {
+    position: absolute;
+    grid-area: auto; /* posicionada pela seção inteira, não por uma célula da grade */
+    top: clamp(5rem, 12vh, 9rem);
+    bottom: clamp(5rem, 12vh, 9rem);
+    left: calc(50% - var(--vao) / 2);
+    width: var(--vao);
+  }
+
+  .palmares__head {
+    max-width: calc(50% - var(--vao) / 2);
+  }
+
+  .palmares__list {
+    grid-template-columns: minmax(0, 1fr) var(--vao) minmax(0, 1fr);
+    column-gap: 0;
+    row-gap: clamp(2rem, 5vh, 3.5rem);
+  }
+
+  .palmares__list > li:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  .palmares__list > li:nth-child(even) {
+    grid-column: 3;
+  }
+
+  .champion {
+    grid-template-columns: clamp(11rem, 20vw, 19rem) minmax(0, 1fr);
+    align-items: end;
+    column-gap: clamp(1rem, 2vw, 1.75rem);
+  }
+
+  .champion figcaption {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 0.35rem;
+    padding-bottom: 9%;
+  }
+
+  .champion__year {
+    grid-row: auto;
+  }
+
+  /* do lado esquerdo do vão, o espelho: o texto à esquerda e a foto junto do vão */
+  .palmares__list > li:nth-child(odd) .champion {
+    grid-template-columns: minmax(0, 1fr) clamp(11rem, 20vw, 19rem);
+  }
+
+  .palmares__list > li:nth-child(odd) .champion__media {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .palmares__list > li:nth-child(odd) figcaption {
+    grid-column: 1;
+    grid-row: 1;
+    justify-items: end;
+    text-align: right;
+  }
 }
 
 /* revelado: a onda de saibro sobe primeiro e a foto vem logo atrás; na volta, a ordem se inverte */
@@ -1375,7 +1473,7 @@ h3 {
   grid-template-columns: 61% minmax(0, 1fr);
   align-content: stretch;
   align-items: center;
-  padding-bottom: 22svh;
+  padding-bottom: clamp(4rem, 8svh, 6rem);
 }
 
 .match > h2,
@@ -1404,12 +1502,13 @@ h3 {
 }
 
 .match__lines .court__line--base {
-  top: 80%;
+  top: auto;
+  bottom: 0;
 }
 
 .match__lines .court__line--center {
   top: 0;
-  bottom: 20%;
+  bottom: 0;
 }
 
 .ticket {
@@ -1640,23 +1739,46 @@ h3 {
     grid-row: 1 / span 2;
   }
 
-  /* no celular os dois crescem e se sobrepõem na rede; o rosto de cada um continua dentro da tela */
+  /* no celular os dois ocupam a largura toda, presos ao pé do quadro e sobrepostos na rede;
+     o rosto de cada um fica dentro da tela e o corpo sai pela borda */
+  .face {
+    --line-gap: 6.5rem;
+  }
+
   .face__player--guga,
   .face__player--nadal {
-    width: 60vw;
-    bottom: 14%;
+    width: 84vw;
+    bottom: 0;
   }
 
   .face__player--guga {
-    right: 46%;
+    right: 32%;
   }
 
   .face__player--nadal {
-    left: 46%;
+    left: 32%;
   }
 
   .face__score {
-    top: 30%;
+    top: auto;
+    bottom: calc(84vw * 0.7 + 1.5rem);
+  }
+
+  /* os nomes-fantasma não cabem deitados em meia tela: no celular ficam de pé, um de cada lado da rede */
+  .face__name {
+    top: calc(var(--line-top) + var(--line-gap) + 0.5rem);
+    font-size: clamp(3.5rem, 17vw, 5rem);
+    writing-mode: vertical-rl;
+  }
+
+  .face__name--guga {
+    right: 50%;
+    padding-right: 0.75rem;
+  }
+
+  .face__name--nadal {
+    left: 50%;
+    padding-left: 0.75rem;
   }
 
   /* no celular o espaço da bola é uma faixa estreita, alternando de lado; o número da marca fica de pé */
@@ -1693,13 +1815,25 @@ h3 {
   }
 
   .champion {
-    grid-template-columns: 6.5rem minmax(0, 1fr);
+    grid-template-columns: 8.5rem minmax(0, 1fr);
     align-items: center;
     gap: 0.9rem;
   }
 
   .champion__name {
     letter-spacing: 0.02em;
+  }
+
+  .champion__cup {
+    font-size: 0.875rem;
+  }
+
+  .champion__trophy {
+    width: 74%;
+  }
+
+  .champion--lenglen .champion__trophy {
+    width: 62%;
   }
 
   .champion figcaption {
@@ -1806,5 +1940,12 @@ h3 {
   .court > .cta--line {
     justify-self: stretch;
     justify-content: space-between;
+  }
+}
+
+/* celular baixo: os nomes de pé encostariam na contagem */
+@media (max-width: 720px) and (max-height: 700px) {
+  .face__name {
+    display: none;
   }
 }

@@ -55,3 +55,32 @@ Regressões novas: nenhuma. **Pendências:** só as duas limitações de materia
   - pedras grandes (4599912).
 
   Cada foto ganhou um véu na cor da camada e os rótulos, um halo, para continuarem legíveis. Os créditos estão no rodapé, e o processamento em `tools/imagens.sh`.
+
+---
+
+# Rodada 2: revisão final (ticket 21)
+
+**Data:** 2026-10-10 · **Como:** um agente revisor novo, sem o histórico, seguindo o `impeccable_finish_reviewer`, como na rodada 1.
+- **Evidência:** página inteira em reduced-motion (`.impeccable/review/desktop.png` e `mobile.png`, 1440 e 390), mais as evidências de movimento em `processo/evidencias/14..21/`.
+- **Limite:** no máximo 2 rodadas de correção.
+
+## Revisão: fix (8 correções)
+| # | Correção pedida | Depois da rodada 1 | Depois da rodada 2 |
+|---|---|---|---|
+| 1 | Bola longe da borda: Les Légendes a 236 px, Palmarès a 201 px (com o balanço, até 120), Le Score a 229 px da direita | partial | **desktop resolved** (Légendes a ~305 px, Le Score a ~301 px, Palmarès pelo **meio**); **mobile aberto** |
+| 2 | Kicker "Face-à-face" (rótulo pequeno acima da frase, banido pela craft floor) | **resolved**: a frase "Dois reis do saibro. Um brasileiro." virou o h2 | — |
+| 3 | Corte duro na borda esquerda da foto do Guga | **resolved**: a borda se dissolve no saibro | — |
+| 4 | Face-à-face no celular: jogadores pequenos, vazio e "K" órfão | **resolved**: jogadores ancorados no pé, nomes de pé, um de cada lado da rede | — |
+| 5 | Caixas de saibro liso atrás do título e da frase | **resolved**: a rede se interrompe atrás da frase | — |
+| 6 | Faixa vazia de saibro antes do rodapé | partial | **resolved**: a linha de base encosta no rodapé |
+| 7 | Palmarès com cara de galeria genérica | **resolved**: cada troféu pousa na mesma depressão oval das Marcas 01–04 | — |
+| 8 | DESIGN.md desatualizado | pendente | atualizado pelo documentador depois do veredito |
+
+**Regressão do lote 1, apontada pelo revisor:** o Palmarès perdeu escala (troféus de ~150 px no desktop e ~60 px no celular; a foto revelada com ~200×220). No lote 2 ficou **resolved**: troféus de ~220/155 px, foto de ~288×315, e ~100 px no celular.
+
+**Veredito final do revisor:** `disposition: fix`. Ficam abertos:
+- **A faixa da bola no celular**, que desce a ~30–60 px da borda esquerda numa tela de 390 px. O traço não cruza nenhum texto: medido, e conferido pelo teste do Playwright.
+- **O DESIGN.md**, resolvido em seguida pelo documentador.
+
+## Decisão do aluno sobre a faixa do celular
+<!-- Aceito por escrito como limitação, ou peço uma terceira rodada? -->

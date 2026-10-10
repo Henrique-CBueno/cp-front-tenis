@@ -92,7 +92,7 @@ if (reducedMotion) {
   runTimeline(document.querySelector('#histoire'));
   runFaceOff(document.querySelector('#face-a-face'));
   runCounters(document.querySelector('#numeros'));
-  revealTitles([...document.querySelectorAll('.rally section h2')]);
+  revealTitles([...document.querySelectorAll('.rally section h2:not(.face__line)')]);
   runMarquees([...document.querySelectorAll('[data-marquee]')]);
   if (racketAllowed()) createRacket({ onHit: rally });
 

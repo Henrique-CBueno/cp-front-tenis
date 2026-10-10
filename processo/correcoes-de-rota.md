@@ -132,3 +132,20 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - a navegação não quebra mais (`nowrap`). Abaixo de 1180 px sai o "Le Service" (o wordmark já leva ao saque); abaixo de 1000 px a navegação some, como no celular;
   - a foto do card no celular ficou menor.
 - **Também:** um servidor `preview` antigo continuava rodando, e o Playwright o reaproveitou (`reuseExistingServer`). Os 7 testes novos falharam contra o build velho até o servidor ser reiniciado.
+
+## #25 · Revisão final da rodada 2: a bola ainda passava perto da borda (2026-10-10)
+- **O que o revisor achou:** no desktop, as faixas laterais deixavam a bola a 14–16% da borda: Les Légendes a 236 px, Palmarès a 201 px (com o balanço, até 120), Le Score a 229 px. A spec pedia algo entre 25 e 35% da largura, e era exatamente a minha queixa original.
+- **Por que os testes não pegaram:** eles provam que o traço não cruza texto, mas nenhum mede a distância até a borda.
+- **Correção:**
+  - faixas mais largas em Les Légendes e Le Score;
+  - em Les Légendes, o rótulo "MARCA 03" puxava o oval para a esquerda e saiu do fluxo;
+  - o Palmarès mudou de 3 colunas para **2 colunas espelhadas em volta de um vão central**, e a bola desce **pelo meio**.
+- **Isso muda a decisão Q17** ("grade de 3 colunas"). A IA priorizou o pedido 1 e a Q7 ("pelo meio", "não pelo lado da seção").
+- **Fica para eu decidir:** no celular, a faixa da bola continua junto da borda (a ~30–60 px numa tela de 390 px).
+
+## #26 · O Palmarès encolheu na primeira correção (2026-10-10)
+- Ao abrir o vão central, a IA deixou os troféus com ~150 px e a foto revelada com ~200×220. O revisor apontou como regressão, justamente no momento troféu → campeão que ele tinha mandado preservar.
+- **Correção:** vão mais estreito, célula da foto com ~288 px e troféus maiores (também no celular).
+- **Também na revisão:**
+  - a sombra do troféu (24 px de desfoque) era recortada pelo card e desenhava um retângulo escuro sobre o saibro; agora é curta;
+  - no celular, a foto do Guga ficou grande demais e cortou o rosto dele na borda; foi ajustada para os dois rostos ficarem dentro da tela.

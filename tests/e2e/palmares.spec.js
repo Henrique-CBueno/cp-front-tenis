@@ -64,8 +64,10 @@ test.describe('no celular', () => {
   });
 });
 
-test('no desktop, a grade tem 3 colunas', async ({ page }) => {
+test('no desktop, os campeões ficam dos dois lados de um vão central, por onde a bola desce', async ({ page }) => {
   await page.goto('/');
   const lefts = await page.locator('.champion').evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().left)));
-  expect(new Set(lefts).size).toBe(3);
+  expect(new Set(lefts).size).toBe(2);
+  const lane = await page.locator('#palmares [data-lane]').boundingBox();
+  expect(Math.abs(lane.x + lane.width / 2 - 1440 / 2)).toBeLessThan(2);
 });

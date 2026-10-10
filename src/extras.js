@@ -20,7 +20,6 @@ function hopAlong(section, ball, progress, axis) {
     y: a.y + (b.y - a.y) * t - (axis === 'x' ? lift : 0),
     scaleX: ground ? 1.18 : 1,
     scaleY: ground ? 0.74 : 1,
-    opacity: 1,
   });
 }
 
@@ -33,6 +32,14 @@ export function runTimeline(section) {
   ball.setAttribute('aria-hidden', 'true');
   ball.dataset.timelineBall = '';
   section.append(ball);
+
+  // Uma bola só em jogo: a da Histoire aparece quando a seção cobre o meio da tela, que é onde está a ponta do rali.
+  // Nesse momento a bola do rali passou para trás da seção; antes e depois, é a do rali que aparece.
+  gsap.ticker.add(() => {
+    const box = section.getBoundingClientRect();
+    const mid = window.innerHeight / 2;
+    gsap.set(ball, { opacity: box.top <= mid && box.bottom >= mid ? 1 : 0 });
+  });
 
   gsap.matchMedia().add('(max-width: 720px)', () => {
     gsap.timeline({

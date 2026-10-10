@@ -45,7 +45,7 @@ export function createRacket({ onHit } = {}) {
       pointer.x = event.clientX;
       pointer.y = event.clientY;
       pointer.seen = true;
-      ready = Boolean(event.target.closest?.('a, button, [tabindex], label, summary'));
+      ready = Boolean(event.target.closest?.('a, button, [tabindex]:not([tabindex="-1"]), label, summary'));
       racket.classList.toggle('is-on-chalk', Boolean(event.target.closest?.('[data-racket-dark]')));
     },
     { passive: true },

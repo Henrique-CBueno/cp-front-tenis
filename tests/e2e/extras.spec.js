@@ -81,3 +81,12 @@ test.describe('Face-à-face com prefers-reduced-motion', () => {
     await expect(page.locator('.face__line')).toHaveCSS('opacity', '1');
   });
 });
+
+test('uma bola só: enquanto a Histoire sobe pela tela, a bola dela fica escondida e a do rali aparece', async ({ page }) => {
+  await page.goto('/');
+  const top = await page.evaluate(() => document.querySelector('#histoire').getBoundingClientRect().top + scrollY);
+  // a seção entra pela metade de baixo da tela: a ponta do rali (o meio da tela) ainda está no respiro acima dela
+  await page.evaluate((y) => window.scrollTo(0, y - 700), top);
+  await expect(page.locator('[data-timeline-ball]')).toHaveCSS('opacity', '0', { timeout: 4000 });
+  await expect(page.locator('[data-rally-ball]')).toHaveCSS('opacity', '1', { timeout: 4000 });
+});
