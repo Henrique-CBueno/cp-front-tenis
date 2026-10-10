@@ -20,6 +20,13 @@ embed public/img/camada-clinquer.webp "Origem: Pexels 7138969 (carvão queimado)
 embed public/img/camada-cascalho.webp "Origem: Pexels 414765 (cascalho cinza), Pexels License. Faixa recortada por tools/imagens.sh."
 embed public/img/camada-pedras.webp "Origem: Pexels 4599912 (pedras), Pexels License. Faixa recortada por tools/imagens.sh."
 
+# Rodada 2: a procedência de cada foto vem de tools/source/commons/creditos.json (gerado por tools/commons.py)
+for img in public/img/rodada2/*.webp; do
+  name=$(basename "$img" .webp); key=${name#face-}; [ "$key" = "$name" ] || key="$key-face"
+  origin=$(python3 -c "import json,sys; c=json.load(open('tools/source/commons/creditos.json'))[sys.argv[1]]; print(f\"Origem: Wikimedia Commons, {c['file']} ({c['page']}), autor: {' '.join(c['author'].split())}, licença {c['license']}. Recortada por tools/rodada2.py.\")" "$key")
+  embed "$img" "$origin"
+done
+
 for frame in public/frames/*/*.webp; do
   embed "$frame" "Origem: Mixkit 873 'Tennis player serving', Mixkit Free License. Quadro do trecho 2,4–6,8 s, recortado com rembg birefnet-general-lite e cortado na caixa do jogador por tools/saque.py."
 done

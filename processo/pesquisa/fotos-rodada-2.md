@@ -38,3 +38,15 @@ O aluno sugeriu https://www.gettyimages.com.br/fotos/stade-roland-garros. As fot
 | 2024 | Alcaraz | [Carlos_Alcaraz_-_Vainqueur_Roland_Garros_2024.jpg](https://commons.wikimedia.org/wiki/File:Carlos_Alcaraz_-_Vainqueur_Roland_Garros_2024.jpg) | CC BY 4.0 | média |
 
 **Lacunas** (buscar no Flickr CC no ticket 13): Federer 2009, Wawrinka 2015, Djokovic 2021, Świątek 2020/2022/2024, campeões de 2025. Mais opções em [Category:People with French Open trophies](https://commons.wikimedia.org/wiki/Category:People_with_French_Open_trophies).
+
+## Ticket 13: o que aconteceu de fato
+- **Busca no Flickr CC e na web pelas lacunas** (Federer 2009, Wawrinka 2015, Djokovic 2021, Świątek 2020/22/24, Gauff/Alcaraz 2025): **nada com licença livre**. Só agências pagas (Getty, AP, UPI). As lacunas ficam de fora (decisão Q9).
+- A categoria do Commons "People with French Open trophies" tem também fotos de 2012 de **ex-campeões** (Costa, Leconte, Forget) segurando o troféu numa cerimônia de lendas. Elas foram **descartadas**: o Palmarès promete o campeão *no ano em que venceu*.
+- **Face-à-face:** as fotos sugeridas (Guga RG 2008 de frente, Nadal RG 2006 em plano aberto) não serviam para "se encarar". A IA listou as candidatas pela API do Commons (`candidatos-guga.png`, `candidatos-nadal.png`) e escolheu:
+  - **Guga:** [Kuerten 2004 Toronto 01](https://commons.wikimedia.org/wiki/File:Kuerten_2004_Toronto_01.jpg), de perfil, prestes a sacar (CC BY 2.0, ataelw). Espelhada para olhar para a direita. Baixa resolução (714×500): o tratamento duotone com grão do ticket 17 disfarça.
+  - **Nadal:** [RG 2017, nº 11](https://commons.wikimedia.org/wiki/File:Paris-FR-75-open_de_tennis-2-6--17-Roland_Garros-Rafael_Nadal-11.jpg), de perfil (CC BY-SA 4.0, François Goglins), em alta resolução.
+- **Erros no caminho:**
+  - o Commons limitou a taxa (HTTP 429), e um job antigo salvou uma página de erro como se fosse a foto da Świątek. O script `tools/commons.py` agora espera, tenta de novo e recusa o que não for JPEG;
+  - o Nadal foi espelhado sem necessidade (`resultado-v1.png`, ele olhava para fora) e quatro cards tinham faixas pretas. Os dois foram corrigidos (`resultado-v2-corrigido.png`).
+- **Świątek 2023 fora do Palmarès:** na foto livre ela está ao lado do troféu, no chão, e o retrato 4:5 não fecha rosto + troféu. 2023 continua representado pelo Djokovic.
+- **Palmarès final (8 cards):** Nadal 2006, Sharapova 2012, Serena 2015, Djokovic 2016, Ostapenko 2017, Halep 2018, Djokovic 2023, Alcaraz 2024.
