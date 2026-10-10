@@ -1,9 +1,6 @@
 import { gsap } from 'gsap';
 import { buildRallyPath } from './rally-path.js';
-
-const expoOut = gsap.parseEase('expo.out');
-// o expo.out do GSAP termina em 0,999; no fim do trecho o estado precisa ser exatamente o final
-const easeOut = (t) => (t >= 1 ? 1 : expoOut(t));
+import { stamp } from './impact.js';
 
 // quanto a ponta persegue o alvo a cada quadro: abaixo de 1, a bola desliza em vez de grudar no scroll
 const INERTIA = 0.16;
@@ -22,6 +19,7 @@ export function createRally({ container, start }) {
     oval: mark.querySelector('.mark__oval'),
     caption: mark.querySelector('.mark__caption'),
     y: 0,
+    made: false,
   }));
 
   let rally = null;
@@ -30,6 +28,10 @@ export function createRally({ container, start }) {
   let head = null;
   // a rebatida da raquete: um pulinho somado à altura do arco; acaba em 0, então a bola volta ao traço
   const kick = { y: 0 };
+  // o tranco do quique na bola: 1 no toque, volta a 0 em ~0,2 s (achata mais e a inércia cai um instante)
+  const jolt = { v: 0 };
+  // depois de medir de novo, as marcas que já ficaram para trás são refeitas sem animação
+  let settle = true;
   let tipNow = null;
 
   // posição de um elemento em coordenadas do container (medidas de layout: não mudam com transform)
@@ -117,8 +119,9 @@ export function createRally({ container, start }) {
         el.style.left = `${p.x}px`;
         el.style.top = `${p.y}px`;
         ground.append(el);
-        return { el, x: p.x, y: p.y };
+        return { el, x: p.x, y: p.y, made: false };
       });
+    settle = true;
     path.setAttribute('d', rally.d);
     length = path.getTotalLength();
     path.style.strokeDasharray = `${length} ${length}`;
@@ -162,7 +165,8 @@ export function createRally({ container, start }) {
   function render(target, { instant = false } = {}) {
     if (!rally) measure();
     const previous = head;
-    head = instant || head === null || !Number.isFinite(target) ? target : head + (target - head) * INERTIA;
+    const inertia = INERTIA * (1 - 0.75 * jolt.v);
+    head = instant || head === null || !Number.isFinite(target) ? target : head + (target - head) * inertia;
 
     const drawn = lengthForY(head);
     path.style.strokeDashoffset = length - drawn;
@@ -177,8 +181,8 @@ export function createRally({ container, start }) {
     gsap.set(ball, {
       x: tip.x,
       y: tip.y - height * 0.6 - kick.y,
-      scaleX: (1 + height / 420) * (1 + 0.2 * (1 - squash)),
-      scaleY: (1 + height / 420) * (1 - 0.28 * (1 - squash)),
+      scaleX: (1 + height / 420) * (1 + 0.2 * (1 - squash)) * (1 + 0.3 * jolt.v),
+      scaleY: (1 + height / 420) * (1 - 0.28 * (1 - squash)) * (1 - 0.32 * jolt.v),
       opacity: visible ? 1 : 0,
     });
     gsap.set(shadow, {
@@ -193,11 +197,18 @@ export function createRally({ container, start }) {
       for (const c of rally.contacts) if (c.y > previous && c.y <= head) dust(c.x, c.y);
     }
 
+    // Cada marca nasce no instante em que a ponta cruza o contato, descendo; uma vez feita, fica.
+    // Sem um cruzamento de verdade (primeira medida, reduced-motion, salto), as que ficaram para trás já estão feitas.
+    const crossing = !instant && !settle && Number.isFinite(previous) && Number.isFinite(head) && head > previous;
     for (const mark of [...marks, ...bounceMarks]) {
-      const sink = easeOut(gsap.utils.clamp(0, 1, (head - mark.y + 40) / 110));
-      gsap.set(mark.oval || mark.el, { scale: sink });
-      if (mark.caption) gsap.set(mark.caption, { opacity: sink, y: (1 - sink) * 12 });
+      if (mark.made && !settle) continue;
+      if (!(head >= mark.y)) continue;
+      const live = crossing && mark.y > previous;
+      if (!mark.made && live) gsap.fromTo(jolt, { v: 1 }, { v: 0, duration: 0.22, ease: 'power2.out', overwrite: true });
+      stamp(mark.oval || mark.el, { caption: mark.caption, instant: mark.made || !live });
+      mark.made = true;
     }
+    settle = false;
   }
 
   // a raquete-cursor encosta na bola? (coordenadas da tela)

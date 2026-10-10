@@ -44,7 +44,43 @@ test('cada quique deixa uma marca no saibro, que fica depois que a bola passa', 
   expect(await scaleOf()).toBe(0);
 
   await page.locator('#histoire').scrollIntoViewIfNeeded();
-  await expect.poll(scaleOf, { timeout: 4000 }).toBe(1);
+  // feita: o tranco passa, e ela assenta um pouco abaixo do tamanho cheio (afundou no saibro)
+  await expect.poll(scaleOf, { timeout: 5000 }).toBeCloseTo(0.96, 2);
+});
+
+// a ponta do traço (onde a bola toca) segue o meio da tela; o quique só acontece quando ela chega ao contato
+async function scrollTipTo(page, y) {
+  await page.evaluate((target) => window.scrollTo(0, target - innerHeight / 2), y);
+}
+
+test('a marca não aparece antes da bola: logo acima do contato, ainda não há marca', async ({ page }) => {
+  await page.goto('/');
+  const bounce = page.locator('.rally__bounce').first();
+  const y = await bounce.evaluate((el) => el.getBoundingClientRect().top + scrollY);
+  const scaleOf = () => bounce.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).a);
+
+  await scrollTipTo(page, y - 30); // a bola a 30 px do saibro
+  await page.waitForTimeout(1500);
+  expect(await scaleOf()).toBe(0);
+
+  await scrollTipTo(page, y + 30); // a bola tocou
+  await expect.poll(scaleOf, { timeout: 3000 }).toBeGreaterThan(0.9);
+});
+
+test('as marcas ficam: rolando de volta para cima, nenhuma se desfaz', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#les-legendes').scrollIntoViewIfNeeded();
+  const caption = page.locator('#terre-battue .mark__caption');
+  await expect(caption).toHaveCSS('opacity', '1', { timeout: 5000 });
+  const made = () =>
+    page.locator('.rally__bounce').evaluateAll((els) => els.filter((el) => new DOMMatrix(getComputedStyle(el).transform).a > 0.9).length);
+  await expect.poll(made, { timeout: 5000 }).toBeGreaterThan(1);
+  const before = await made();
+
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await page.waitForTimeout(1500);
+  expect(await made()).toBe(before);
+  await expect(caption).toHaveCSS('opacity', '1');
 });
 
 test.describe('quiques com prefers-reduced-motion', () => {
@@ -55,6 +91,6 @@ test.describe('quiques com prefers-reduced-motion', () => {
     await page.waitForLoadState('load');
     const scales = await page.locator('.rally__bounce').evaluateAll((els) => els.map((el) => new DOMMatrix(getComputedStyle(el).transform).a));
     expect(scales.length).toBeGreaterThan(3);
-    expect(scales.every((s) => s === 1)).toBe(true);
+    expect(scales.every((s) => Math.abs(s - 0.96) < 0.001)).toBe(true);
   });
 });

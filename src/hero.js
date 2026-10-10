@@ -1,11 +1,11 @@
 import { gsap } from 'gsap';
+import { stamp } from './impact.js';
 
 const { clamp, mapRange, interpolate } = gsap.utils;
 
 // Fases do hero no progresso do pin (0–1): o saque, o voo da bola até o saibro, a marca.
 const SERVE_END = 0.78;
 const FLIGHT_END = 0.9;
-const MARK_END = 0.96;
 
 const phase = (p, start, end) => clamp(0, 1, mapRange(start, end, 0, 1, p));
 const expoOut = gsap.parseEase('expo.out');
@@ -26,6 +26,8 @@ export function createHero({ section, manifest, serveCanvas }) {
   const contactProgress = SERVE_END * manifest.impactProgress;
   let flight = null; // o arco contato → marca, recalculado quando o layout muda
   let traceLength = 0;
+  let lastP = null;
+  let markMade = false;
 
   function measureFlight() {
     const from = serveCanvas.pointAt(manifest.contact);
@@ -67,9 +69,21 @@ export function createHero({ section, manifest, serveCanvas }) {
     tracePath.style.strokeDashoffset = traceLength * (1 - flown);
     tracePath.style.opacity = flown > 0 ? 0.85 : 0;
 
-    const mark = easeOut(phase(p, FLIGHT_END - 0.02, MARK_END));
-    gsap.set(markOval, { scale: mark });
-    gsap.set(markCaption, { opacity: mark, y: (1 - mark) * 12 });
+    // A Marca 01 nasce no quique (o fim do voo) e fica. Se a página já abriu depois dele, ela já está feita.
+    if (!markMade && p >= FLIGHT_END) {
+      markMade = true;
+      const live = lastP !== null && lastP < FLIGHT_END;
+      stamp(markOval, { caption: markCaption, instant: !live });
+      // o título "estica" junto com a marca no saibro
+      const stretch = { value: 62 };
+      gsap.to(stretch, {
+        value: 72,
+        duration: live ? 0.6 : 0,
+        ease: 'expo.out',
+        onUpdate: () => (title.style.fontStretch = `${stretch.value}%`),
+      });
+    }
+    lastP = p;
 
     // Parallax dentro do pin: a arquibancada recua devagar, o grão do saibro escorre mais rápido
     // e se adensa no instante do contato.
@@ -78,8 +92,6 @@ export function createHero({ section, manifest, serveCanvas }) {
     grain.style.backgroundPosition = `0 ${-160 * p}px`;
     grain.style.opacity = 0.38 + 0.3 * dust;
 
-    // O título "estica" como a marca no saibro.
-    title.style.fontStretch = `${62 + 10 * mark}%`;
     hint.style.opacity = 1 - phase(p, 0, 0.06);
     return frameProgress;
   }

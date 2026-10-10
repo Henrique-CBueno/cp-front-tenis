@@ -9,10 +9,10 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Nenhuma marca feita antes de a bola chegar (Playwright)
-- [ ] Depois de rolar para cima, as marcas feitas continuam (Playwright)
-- [ ] Marcas 01–04 com o mesmo impacto
-- [ ] Reduced-motion: todas feitas
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Nenhuma marca feita antes de a bola chegar (Playwright)
+- [x] Depois de rolar para cima, as marcas feitas continuam (Playwright)
+- [x] Marcas 01–04 com o mesmo impacto
+- [x] Reduced-motion: todas feitas
+- [x] Log da etapa em `processo/prompts/`
