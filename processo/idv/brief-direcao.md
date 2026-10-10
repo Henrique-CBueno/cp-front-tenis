@@ -2,7 +2,7 @@
 
 **Origem:** impeccable `shape`, 2026-10-10. Sorteio `concept-seed` (seed `25cf5024`). Escolhida na página de decisão:
 **IMPECCABLE'S PICK, "La Trace"**, e não a direção sorteada ("Ordre de Jeu"). Todas as opções e esboços estão em `rodada-direcao/`.
-**Status:** aguardando minha confirmação.
+**Status:** ✅ confirmado por mim em 2026-10-10 ("confirmo"), incluindo as ideias trazidas das opções descartadas.
 
 ## 1. Público e trabalho
 O fã brasileiro de tênis, no notebook, revivendo Roland Garros. Modo **Persuade**: ele precisa *sentir* o torneio e sair com vontade de estar lá.
