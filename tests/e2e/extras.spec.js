@@ -38,3 +38,12 @@ test.describe('no celular', () => {
     expect(direction).toBe('column');
   });
 });
+
+test('a bola não some na Histoire: quica sobre a linha do tempo durante o pin', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#histoire').scrollIntoViewIfNeeded();
+  await page.mouse.wheel(0, 600);
+  const ball = page.locator('[data-timeline-ball]');
+  await expect(ball).toHaveCSS('opacity', '1', { timeout: 4000 });
+  await expect(ball).toBeInViewport();
+});

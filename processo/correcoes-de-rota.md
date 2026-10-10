@@ -105,3 +105,6 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Antes:** a bola corria pela borda (decisão da revisão final, para não cruzar o texto). Pedi que voltasse para o meio, natural e suave.
 - **Agora:** o layout reserva espaço para a bola (faixas por seção + respiros) e a curva é monótona (não invade o texto).
 - **O teste novo "o traço nunca atravessa um texto"** achou no celular o rótulo vertical da marca (mais largo do que parecia) e o título do fechamento. Os dois foram corrigidos.
+
+## #22 · A bola da Histoire encostava no texto (2026-10-10)
+- O primeiro arco do quique entre as datas (70 px no desktop, 36 px no celular) fazia a bola tocar o parágrafo e o texto das datas. Baixado para 30 / 18 px.

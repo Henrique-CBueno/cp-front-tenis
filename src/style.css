@@ -623,6 +623,10 @@ h2 {
   gap: 1.5rem;
 }
 
+.timeline__ball {
+  z-index: 2;
+}
+
 .timeline__track {
   --step: clamp(17rem, 24vw, 22rem);
   position: relative;

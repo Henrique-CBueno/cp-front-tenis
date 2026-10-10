@@ -4,9 +4,13 @@
 
 **Blocked by:** 14
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Playwright: a bola fica visível durante o pin da Histoire
-- [ ] A bola quica sobre os dots das datas; transições suaves na entrada e na saída do pin
-- [ ] Celular (linha do tempo vertical) e reduced-motion tratados
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Playwright: a bola fica visível durante o pin da Histoire
+- [x] A bola quica sobre os dots das datas; transições suaves na entrada e na saída do pin
+- [x] Celular (linha do tempo vertical) e reduced-motion tratados
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. Bola da linha do tempo em `src/extras.js` (`hopAlong`), desktop e celular; teste E2E.
