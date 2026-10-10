@@ -560,6 +560,93 @@ h2 {
   font-size: 0.8125rem;
 }
 
+/* Histoire: a linha de base vira a linha do tempo; cada data é uma marca.
+   Fundo opaco: o traço do rali passa por trás, como passa por trás das camadas. */
+.histoire {
+  background: var(--clay);
+  justify-items: stretch;
+  align-content: center;
+  gap: clamp(2.5rem, 6vh, 4rem);
+  overflow: hidden;
+}
+
+.histoire__head {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.timeline__track {
+  --step: clamp(17rem, 24vw, 22rem);
+  position: relative;
+  display: flex;
+  width: max-content;
+  margin: 0;
+  padding: 0 var(--gutter) 0 0;
+  list-style: none;
+  will-change: transform;
+}
+
+.timeline__track::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--gutter) * -1);
+  right: 0;
+  top: 0.9rem;
+  height: var(--line);
+  background: var(--chalk);
+}
+
+.timeline__item {
+  position: relative;
+  width: var(--step);
+  padding: 2.75rem 2rem 0 0;
+}
+
+.timeline__dot {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2.3rem;
+  aspect-ratio: 2.2;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 45% 50%, #7c3013, var(--clay-deep) 60%, transparent 72%);
+  box-shadow: inset 0 0 0 2px rgb(246 239 226 / 0.55);
+  /* centrada na linha do tempo */
+  top: calc(0.9rem + var(--line) / 2);
+  transform: translateY(-50%);
+}
+
+.timeline__item time {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-stretch: 140%;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline__item p {
+  margin: 0.5rem 0 0;
+  max-width: 30ch;
+  text-wrap: pretty;
+}
+
+/* Le Score: os números no mesmo placar de uma medida só */
+.numeros {
+  justify-items: stretch;
+}
+
+.numeros h2,
+.numeros .chapter__lede {
+  justify-self: start;
+}
+
+.scoreboard.scoreboard--numbers dt {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  text-transform: none; /* unidades (cm, mm) não vão em caixa-alta */
+}
+
 /* Les Légendes: um placar num tamanho só; a hierarquia vem do peso e da caixa */
 .legendes {
   justify-items: stretch;
@@ -841,6 +928,31 @@ h3 {
   .court__hint::before {
     animation: none;
   }
+
+}
+
+/* telas largas, sem movimento: a linha do tempo não corre; quebra em linhas e cada data leva o seu trecho de linha
+   (no celular ela já fica de pé, então esta regra não vale lá) */
+@media (prefers-reduced-motion: reduce) and (min-width: 721px) {
+  .timeline__track {
+    flex-wrap: wrap;
+    width: auto;
+    row-gap: 2.5rem;
+  }
+
+  .timeline__track::before {
+    display: none;
+  }
+
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.9rem;
+    height: var(--line);
+    background: var(--chalk);
+  }
 }
 
 @media (max-width: 720px) {
@@ -939,6 +1051,32 @@ h3 {
   .terre,
   .guga {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* no celular a linha do tempo fica de pé: a linha à esquerda, as datas descendo */
+  .timeline__track {
+    flex-direction: column;
+    width: auto;
+    padding: 0 0 0 1.5rem;
+  }
+
+  .timeline__track::before {
+    left: 0;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: var(--line);
+    height: auto;
+  }
+
+  .timeline__item {
+    width: auto;
+    padding: 0 0 2.25rem 1.5rem;
+  }
+
+  .timeline__dot {
+    left: calc(-1.5rem - 1.15rem + var(--line) / 2);
+    top: 0.9rem;
   }
 
   .legendes__head {

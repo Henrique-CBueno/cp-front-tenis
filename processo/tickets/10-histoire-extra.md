@@ -4,8 +4,12 @@
 
 **Blocked by:** 06
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Datas verificadas, com fontes
-- [ ] Funciona em mobile (vertical) e em reduced-motion
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Datas verificadas, com fontes
+- [x] Funciona em mobile (vertical) e em reduced-motion
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído, com fatos e fontes em `processo/pesquisa/fatos.md`. Testes em `tests/e2e/extras.spec.js`.

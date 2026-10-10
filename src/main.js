@@ -13,6 +13,7 @@ import { createHero } from './hero.js';
 import { createRally } from './rally.js';
 import { animateTerre } from './terre.js';
 import { drawHeart } from './legendes.js';
+import { runTimeline, runCounters } from './extras.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -82,6 +83,8 @@ if (reducedMotion) {
   });
 
   animateTerre(document.querySelector('#terre-battue'));
+  runTimeline(document.querySelector('#histoire'));
+  runCounters(document.querySelector('#numeros'));
 
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {
