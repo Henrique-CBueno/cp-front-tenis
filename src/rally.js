@@ -28,6 +28,9 @@ export function createRally({ container, start }) {
   let length = 0;
   let lengthAtY = [];
   let head = null;
+  // a rebatida da raquete: um pulinho somado à altura do arco; acaba em 0, então a bola volta ao traço
+  const kick = { y: 0 };
+  let tipNow = null;
 
   // posição de um elemento em coordenadas do container (medidas de layout: não mudam com transform)
   function boxOf(el) {
@@ -170,9 +173,10 @@ export function createRally({ container, start }) {
     const height = rally.heightAt(groundY);
     const visible = drawn > 0 && drawn < length;
     const squash = height < 6 ? 1 - (6 - height) / 6 : 1; // 0 no chão, 1 no ar
+    tipNow = tip;
     gsap.set(ball, {
       x: tip.x,
-      y: tip.y - height * 0.6,
+      y: tip.y - height * 0.6 - kick.y,
       scaleX: (1 + height / 420) * (1 + 0.2 * (1 - squash)),
       scaleY: (1 + height / 420) * (1 - 0.28 * (1 - squash)),
       opacity: visible ? 1 : 0,
@@ -196,5 +200,20 @@ export function createRally({ container, start }) {
     }
   }
 
-  return { render, measure };
+  // a raquete-cursor encosta na bola? (coordenadas da tela)
+  function near(x, y, reach) {
+    if (Number(gsap.getProperty(ball, 'opacity')) === 0) return false;
+    const box = ball.getBoundingClientRect();
+    return Math.hypot(box.left + box.width / 2 - x, box.top + box.height / 2 - y) < reach + box.width / 2;
+  }
+
+  function hit() {
+    if (gsap.isTweening(kick) || !tipNow) return;
+    dust(tipNow.x, tipNow.y);
+    gsap.timeline()
+      .to(kick, { y: 70, duration: 0.28, ease: 'power2.out' })
+      .to(kick, { y: 0, duration: 0.42, ease: 'bounce.out' });
+  }
+
+  return { render, measure, near, hit };
 }

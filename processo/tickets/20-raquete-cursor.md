@@ -4,10 +4,10 @@
 
 **Blocked by:** 15
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Playwright: a raquete existe com mouse e não existe com toque nem com reduced-motion
-- [ ] O hotspot corresponde ao clique real (links clicáveis exatamente onde a raquete "aponta")
-- [ ] O foco por teclado continua visível; a posição de espera é clara sobre os links
-- [ ] A rebatida da bola não quebra o trajeto (a bola volta ao rali)
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Playwright: a raquete existe com mouse e não existe com toque nem com reduced-motion
+- [x] O hotspot corresponde ao clique real (links clicáveis exatamente onde a raquete "aponta")
+- [x] O foco por teclado continua visível; a posição de espera é clara sobre os links
+- [x] A rebatida da bola não quebra o trajeto (a bola volta ao rali)
+- [x] Log da etapa em `processo/prompts/`

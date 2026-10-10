@@ -18,6 +18,7 @@ import { runFaceOff } from './face.js';
 import { runPalmares } from './palmares.js';
 import { revealTitles } from './titles.js';
 import { runMarquees } from './marquee.js';
+import { createRacket, racketAllowed } from './racket.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,6 +94,7 @@ if (reducedMotion) {
   runCounters(document.querySelector('#numeros'));
   revealTitles([...document.querySelectorAll('.rally section h2')]);
   runMarquees([...document.querySelectorAll('[data-marquee]')]);
+  if (racketAllowed()) createRacket({ onHit: rally });
 
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {

@@ -1239,6 +1239,83 @@ h3 {
   margin-inline: 0.45em;
 }
 
+/* A raquete-cursor: no lugar do cursor do sistema, só com mouse. Fica acima de tudo e nunca recebe o clique. */
+.has-racket,
+.has-racket * {
+  cursor: none !important;
+}
+
+.racket {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 60px;
+  height: 130px;
+  pointer-events: none;
+  filter: drop-shadow(0 6px 8px rgb(40 12 2 / 0.45));
+}
+
+.racket svg {
+  display: block;
+  overflow: visible;
+}
+
+.racket__face {
+  fill: transparent;
+  transition: fill 160ms ease-out;
+}
+
+/* as cordas ficam dentro do aro */
+.racket__strings {
+  clip-path: ellipse(22px 28px at 30px 32px);
+  stroke: var(--chalk);
+  stroke-width: 0.8;
+  opacity: 0.75;
+}
+
+/* o aro e o cabo: giz com contorno de saibro escuro, para a raquete aparecer também sobre o giz */
+.racket__frame {
+  fill: none;
+  stroke: var(--chalk);
+  stroke-width: 3.5;
+  stroke-linejoin: round;
+  paint-order: stroke;
+  filter: drop-shadow(0 0 1px var(--clay-deep)) drop-shadow(0 0 0.5px var(--clay-deep));
+}
+
+.racket__handle {
+  fill: var(--clay-deep);
+  stroke: var(--chalk);
+  stroke-width: 1.5;
+}
+
+.racket__grip {
+  stroke: var(--chalk);
+  stroke-width: 1;
+  opacity: 0.7;
+}
+
+/* posição de espera, sobre o que é clicável: a raquete fica de pé e as cordas se enchem de giz */
+.racket.is-ready .racket__face {
+  fill: rgb(246 239 226 / 0.25);
+}
+
+/* sobre superfícies de giz (o ingresso), a raquete troca para saibro escuro */
+.racket.is-on-chalk .racket__frame,
+.racket.is-on-chalk .racket__strings,
+.racket.is-on-chalk .racket__grip {
+  stroke: var(--clay-deep);
+}
+
+.racket.is-on-chalk .racket__frame {
+  filter: none;
+}
+
+.racket.is-on-chalk.is-ready .racket__face {
+  fill: rgb(143 58 24 / 0.15);
+}
+
 /* Respiros: faixas de saibro sem conteúdo entre as seções, onde a bola cruza a página em arco e quica */
 .respiro {
   height: clamp(12rem, 32vh, 22rem);
