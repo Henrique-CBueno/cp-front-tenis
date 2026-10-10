@@ -149,3 +149,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Também na revisão:**
   - a sombra do troféu (24 px de desfoque) era recortada pelo card e desenhava um retângulo escuro sobre o saibro; agora é curta;
   - no celular, a foto do Guga ficou grande demais e cortou o rosto dele na borda; foi ajustada para os dois rostos ficarem dentro da tela.
+
+## #27 · Aceitei a faixa da bola no celular como limitação (2026-10-10)
+- **O que foi:** na revisão final da rodada 2, o revisor manteve aberto um item: no celular, a bola desce a ~30–60 px da borda. A IA ofereceu duas saídas: (a) aceitar por escrito ou (b) uma terceira rodada, com o texto abrindo espaço para a bola no meio da tela.
+- **Minha escolha:** (a). A queixa original era a bola no canto do **desktop**, que foi resolvida.
+- **Por quê:** numa tela de 390 px não há largura para um vão central, e o traço nunca cruza texto.

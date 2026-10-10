@@ -83,4 +83,10 @@ Regressões novas: nenhuma. **Pendências:** só as duas limitações de materia
 - **O DESIGN.md**, resolvido em seguida pelo documentador.
 
 ## Decisão do aluno sobre a faixa do celular
-<!-- Aceito por escrito como limitação, ou peço uma terceira rodada? -->
+- **Faixa da bola no celular:** ✅ **aceita por escrito como limitação** ("a, aceito a faixa do celular como limitação"). Fica como **adaptação citada**:
+  - numa tela de 390 px não há largura para um vão central sem empurrar o texto para colunas estreitas demais;
+  - a bola desce por uma faixa lateral de 4.25rem que alterna de lado entre as seções;
+  - o traço nunca cruza texto (teste "o traço da bola nunca atravessa um texto", no celular).
+- **DESIGN.md:** atualizado pelo documentador.
+
+**Situação final:** com o aceite, os dois itens que o revisor deixou abertos estão fechados. Pela regra do revisor, isso fecha os itens desta revisão, não a página inteira.
