@@ -90,3 +90,7 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 ## #18 · Revisão final: recaptura e 8 correções (2026-10-10)
 - A primeira evidência foi recusada (foto lazy vazia no mobile), porque eu só tinha validado o desktop. Ver `revisao-final.md`.
 - O revisor pediu 8 correções. 6 ficaram resolvidas e 2 parciais por limitação de material. O lote causou 3 regressões novas (R1–R3).
+
+## #19 · Não aceitei as camadas chapadas (2026-10-10)
+- A IA tinha registrado "sem fotos com licença em mãos" como limitação. Eu aceitei só a limitação da raquete no mobile.
+- A IA então pesquisou e encontrou fotos Pexels para as 4 camadas. A limitação era de esforço, não de material.

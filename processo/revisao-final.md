@@ -45,3 +45,13 @@ Regressões novas: nenhuma. **Pendências:** só as duas limitações de materia
 - **Camadas sem foto:** calcário, clínquer, cascalho e pedras não têm foto com licença em mãos.
 
 **Achado do processo:** o teste antigo "sem scroll horizontal" não pegou um transbordamento real, porque rodava com `isMobile`. Foram adicionados testes em janelas de 360/390 px.
+
+## Decisão do aluno sobre as pendências
+- **Raquete no mobile:** ✅ aceita por escrito como limitação de material.
+- **Camadas sem foto:** ❌ **não aceita.** A IA buscou fotos com licença (Pexels) e escolheu uma por camada, do fino ao grosso:
+  - calcário branco triturado (3964794);
+  - carvão queimado para o clínquer (7138969);
+  - cascalho cinza fino (414765);
+  - pedras grandes (4599912).
+
+  Cada foto ganhou um véu na cor da camada e os rótulos, um halo, para continuarem legíveis. Os créditos estão no rodapé, e o processamento em `tools/imagens.sh`.

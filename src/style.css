@@ -545,12 +545,18 @@ h2 {
   will-change: transform;
 }
 
+.strata__layer span {
+  /* halo na cor da própria camada: o rótulo continua legível sobre a textura */
+  text-shadow: 0 0 3px var(--tint), 0 0 10px var(--tint), 0 0 18px var(--tint);
+}
+
 .strata__layer span:last-child {
   font-variant-numeric: tabular-nums;
   font-weight: 400;
 }
 
 .strata__layer--brick {
+  --tint: #5a210b;
   background: var(--clay-deep) url('/img/saibro.webp') center / 700px auto;
   background-blend-mode: multiply;
   color: var(--chalk);
@@ -558,25 +564,29 @@ h2 {
 }
 
 .strata__layer--limestone {
-  background: #ece3d2;
+  --tint: #ece3d2;
+  background: linear-gradient(rgb(236 227 210 / 0.72), rgb(236 227 210 / 0.72)), #ece3d2 url('/img/camada-calcario.webp') center / cover;
   color: #3a2a20;
   padding-block: 1.6rem;
 }
 
 .strata__layer--clinker {
-  background: #3b3330;
+  --tint: #28221f;
+  background: linear-gradient(rgb(40 34 31 / 0.55), rgb(40 34 31 / 0.55)), #3b3330 url('/img/camada-clinquer.webp') center / cover;
   color: var(--chalk);
   padding-block: 1.8rem;
 }
 
 .strata__layer--gravel {
-  background: #93877b;
+  --tint: #a0968a;
+  background: linear-gradient(rgb(160 150 138 / 0.7), rgb(160 150 138 / 0.7)), #93877b url('/img/camada-cascalho.webp') center / cover;
   color: #1f1813;
   padding-block: 3.4rem;
 }
 
 .strata__layer--stone {
-  background: #5e554d;
+  --tint: #463f39;
+  background: linear-gradient(rgb(70 63 57 / 0.68), rgb(70 63 57 / 0.68)), #5e554d url('/img/camada-pedras.webp') center / cover;
   color: var(--chalk);
   padding-block: 2.4rem;
 }
