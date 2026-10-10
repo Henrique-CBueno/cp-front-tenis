@@ -80,3 +80,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - O creme-suave (`#ecd9c6`) do texto corrido sobre o saibro dava **3,86:1** (reprovado). O texto corrido voltou para o creme principal (4,63:1). O texto da camada de cascalho estava em 4,49:1; a camada foi clareada.
 - **No screenshot**, a bola do rali passava por cima da foto da bola no saibro e parecia uma segunda bola. Agora bola e traço correm por trás dos blocos opacos.
 - **Fato verificado antes de escrever:** o árbitro que desce da cadeira para conferir a marca. Confirmado, inclusive em 2026 (ver `pesquisa/fatos.md`).
+
+## #17 · Les Légendes: o coração e o traço (2026-10-10)
+- **O coração saiu "de giz", perfeito demais.** O Guga *riscou* o saibro com a raquete, então o traço virou um **sulco** (saibro escuro com um brilho fino na borda).
+- **O traço do rali cruzava o coração e o placar.** O roteamento mudou de novo e ficou mais simples: o traço sempre corre pela **borda da página**, do lado da próxima marca (no celular, sempre a direita), e atravessa até a marca no respiro acima dela. Uma regra só, para qualquer tela.
+- **Texto corrigido antes de publicar:** escrevi "semanas depois, era campeão", mas a final foi poucos dias depois das oitavas. Ficou "dias depois", que a fonte sustenta.
+- **Teste quebrado por mudança anterior:** um teste do ticket 05 procurava `.mark__caption`, que desde o ticket 06 casa com 4 elementos. O seletor agora aponta para a marca do hero.

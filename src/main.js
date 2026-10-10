@@ -12,6 +12,9 @@ import { createServeCanvas, loadImage } from './serve-canvas.js';
 import { createHero } from './hero.js';
 import { createRally } from './rally.js';
 import { animateTerre } from './terre.js';
+import { drawHeart } from './legendes.js';
+
+gsap.registerPlugin(ScrollTrigger);
 
 for (const link of document.querySelectorAll('[data-cta]')) {
   link.href = OFFICIAL_TICKETS_URL;
@@ -58,10 +61,11 @@ gsap.ticker.add(() => {
 // Fontes e imagens mudam a altura das seções: mede o traço de novo quando tudo carregou.
 window.addEventListener('load', remeasure);
 
+drawHeart(document.querySelector('#les-legendes'), { animate: !reducedMotion });
+
 if (reducedMotion) {
   rally.render(Infinity);
 } else {
-  gsap.registerPlugin(ScrollTrigger);
 
   const lenis = new Lenis({ anchors: true });
   lenis.on('scroll', ScrollTrigger.update);

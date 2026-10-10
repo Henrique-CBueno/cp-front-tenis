@@ -28,6 +28,16 @@ test('cada marca afunda no saibro quando o traço chega até ela', async ({ page
   await expect(caption).toHaveCSS('opacity', '1', { timeout: 4000 });
 });
 
+test('o coração do Guga é desenhado conforme a seção passa pela tela', async ({ page }) => {
+  await page.goto('/');
+  const heart = page.locator('[data-heart-path]');
+  const offset = () => heart.evaluate((path) => parseFloat(getComputedStyle(path).strokeDashoffset));
+
+  expect(await offset()).toBeGreaterThan(100);
+  await page.locator('#titulo-guga').scrollIntoViewIfNeeded();
+  await expect.poll(offset, { timeout: 4000 }).toBeLessThan(5);
+});
+
 test.describe('com prefers-reduced-motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
@@ -40,5 +50,11 @@ test.describe('com prefers-reduced-motion', () => {
     }
     const offset = await page.locator('[data-rally-path]').evaluate((path) => parseFloat(path.style.strokeDashoffset));
     expect(offset).toBeCloseTo(0, 0);
+  });
+
+  test('o coração do Guga já aparece completo', async ({ page }) => {
+    await page.goto('/');
+    const offset = await page.locator('[data-heart-path]').evaluate((path) => parseFloat(getComputedStyle(path).strokeDashoffset));
+    expect(offset).toBe(0);
   });
 });

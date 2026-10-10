@@ -2,26 +2,16 @@ import { gsap } from 'gsap';
 
 const easeOut = gsap.parseEase('expo.out');
 
-// Desktop: o texto alterna de lado, então o traço sai da marca na horizontal (ao lado do oval não há texto),
-// desce na coluna da próxima marca (vazia) e chega a ela por cima.
-function swingPath(points) {
-  let d = `M${points[0].x},${points[0].y}`;
-  for (let i = 1; i < points.length; i++) {
-    const [a, b] = [points[i - 1], points[i]];
-    const dy = b.y - a.y;
-    d += ` C${b.x},${a.y} ${b.x},${b.y - dy * 0.6} ${b.x},${b.y}`;
-  }
-  return d;
-}
-
-// Celular: o texto ocupa a esquerda, então o traço desce pela margem direita
-// e atravessa para cada marca no respiro acima dela.
+// O traço corre pela borda da página (onde nunca há conteúdo) e atravessa para cada marca no respiro acima
+// dela. No desktop o texto alterna de lado, então a borda é a do lado da próxima marca; no celular o texto
+// ocupa a esquerda, então a borda é sempre a direita.
 function railPath(points, width) {
-  const rail = width - 10;
   const turn = 64;
+  const railFor = (b) => (width > 720 && b.x < width / 2 ? 12 : width - 12);
   let d = `M${points[0].x},${points[0].y}`;
   for (let i = 1; i < points.length; i++) {
     const [a, b] = [points[i - 1], points[i]];
+    const rail = railFor(b);
     d += ` C${rail},${a.y} ${rail},${a.y} ${rail},${a.y + turn}`;
     d += ` L${rail},${b.y - turn}`;
     d += ` C${rail},${b.y - turn / 3} ${b.x},${b.y - turn} ${b.x},${b.y}`;
@@ -67,7 +57,7 @@ export function createRally({ container, start }) {
       mark.y = center.y;
       points.push(center);
     }
-    path.setAttribute('d', width <= 720 ? railPath(points, width) : swingPath(points));
+    path.setAttribute('d', railPath(points, width));
     length = path.getTotalLength();
     path.style.strokeDasharray = `${length} ${length}`;
 

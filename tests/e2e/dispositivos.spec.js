@@ -48,7 +48,7 @@ test.describe('com prefers-reduced-motion', () => {
     await page.goto('/');
     await page.waitForLoadState('networkidle');
 
-    await expect(page.locator('.mark__caption')).toHaveCSS('opacity', '1');
+    await expect(page.locator('.mark--hero .mark__caption')).toHaveCSS('opacity', '1');
     const pinned = await page.locator('.pin-spacer').count();
     expect(pinned).toBe(0);
   });

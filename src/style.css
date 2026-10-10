@@ -545,6 +545,120 @@ h2 {
   font-size: 0.8125rem;
 }
 
+/* Les Légendes: um placar num tamanho só; a hierarquia vem do peso e da caixa */
+.legendes {
+  justify-items: stretch;
+  row-gap: clamp(3rem, 8vh, 5rem);
+}
+
+.legendes__head {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: end;
+}
+
+.scoreboard {
+  display: grid;
+  margin: 0;
+  border-top: 2px solid var(--chalk);
+}
+
+.scoreboard__row {
+  display: grid;
+  grid-template-columns: minmax(10rem, 1fr) minmax(0, 2fr);
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid rgb(246 239 226 / 0.45);
+  text-align: left;
+  font-size: 1.125rem;
+}
+
+.scoreboard dt {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.scoreboard dd {
+  margin: 0;
+}
+
+.scoreboard strong {
+  font-variant-numeric: tabular-nums;
+}
+
+.scoreboard__row--guga {
+  background: var(--chalk);
+  color: var(--clay-deep);
+  padding-inline: 1rem;
+  margin-inline: -1rem;
+}
+
+/* Guga: o coração no saibro */
+.guga {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 6rem);
+  text-align: left;
+}
+
+.guga__heart {
+  margin: 0;
+}
+
+.guga__heart svg {
+  display: block;
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+  overflow: visible;
+}
+
+.guga__heart svg {
+  margin-inline: auto;
+}
+
+/* o coração é um sulco riscado no saibro: fundo escuro e um brilho fino na borda de cima */
+.guga__groove {
+  fill: none;
+  stroke: #6e2a10;
+  stroke-width: 11;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 -2px 0 rgb(246 239 226 / 0.55)) drop-shadow(0 2px 1px rgb(60 20 5 / 0.35));
+}
+
+.guga__heart figcaption {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.guga__story {
+  display: grid;
+  gap: 1.25rem;
+  max-width: 46ch;
+}
+
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 500;
+  font-stretch: 62%;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+}
+
+.guga__story p {
+  margin: 0;
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
+  text-wrap: pretty;
+}
+
 /* Rodapé */
 .footer {
   background: var(--clay-deep);
@@ -629,8 +743,18 @@ h2 {
     justify-self: end;
   }
 
-  .terre {
+  .terre,
+  .guga {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .legendes__head {
+    justify-items: start;
+  }
+
+  .scoreboard__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
   }
 
   .court__hint {
