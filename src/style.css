@@ -145,15 +145,157 @@ a {
   background: var(--chalk);
 }
 
-/* O saque: fica atrás do texto e termina na linha de base */
+/* Camada distante: a arquibancada da Chatrier tingida pelo saibro, sumindo antes da linha de base */
+.court__stadium {
+  position: absolute;
+  z-index: -3;
+  inset: 0 0 29% 30%;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+  opacity: 0.36;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 45%, transparent 96%), linear-gradient(to right, transparent, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 45%, transparent 96%), linear-gradient(to right, transparent, #000 30%);
+  -webkit-mask-composite: source-in;
+  mask-composite: intersect;
+}
+
+.court__stadium img {
+  width: 100%;
+  height: 118%;
+  object-fit: cover;
+  object-position: 60% 30%;
+  will-change: transform;
+}
+
+/* O grão: a textura real do saibro, varrido */
+.court__grain {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background: url('/img/saibro.webp') 0 0 / 1400px auto repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.38;
+  will-change: background-position, opacity;
+}
+
+/* O saque: fica atrás do texto e nasce do saibro, na linha de base */
 .court__serve {
   position: absolute;
   z-index: -1;
   /* canvas é elemento substituído: top + bottom não esticam, a altura precisa ser explícita */
-  right: 0;
+  right: 2%;
   bottom: 29%;
-  width: min(62%, 1100px);
-  height: 71%;
+  width: min(58%, 1040px);
+  height: 62%;
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 16%);
+  mask-image: linear-gradient(to top, transparent, #000 16%);
+}
+
+/* A bola e o seu traço */
+.court__trace {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.court__trace path {
+  fill: none;
+  stroke: var(--chalk);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.court__ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: clamp(12px, 1.15vw, 18px);
+  aspect-ratio: 1;
+  margin: calc(clamp(12px, 1.15vw, 18px) / -2) 0 0 calc(clamp(12px, 1.15vw, 18px) / -2);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f3f7a2, #d4dc3a 55%, #9fa524);
+  box-shadow: 0 6px 10px -4px rgb(60 20 5 / 0.55);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Marca 01: o oval que a bola deixa no saibro */
+.mark {
+  position: absolute;
+  left: 41%;
+  top: 50%;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+  pointer-events: none;
+}
+
+.mark__oval {
+  display: block;
+  width: clamp(72px, 7.5vw, 120px);
+  aspect-ratio: 2.2;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 45% 50%, #7c3013, var(--clay-deep) 60%, transparent 72%);
+  box-shadow: inset 0 0 0 2px rgb(246 239 226 / 0.55);
+  transform-origin: 0% 50%;
+  transform: scale(0);
+}
+
+.mark__caption {
+  margin: 0;
+  max-width: 18ch;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  text-wrap: balance;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0;
+}
+
+.mark__number {
+  display: block;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  font-stretch: 140%;
+  letter-spacing: -0.01em;
+}
+
+.court__hint {
+  position: absolute;
+  left: var(--gutter);
+  bottom: calc(var(--gutter) + 1.2rem);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.court__hint::before {
+  content: '';
+  width: 1px;
+  height: 2.5rem;
+  background: var(--chalk);
+  transform-origin: top;
+  animation: hint 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes hint {
+  0% { transform: scaleY(0); }
+  60%, 100% { transform: scaleY(1); opacity: 0; }
 }
 
 /* Linha de base e linha central de saque, como fitas pintadas sobre o saibro */
@@ -230,6 +372,12 @@ h1 {
   color: var(--chalk-soft);
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .court__hint::before {
+    animation: none;
+  }
+}
+
 @media (max-width: 720px) {
   .court__title {
     max-width: calc(88% - var(--gutter));
@@ -247,9 +395,25 @@ h1 {
   }
 
   .court__serve {
+    right: 0;
     width: 100%;
     bottom: 21%;
     height: 42%;
+  }
+
+  .court__stadium {
+    inset: 28% 0 21% 0;
+  }
+
+  .mark {
+    left: var(--gutter);
+    top: 80.5%;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .court__hint {
+    display: none;
   }
 
   .court > .cta--line {

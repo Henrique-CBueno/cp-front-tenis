@@ -15,6 +15,11 @@
 
     <main>
       <section id="le-service" class="court" aria-labelledby="titulo-principal">
+        <div class="court__stadium" data-stadium aria-hidden="true">
+          <img src="/img/estadio.webp" alt="" width="1600" height="842" decoding="async" />
+        </div>
+        <div class="court__grain" data-grain aria-hidden="true"></div>
+
         <div class="court__lines" aria-hidden="true">
           <span class="court__line court__line--base"></span>
           <span class="court__line court__line--center"></span>
@@ -22,6 +27,16 @@
 
         <canvas class="court__serve" data-serve-canvas role="img"
           aria-label="Um jogador lança a bola contra o céu, arqueia o corpo e saca."></canvas>
+
+        <svg class="court__trace" data-trace aria-hidden="true"><path data-trace-path /></svg>
+        <span class="court__ball" data-ball aria-hidden="true"></span>
+
+        <div class="mark" data-mark>
+          <span class="mark__oval" aria-hidden="true"></span>
+          <p class="mark__caption"><span class="mark__number">Marca 01</span> o saque toca o saibro</p>
+        </div>
+
+        <p class="court__hint" data-scroll-hint aria-hidden="true">Role para sacar</p>
 
         <div class="court__title">
           <h1 id="titulo-principal">Le Service</h1>
@@ -42,6 +57,8 @@
       <section class="footer__credits" aria-labelledby="creditos">
         <h2 id="creditos">Créditos</h2>
         <ul>
+          <li>Arquibancada do Court Philippe-Chatrier: "Court Philippe Chatrier 2024", MFonzatti, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br">CC BY-SA 4.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Court_Philippe_Chatrier_2024.jpg">Wikimedia Commons</a>. Recortada e convertida para tons de cinza; esta versão também está sob CC BY-SA 4.0.</li>
+          <li>Textura do saibro: foto de <a href="https://www.pexels.com/photo/close-up-of-a-clay-tennis-court-line-texture-38381015/">Pexels</a> (Pexels License).</li>
           <li>Vídeo do saque: "Tennis player serving", Mixkit (Mixkit Free License).</li>
           <li>Tipografia: Anybody (Tyler Finck, SIL Open Font License) e Schibsted Grotesk (Schibsted, SIL Open Font License).</li>
         </ul>

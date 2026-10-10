@@ -20,7 +20,10 @@ WORK = ROOT / 'tools/work'
 OUT = ROOT / 'public/frames'
 MANIFEST = ROOT / 'src/frames-manifest.json'
 
-START, DURATION, IMPACT = 2.4, 4.4, 6.15  # trecho do saque e instante do contato (s)
+START, DURATION = 2.4, 4.4  # trecho do saque (s)
+STATIC_FRAME = 80  # braço estendido, raquete subindo: o quadro estático (reduced-motion)
+CONTACT_FRAME = 82  # contato raquete-bola, logo acima da borda do vídeo
+CONTACT_POINT = (560, -24)  # posição do contato no vídeo original (px), estimada pela grade dos quadros 74-80
 DESKTOP_COUNT = 90
 MOBILE_SCALE = 0.6
 MODEL = 'birefnet-general-lite'  # escolhido na comparação (ver processo/decisoes/008)
@@ -35,8 +38,6 @@ def extract(dest: Path):
     fps = DESKTOP_COUNT / DURATION
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(START), '-t', str(DURATION), '-i', SRC,
                     '-vf', f'fps={fps}', '-frames:v', str(DESKTOP_COUNT), dest / '%03d.png'], check=True)
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-ss', str(IMPACT), '-i', SRC, '-frames:v', '1',
-                    dest / 'impacto.png'], check=True)
 
 
 def cut_all(raw: Path, cut: Path):
@@ -47,6 +48,20 @@ def cut_all(raw: Path, cut: Path):
         if not target.exists():
             remove(Image.open(frame), session=session).save(target)
             print('recortado', frame.name, flush=True)
+
+
+def track_ball(raw: Path):
+    """A bola some no recorte; rastreia pela cor (amarelo-esverdeado contra o céu) nos quadros originais."""
+    positions = []
+    for frame in sorted(raw.glob('[0-9]*.png')):
+        hsv = np.asarray(Image.open(frame).convert('HSV'), dtype=np.float32)
+        hue, sat, val = hsv[..., 0] * 360 / 255, hsv[..., 1] / 255, hsv[..., 2] / 255
+        ys, xs = np.nonzero((hue > 45) & (hue < 85) & (sat > 0.35) & (val > 0.45))
+        tight = len(xs) > 40 and xs.std() < 25 and ys.std() < 25  # uma bola, não ruído espalhado
+        positions.append((float(xs.mean()), float(ys.mean())) if tight else None)
+    # depois que sai pelo topo no lançamento, a bola só volta no contato
+    last_seen = max(i for i, p in enumerate(positions) if p and i < CONTACT_FRAME)
+    return [p if i <= last_seen else None for i, p in enumerate(positions)]
 
 
 def union_box(images):
@@ -67,6 +82,7 @@ def main():
 
     frames = [Image.open(p) for p in sorted(cut.glob('[0-9]*.png'))]
     box = union_box(frames)
+    ball = track_ball(raw)
     for name in ('desktop', 'mobile', 'static'):
         shutil.rmtree(OUT / name, ignore_errors=True)
         (OUT / name).mkdir(parents=True)
@@ -77,17 +93,24 @@ def main():
         if i % 2 == 0:
             small = crop.resize((round(crop.width * MOBILE_SCALE), round(crop.height * MOBILE_SCALE)), Image.LANCZOS)
             small.save(OUT / 'mobile' / f'{i // 2:03d}.webp', quality=78, method=6)
-    Image.open(cut / 'impacto.png').crop(box).save(OUT / 'static' / 'impacto.webp', quality=85, method=6)
+    frames[STATIC_FRAME].crop(box).save(OUT / 'static' / 'impacto.webp', quality=85, method=6)
 
-    def urls(name):
+    def urls(name):  # noqa: E306
         return [f'/frames/{name}/{p.name}' for p in sorted((OUT / name).glob('*.webp'))]
 
     w, h = frames[0].size
+    bw, bh = box[2] - box[0], box[3] - box[1]
+
+    def in_crop(point):  # coordenadas normalizadas à caixa do jogador (as mesmas dos quadros)
+        return None if point is None else [round((point[0] - box[0]) / bw, 4), round((point[1] - box[1]) / bh, 4)]
+
     manifest = {
         'source': f'Mixkit 873, recortado com rembg ({MODEL})',
         'mobileMaxWidth': 720,
         'keyframeEvery': 8,
-        'impactProgress': round((IMPACT - START) / DURATION, 3),
+        'impactProgress': round(CONTACT_FRAME / (len(frames) - 1), 4),
+        'contact': in_crop(CONTACT_POINT),
+        'ball': [in_crop(p) for p in ball],
         'crop': {'x': box[0] / w, 'y': box[1] / h, 'width': (box[2] - box[0]) / w, 'height': (box[3] - box[1]) / h},
         'sets': {name: urls(name) for name in ('desktop', 'mobile', 'static')},
     }

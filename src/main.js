@@ -9,6 +9,7 @@ import { OFFICIAL_TICKETS_URL } from './config.js';
 import manifest from './frames-manifest.json';
 import { createServeSequence } from './serve-sequence.js';
 import { createServeCanvas, loadImage } from './serve-canvas.js';
+import { createHero } from './hero.js';
 
 for (const link of document.querySelectorAll('[data-cta]')) {
   link.href = OFFICIAL_TICKETS_URL;
@@ -24,8 +25,15 @@ const sequence = createServeSequence({
 const serveCanvas = createServeCanvas(document.querySelector('[data-serve-canvas]'));
 sequence.preload();
 
+const hero = createHero({ section: document.querySelector('#le-service'), manifest, serveCanvas });
+window.addEventListener('resize', hero.relayout);
+
+// Com reduced-motion, o estado final: o quadro estático, a bola já pousada, a marca no saibro.
 let progress = reducedMotion ? 1 : 0;
-gsap.ticker.add(() => serveCanvas.draw(sequence.frameAt(progress)));
+gsap.ticker.add(() => {
+  const frameProgress = hero.render(progress);
+  serveCanvas.draw(sequence.frameAt(frameProgress));
+});
 
 if (!reducedMotion) {
   gsap.registerPlugin(ScrollTrigger);

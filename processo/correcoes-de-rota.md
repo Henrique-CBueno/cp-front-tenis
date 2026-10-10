@@ -62,3 +62,10 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Resultado:** os keys removem o céu, mas a camisa branca some junto e o alambrado fica.
 - **Tentativa extra da IA:** montar uma placa limpa do fundo (a câmera parecia parada) para recuperar raquete e bola pela diferença. **Falhou:** a câmera se move.
 - **Ficou:** rembg (birefnet-lite). A bola vira elemento próprio da página. Ver `decisoes/008`.
+
+## #14 · Ajustes do hero pelos screenshots (2026-10-10)
+- A textura do saibro mostrava **emendas** retas (o tile não era contínuo). Corrigi espelhando em 2×2 e reduzindo a opacidade.
+- A linha de base passava **por cima da legenda** da Marca 01. A marca subiu.
+- No mobile, a arquibancada tinha uma **borda dura** em cima. Ganhou um degradê no topo.
+- "MARCA 01" quebrava em duas linhas no reduced-motion → `nowrap`.
+- A estimativa do instante do impacto (quadro 76) estava cedo: pela grade dos quadros, o contato é no quadro 82.

@@ -4,12 +4,16 @@
 
 **Blocked by:** 02
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Pelo menos 3 camadas com velocidades distintas no scroll do hero
-- [ ] A Marca 01 aparece sincronizada com o quadro do impacto
-- [ ] O grão do saibro varia com o progresso do saque
-- [ ] Foto do estádio com atribuição CC BY-SA no rodapé
-- [ ] Indicação sutil de "role" na primeira dobra
-- [ ] Screenshot desktop 1440 da primeira dobra em `processo/` como evidência
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Pelo menos 3 camadas com velocidades distintas no scroll do hero
+- [x] A Marca 01 aparece sincronizada com o quadro do impacto
+- [x] O grão do saibro varia com o progresso do saque
+- [x] Foto do estádio com atribuição CC BY-SA no rodapé
+- [x] Indicação sutil de "role" na primeira dobra
+- [x] Screenshot desktop 1440 da primeira dobra em `processo/` como evidência
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. A bola é rastreada no vídeo e segue o traço até a Marca 01. Camadas: arquibancada (CC BY-SA, sem logos), grão do saibro e linhas. O grão se adensa no contato. Os testes continuam verdes. Evidências em `processo/evidencias/04/`.
