@@ -169,18 +169,75 @@ export function runTimeline(section) {
   gsap.matchMedia().add('(min-width: 721px)', () => {
     // medidas de layout (offset*), que não mudam com o translate já aplicado
     const distance = () => Math.max(0, track.offsetLeft + track.offsetWidth - section.clientWidth);
-    const hold = () => window.innerHeight * 0.3; // a espera na primeira e na última data
-    const travel = (p, total) => gsap.utils.clamp(0, 1, (p * total - hold()) / Math.max(1, distance()));
+    // As fases do pin, em pixels de scroll: a bola plana até 1891, espera, pula de data em data enquanto a
+    // linha corre, espera em 2020 e salta para fora da linha. Os voos acontecem com a seção presa, então a
+    // bola pode andar de lado com calma, em vez de dar um salto lateral no último instante.
+    const vh = () => window.innerHeight;
+    const phases = () => {
+      const glide = vh() * 0.45;
+      const hold = vh() * 0.2;
+      const leap = vh() * 0.45;
+      return { glide, hold, travel: Math.max(1, distance()), leap };
+    };
+    const totalOf = (p) => p.glide + 2 * p.hold + p.travel + p.leap;
+    // a altura (na seção) que fica no meio da tela durante o pin: um pouco acima da linha, à direita da frase
+    const anchorY = () => dotAt(0).y - 60;
+    const travelAt = (t, p) => gsap.utils.clamp(0, 1, (t - p.glide - p.hold) / p.travel);
     const st = ScrollTrigger.create({
       trigger: section,
-      // o pin começa quando a primeira data chega ao meio da tela: é onde a ponta do traço (e a bola) está
-      start: () => `top ${window.innerHeight / 2 - dotAt(0).y}px`,
-      end: () => `+=${distance() + 2 * hold()}`,
+      start: () => `top ${vh() / 2 - anchorY()}px`,
+      end: () => `+=${totalOf(phases())}`,
       pin: true,
       invalidateOnRefresh: true,
-      onUpdate: (self) => gsap.set(track, { x: -distance() * travel(self.progress, self.end - self.start) }),
+      onUpdate: (self) => {
+        const p = phases();
+        const shift = distance() * travelAt(self.progress * totalOf(p), p);
+        gsap.set(track, { x: -shift });
+        // a parte vertical da chegada some nos primeiros passos do scroll lateral, antes de cruzar o título;
+        // o voo rente à linha e os arcos dos pulos ficam
+        entryPath.style.opacity = String(1 - gsap.utils.clamp(0, 1, shift / 240));
+      },
     });
     const lastIndex = dots.length - 1;
+
+    // os dois voos, desenhados dentro da linha do tempo (correm com ela, como os arcos dos pulos)
+    const [glidePath, leapPath] = [0, 1].map(() => trace.appendChild(document.createElementNS(svgNS, 'path')));
+    const geometry = { glide: 0, leap: 0, entry: null, exit: null };
+    function layoutFlights() {
+      const t = trackAt();
+      const first = dotAt(0);
+      const last = dotAt(lastIndex);
+      const inX = Math.min(section.clientWidth * 0.6, headTextRight() + 48);
+      const endX = last.x - distance();
+      const outX = Math.min(section.clientWidth - 60, endX + items[lastIndex].offsetWidth);
+      geometry.entry = { x: inX, y: anchorY() };
+      geometry.exit = { x: outX, y: anchorY() };
+      // chegada: continua descendo na direção em que vinha, deita sobre a linha e plana até pousar em 1891
+      // (nas coordenadas da linha)
+      const a = { x: inX - t.x, y: anchorY() - t.y };
+      const d1 = { x: first.x - t.x, y: first.y - t.y };
+      const c2x = d1.x + (a.x - d1.x) * 0.55;
+      glidePath.setAttribute('d', `M${a.x},${a.y} C${a.x},${a.y + 50} ${c2x},${d1.y} ${d1.x},${d1.y}`);
+      // saída: salta de 2020 para cima e para a direita e cai sobre o trecho de linha a mais (linha já no fim)
+      const l = { x: last.x - t.x, y: last.y - t.y };
+      const e = { x: outX - t.x + distance(), y: anchorY() - t.y };
+      leapPath.setAttribute('d', `M${l.x},${l.y} Q${e.x},${l.y - 130} ${e.x},${e.y}`);
+      geometry.glide = glidePath.getTotalLength();
+      geometry.leap = leapPath.getTotalLength();
+      draw(glidePath, geometry.glide, 0);
+      draw(leapPath, geometry.leap, 0);
+    }
+    const draw = (path, length, f) => (path.style.strokeDasharray = `${length * f} ${length + 1}`);
+    // o ponto de um voo na tela, nas coordenadas da seção (a linha pode estar deslocada)
+    function along(path, length, f) {
+      const point = path.getPointAtLength(length * f).matrixTransform(path.getScreenCTM());
+      const origin = section.getBoundingClientRect();
+      return { x: point.x - origin.left, y: point.y - origin.top };
+    }
+    let glided = 0;
+    let leapt = 0;
+    const smooth = gsap.parseEase('sine.inOut');
+
     section.rallyDock = {
       el: section,
       overlay: {
@@ -195,26 +252,53 @@ export function runTimeline(section) {
       total: () => st.end - st.start,
       points: () => {
         layoutHops('x');
-        const first = dotAt(0);
-        const last = dotAt(lastIndex);
+        layoutFlights();
         const lastItem = localOf(items[lastIndex], section);
-        const endX = last.x - distance();
-        // sai correndo pelo trecho de linha depois de 2020, para a direita do texto dela, e só então desce
-        const outX = Math.min(section.clientWidth - 60, endX + items[lastIndex].offsetWidth);
-        // chega pela direita do título e da frase e desce pelo vão entre o texto e a linha até 1891
-        const inX = Math.min(section.clientWidth * 0.6, headTextRight() + 48);
         return {
-          entry: [{ x: inX, y: headBottom() + 8 }, { ...first, contact: true }],
-          exit: [{ x: endX, y: last.y, contact: true }, { x: outX, y: last.y + 8 }, { x: outX, y: lastItem.y + lastItem.height + 16 }],
+          entry: [geometry.entry],
+          // depois do salto, desce pela direita do texto de 2020
+          exit: [geometry.exit, { x: geometry.exit.x, y: lastItem.y + lastItem.height + 16 }],
         };
       },
-      // u: de 0 (pouso na primeira data) a 1 (saída da última), ao longo do pin inteiro
-      hop: (u) => hopTo(travel(u, st.end - st.start) * lastIndex, 'x'),
-      passed: () => dots.forEach((_, i) => touch(i)),
+      // u: de 0 (a bola chega à direita da frase) a 1 (sai do salto), ao longo do pin inteiro
+      hop: (u) => {
+        const p = phases();
+        const t = u * totalOf(p);
+        const leapStart = p.glide + 2 * p.hold + p.travel;
+        if (t < p.glide) {
+          const f = smooth(t / p.glide);
+          glided = Math.max(glided, f);
+          draw(glidePath, geometry.glide, glided);
+          const at = along(glidePath, geometry.glide, f);
+          gsap.set(ball, { x: at.x, y: at.y, scaleX: 1, scaleY: 1, opacity: 1 });
+          return;
+        }
+        if (glided < 1) {
+          glided = 1;
+          draw(glidePath, geometry.glide, 1);
+        }
+        if (t < leapStart) {
+          hopTo(travelAt(t, p) * lastIndex, 'x');
+          return;
+        }
+        hopTo(lastIndex, 'x');
+        const f = smooth(gsap.utils.clamp(0, 1, (t - leapStart) / p.leap));
+        leapt = Math.max(leapt, f);
+        draw(leapPath, geometry.leap, leapt);
+        const at = along(leapPath, geometry.leap, f);
+        gsap.set(ball, { x: at.x, y: at.y, scaleX: 1, scaleY: 1, opacity: 1 });
+      },
+      passed: () => {
+        dots.forEach((_, i) => touch(i));
+        draw(glidePath, geometry.glide, 1);
+        draw(leapPath, geometry.leap, 1);
+      },
     };
     return () => {
       delete section.rallyDock;
       st.kill();
+      glidePath.remove();
+      leapPath.remove();
     };
   });
 }

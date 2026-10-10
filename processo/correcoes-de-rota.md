@@ -169,3 +169,10 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - o traço da chegada e um arco a cada pulo agora moram dentro da linha do tempo e correm com ela;
   - a linha ganhou um trecho a mais depois de 2020, para a bola sair.
 - **Lição:** a IA mudou o layout para facilitar a geometria do traço, sem perguntar. Uma mudança de layout que não foi pedida precisa ser perguntada antes.
+
+## #30 · A bola chegava e saía da Histoire sem transição natural (2026-10-10)
+- **O problema que eu vi:** a bola ia para a linha do tempo tarde demais e não fazia uma transição natural, nem na chegada nem na saída.
+- **A causa (da IA):** o traço só avança com o scroll para baixo (x = f(y)). Uma travessia lateral grande num trecho curto de scroll vira um salto, e as curvas viravam cantos.
+- **Correção:**
+  - os movimentos laterais passaram a acontecer **com a seção presa**: um voo planado até 1891 e um salto em arco para fora de 2020, os dois conduzidos pelo scroll e desenhados como rastro;
+  - no celular, um vão maior entre o texto e a linha, para a curva até 1891.

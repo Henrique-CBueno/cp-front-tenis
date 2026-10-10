@@ -1919,6 +1919,11 @@ h3 {
     height: clamp(9rem, 22vh, 14rem);
   }
 
+  /* um vão maior entre a frase e a linha: é por ali que a bola faz a curva até 1891 */
+  .histoire {
+    row-gap: clamp(5.5rem, 13vh, 7rem);
+  }
+
   /* no celular a linha do tempo fica de pé: a linha à esquerda, as datas descendo */
   .timeline__track {
     flex-direction: column;
