@@ -15,6 +15,7 @@ import { animateTerre } from './terre.js';
 import { drawHeart } from './legendes.js';
 import { runTimeline, runCounters } from './extras.js';
 import { runFaceOff } from './face.js';
+import { runPalmares } from './palmares.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,6 +65,7 @@ gsap.ticker.add(() => {
 window.addEventListener('load', remeasure);
 
 drawHeart(document.querySelector('#guga'), { animate: !reducedMotion });
+runPalmares(document.querySelector('#palmares'));
 
 if (reducedMotion) {
   rally.render(Infinity);

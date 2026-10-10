@@ -63,7 +63,17 @@ export function createRally({ container, start }) {
       const x = box.x + box.width / 2;
       const mark = el.querySelector('[data-chapter-mark] .mark__oval');
       const top = mark ? { ...centerOf(mark), contact: true } : { x, y: box.y + 24 };
-      stations.push({ points: [top, { x: top.x, y: box.y + box.height - 24 }] });
+      const bottom = { x: top.x, y: box.y + box.height - 24 };
+      // num espaço comprido ([data-sway]) a bola não desce reta: quica de um lado para o outro dentro dele
+      const sway = [];
+      if (el.matches('[data-sway]')) {
+        const count = Math.max(1, Math.round((bottom.y - top.y) / 480) - 1);
+        for (let k = 1; k <= count; k++) {
+          const side = k % 2 ? 1 : -1;
+          sway.push({ x: x + side * box.width * 0.28, y: top.y + ((bottom.y - top.y) * k) / (count + 1), contact: true, bounce: true });
+        }
+      }
+      stations.push({ points: [top, ...sway, bottom] });
     }
 
     const points = [{ ...start(), contact: true }];

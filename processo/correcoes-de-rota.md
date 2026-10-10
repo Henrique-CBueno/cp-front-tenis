@@ -120,3 +120,15 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - no celular, jogadores a 60% da largura, sobrepostos na rede e erguidos;
   - borda de baixo das fotos dissolvida no saibro.
 - **Testes ajustados com justificativa:** o teste "nenhum elemento passa da borda" acusava o nome e a foto do Nadal, que saem da tela de propósito mas são recortados pela seção. O teste agora ignora o que um ancestral com `overflow: hidden` já recorta.
+
+## #24 · Palmarès: a bola voltou a descer reta (2026-10-10)
+- **O que aconteceu:**
+  - o espaço reservado da seção acompanha a grade dos 8 cards (mais de duas telas). Com só dois pontos (topo e base), a bola descia numa linha reta, justamente o que eu tinha recusado na Q13;
+  - o 5º link quebrou a navegação em duas linhas a 1024 px;
+  - no celular, os nomes quebravam em três linhas.
+- **Quem achou:** a própria IA, nos screenshots. Os testes passavam, porque nenhum deles mede "reta".
+- **Correção:**
+  - espaços compridos ganham `data-sway`: a bola quica de um lado para o outro dentro da faixa (a ~28% da largura do centro), um quique a cada ~480 px, com marca e pó;
+  - a navegação não quebra mais (`nowrap`). Abaixo de 1180 px sai o "Le Service" (o wordmark já leva ao saque); abaixo de 1000 px a navegação some, como no celular;
+  - a foto do card no celular ficou menor.
+- **Também:** um servidor `preview` antigo continuava rodando, e o Playwright o reaproveitou (`reuseExistingServer`). Os 7 testes novos falharam contra o build velho até o servidor ser reiniciado.

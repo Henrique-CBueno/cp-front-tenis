@@ -4,11 +4,11 @@
 
 **Blocked by:** 13
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Lista semântica (ano, nome, troféu); a foto tem `alt` descritivo
-- [ ] Revelação por hover, por `:focus-visible` e por toque; no celular, também pelo scroll
-- [ ] Playwright: hover e foco revelam a foto; o toque revela no celular
-- [ ] Grade de 3 colunas no desktop, lista no celular; sem transbordamento
-- [ ] O traço do rali respeita o vazio reservado da seção
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Lista semântica (ano, nome, troféu); a foto tem `alt` descritivo
+- [x] Revelação por hover, por `:focus-visible` e por toque; no celular, também pelo scroll
+- [x] Playwright: hover e foco revelam a foto; o toque revela no celular
+- [x] Grade de 3 colunas no desktop, lista no celular; sem transbordamento
+- [x] O traço do rali respeita o vazio reservado da seção
+- [x] Log da etapa em `processo/prompts/`
