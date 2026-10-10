@@ -95,7 +95,7 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - A IA tinha registrado "sem fotos com licença em mãos" como limitação. Eu aceitei só a limitação da raquete no mobile.
 - A IA então pesquisou e encontrou fotos Pexels para as 4 camadas. A limitação era de esforço, não de material.
 
-## #20 · Bugs de CSS que eu mesma (a IA) criei, achados pelo documentador (2026-10-10)
+## #20 · Bugs de CSS criados pela IA, achados pelo documentador (2026-10-10)
 - **O que aconteceu:** ao inserir blocos de CSS com `replace` em Python, todas as ocorrências foram trocadas, não só a primeira. Isso deixou a seta do CTA deslocada 4 px em repouso, criou um bloco duplicado e separou o `list-style` da lista das camadas.
 - **Quem achou:** o documentador, ao ler o CSS para escrever o DESIGN.md. Os screenshots não mostravam o problema.
 - **Correção:** os blocos foram limpos, o `--green` (nunca usado) e o `.cta--solid` (sem uso) foram removidos, e o halo dos rótulos das camadas virou uma etiqueta sólida (o detector acusou "dark glow").
