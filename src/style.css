@@ -368,7 +368,12 @@ h1 {
   border-color: var(--chalk);
 }
 
-/* O rali: depois do saque, um traço contínuo desce a página ligando as marcas */
+/* O rali: depois do saque, um traço contínuo desce a página ligando as marcas.
+   Traço e bola correm no mesmo plano, por trás dos blocos opacos (fotos, camadas). */
+.rally__ball {
+  z-index: -1;
+}
+
 .rally {
   position: relative;
   isolation: isolate;
@@ -435,6 +440,109 @@ h2 {
   font-size: clamp(1.0625rem, 1.5vw, 1.375rem);
   line-height: 1.45;
   text-wrap: pretty;
+}
+
+/* Terre Battue: texto, a marca vista de perto e a quadra em corte */
+.terre {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  align-items: center;
+  column-gap: clamp(2rem, 6vw, 6rem);
+  row-gap: clamp(3rem, 8vh, 6rem);
+  justify-items: stretch;
+}
+
+.terre__text {
+  display: grid;
+  gap: 1.5rem;
+  justify-items: start;
+}
+
+.chapter__body {
+  max-width: 52ch;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+.terre__photo {
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  box-shadow: 0 30px 60px -30px rgb(60 20 5 / 0.6);
+}
+
+.terre__photo img {
+  display: block;
+  width: 100%;
+  height: 118%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+/* A quadra em corte: as camadas se afastam com o scroll, como uma vista explodida */
+.strata {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+.strata__layers {
+  display: grid;
+  margin: 0;
+  padding: 0 0 3.5rem; /* espaço para as camadas se afastarem */
+  list-style: none;
+}
+
+.strata__layer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.85rem var(--gutter);
+  margin-inline: calc(var(--gutter) * -1);
+  font-size: 0.875rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  will-change: transform;
+}
+
+.strata__layer span:last-child {
+  font-variant-numeric: tabular-nums;
+  font-weight: 400;
+}
+
+.strata__layer--brick {
+  background: var(--clay-deep);
+  color: var(--chalk);
+  padding-block: 0.6rem;
+}
+
+.strata__layer--limestone {
+  background: #ece3d2;
+  color: #3a2a20;
+  padding-block: 1.6rem;
+}
+
+.strata__layer--clinker {
+  background: #3b3330;
+  color: var(--chalk);
+  padding-block: 1.8rem;
+}
+
+.strata__layer--gravel {
+  background: #93877b;
+  color: #1f1813;
+  padding-block: 3.4rem;
+}
+
+.strata__layer--stone {
+  background: #5e554d;
+  color: var(--chalk);
+  padding-block: 2.4rem;
+}
+
+.strata figcaption {
+  margin-top: 1rem;
+  font-size: 0.8125rem;
 }
 
 /* Rodapé */
@@ -519,6 +627,10 @@ h2 {
 
   .chapter--right .mark {
     justify-self: end;
+  }
+
+  .terre {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .court__hint {

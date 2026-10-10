@@ -23,4 +23,10 @@ ffmpeg -v error -y -i tools/source/pexels-38381015.jpg -filter_complex \
   "crop=1800:1200:0:0,scale=700:-2,split[a][b];[b]hflip[bh];[a][bh]hstack,split[t][u];[u]vflip[uv];[t][uv]vstack" \
   -c:v libwebp -quality 68 public/img/saibro.webp
 
+# A marca vista de perto: bola no saibro com o desenho do quique logo abaixo. Pexels 38380408 (Pexels License)
+[ -f tools/source/pexels-38380408.jpg ] || curl -sSL -A "$UA" -o tools/source/pexels-38380408.jpg \
+  "https://images.pexels.com/photos/38380408/pexels-photo-38380408.jpeg?auto=compress&w=1800"
+ffmpeg -v error -y -i tools/source/pexels-38380408.jpg \
+  -vf "crop=1800:2300:0:120,scale=960:-2" -c:v libwebp -quality 74 public/img/marca.webp
+
 du -h public/img/*

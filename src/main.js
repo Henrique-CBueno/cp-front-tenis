@@ -11,6 +11,7 @@ import { createServeSequence } from './serve-sequence.js';
 import { createServeCanvas, loadImage } from './serve-canvas.js';
 import { createHero } from './hero.js';
 import { createRally } from './rally.js';
+import { animateTerre } from './terre.js';
 
 for (const link of document.querySelectorAll('[data-cta]')) {
   link.href = OFFICIAL_TICKETS_URL;
@@ -75,6 +76,8 @@ if (reducedMotion) {
     scrub: true,
     onUpdate: (self) => (progress = self.progress),
   });
+
+  animateTerre(document.querySelector('#terre-battue'));
 
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {

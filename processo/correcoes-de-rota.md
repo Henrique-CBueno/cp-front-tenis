@@ -75,3 +75,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Sintoma (screenshot):** curvas S entre as marcas passavam por cima de títulos e parágrafos, principalmente no celular, e o rali começava solto, sem sair da Marca 01.
 - **Correção:** roteamento por tela. No desktop, o traço sai na horizontal e desce na coluna vazia; no celular, desce pela margem direita. O início foi ligado à Marca 01. Ver `decisoes/010`.
 - **Também:** o texto passava por baixo da navegação transparente (o topo ganhou um degradê de saibro), e "MARCA 03" estourava a borda no celular (largura da legenda).
+
+## #16 · Terre Battue: contraste e a "segunda bola" (2026-10-10)
+- O creme-suave (`#ecd9c6`) do texto corrido sobre o saibro dava **3,86:1** (reprovado). O texto corrido voltou para o creme principal (4,63:1). O texto da camada de cascalho estava em 4,49:1; a camada foi clareada.
+- **No screenshot**, a bola do rali passava por cima da foto da bola no saibro e parecia uma segunda bola. Agora bola e traço correm por trás dos blocos opacos.
+- **Fato verificado antes de escrever:** o árbitro que desce da cadeira para conferir a marca. Confirmado, inclusive em 2026 (ver `pesquisa/fatos.md`).
