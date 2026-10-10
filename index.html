@@ -59,12 +59,10 @@
         <svg class="rally__trace" data-rally-trace aria-hidden="true"><path data-rally-path /></svg>
         <span class="court__ball rally__ball" data-rally-ball aria-hidden="true"></span>
 
+        <div class="respiro" data-respiro data-bounces="1" aria-hidden="true"></div>
+
         <section id="terre-battue" class="chapter chapter--left terre" aria-labelledby="titulo-terre">
           <div class="terre__text">
-            <div class="mark" data-chapter-mark>
-              <span class="mark__oval" aria-hidden="true"></span>
-              <p class="mark__caption"><span class="mark__number">Marca 02</span></p>
-            </div>
             <h2 id="titulo-terre">Terre Battue</h2>
             <p class="chapter__lede">Tijolo moído, varrido entre os sets. É o saibro que guarda a marca de cada bola.</p>
             <p class="chapter__body">
@@ -76,6 +74,13 @@
               E é por isso que ela deixa marca. Aqui, quando a bola quica perto da linha, o árbitro desce da cadeira, vai até
               a marca e decide por ela.
             </p>
+          </div>
+
+          <div class="lane" data-lane>
+            <div class="mark" data-chapter-mark>
+              <span class="mark__oval" aria-hidden="true"></span>
+              <p class="mark__caption"><span class="mark__number">Marca 02</span></p>
+            </div>
           </div>
 
           <figure class="terre__photo" data-parallax-photo>
@@ -94,6 +99,8 @@
             <figcaption id="strata-legenda">As cinco camadas de uma quadra de Roland-Garros, de cima para baixo. Fora de escala.</figcaption>
           </figure>
         </section>
+
+        <div class="respiro" data-respiro data-bounces="2" aria-hidden="true"></div>
 
         <section id="histoire" class="chapter histoire" aria-labelledby="titulo-histoire">
           <div class="histoire__head">
@@ -114,12 +121,17 @@
           </div>
         </section>
 
+        <div class="respiro" data-respiro data-bounces="2" aria-hidden="true"></div>
+
         <section id="les-legendes" class="chapter chapter--right legendes" aria-labelledby="titulo-legendes">
-          <div class="legendes__head">
+          <div class="lane" data-lane>
             <div class="mark" data-chapter-mark>
               <span class="mark__oval" aria-hidden="true"></span>
               <p class="mark__caption"><span class="mark__number">Marca 03</span></p>
             </div>
+          </div>
+
+          <div class="legendes__head">
             <h2 id="titulo-legendes">Les Légendes</h2>
             <p class="chapter__lede">Quem venceu aqui deixou mais do que um troféu. Deixou marca.</p>
           </div>
@@ -166,7 +178,10 @@
           </article>
         </section>
 
+        <div class="respiro" data-respiro data-bounces="2" aria-hidden="true"></div>
+
         <section id="numeros" class="chapter chapter--left numeros" aria-labelledby="titulo-numeros">
+          <div class="lane" data-lane></div>
           <h2 id="titulo-numeros">Le Score</h2>
           <p class="chapter__lede">O torneio em números, todos com fonte.</p>
           <dl class="scoreboard scoreboard--numbers" data-counters>
@@ -179,11 +194,14 @@
           </dl>
         </section>
 
+        <div class="respiro" data-respiro data-bounces="2" aria-hidden="true"></div>
+
         <section id="jeu-set-et-match" class="chapter chapter--left match" aria-labelledby="titulo-jeu">
           <div class="match__lines" aria-hidden="true">
             <span class="court__line court__line--base"></span>
             <span class="court__line court__line--center"></span>
           </div>
+          <div class="lane lane--mobile" data-lane></div>
           <h2 id="titulo-jeu">Jeu, Set et Match</h2>
           <p class="chapter__lede">Todo saque deixa uma marca. A próxima, no saibro de Paris, pode ser a sua.</p>
           <div class="match__landing">

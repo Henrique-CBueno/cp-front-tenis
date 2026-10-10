@@ -100,3 +100,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Quem achou:** o documentador, ao ler o CSS para escrever o DESIGN.md. Os screenshots não mostravam o problema.
 - **Correção:** os blocos foram limpos, o `--green` (nunca usado) e o `.cta--solid` (sem uso) foram removidos, e o halo dos rótulos das camadas virou uma etiqueta sólida (o detector acusou "dark glow").
 - **Lição:** edição por substituição de texto precisa limitar a uma ocorrência e conferir o resultado.
+
+## #21 · A bola volta para o meio (rodada 2, ticket 14) (2026-10-10)
+- **Antes:** a bola corria pela borda (decisão da revisão final, para não cruzar o texto). Pedi que voltasse para o meio, natural e suave.
+- **Agora:** o layout reserva espaço para a bola (faixas por seção + respiros) e a curva é monótona (não invade o texto).
+- **O teste novo "o traço nunca atravessa um texto"** achou no celular o rótulo vertical da marca (mais largo do que parecia) e o título do fechamento. Os dois foram corrigidos.

@@ -443,11 +443,15 @@ h2 {
 
 /* Terre Battue: texto, a marca vista de perto e a quadra em corte */
 .terre {
-  grid-template-columns: minmax(0, 1fr) minmax(0, 0.85fr);
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.42fr) minmax(0, 0.85fr);
   align-items: center;
   column-gap: clamp(2rem, 6vw, 6rem);
   row-gap: clamp(3rem, 8vh, 6rem);
   justify-items: stretch;
+}
+
+.terre > .lane {
+  align-self: stretch;
 }
 
 .terre__text {
@@ -633,7 +637,17 @@ h2 {
 
 /* Le Score: os números no mesmo placar de uma medida só */
 .numeros {
+  grid-template-columns: minmax(0, 1fr) minmax(9rem, 0.36fr);
   justify-items: stretch;
+}
+
+.numeros > :not(.lane) {
+  grid-column: 1;
+}
+
+.numeros > .lane {
+  grid-column: 2;
+  grid-row: 1 / span 3;
 }
 
 .numeros h2,
@@ -649,8 +663,18 @@ h2 {
 
 /* Les Légendes: um placar num tamanho só; a hierarquia vem do peso e da caixa */
 .legendes {
+  grid-template-columns: minmax(9rem, 0.38fr) minmax(0, 1fr);
   justify-items: stretch;
   row-gap: clamp(3rem, 8vh, 5rem);
+}
+
+.legendes > :not(.lane) {
+  grid-column: 2;
+}
+
+.legendes > .lane {
+  grid-column: 1;
+  grid-row: 1 / span 3;
 }
 
 .legendes__head {
@@ -758,6 +782,28 @@ h3 {
   margin: 0;
   font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
   text-wrap: pretty;
+}
+
+/* Respiros: faixas de saibro sem conteúdo entre as seções, onde a bola cruza a página em arco e quica */
+.respiro {
+  height: clamp(12rem, 32vh, 22rem);
+}
+
+/* Espaço reservado da bola dentro de cada seção: vazio, a não ser pela marca da seção no alto */
+.lane {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 8rem;
+}
+
+.lane .mark,
+.chapter--right .lane .mark {
+  flex-direction: row;
+}
+
+.lane--mobile {
+  display: none;
 }
 
 /* Cada capítulo termina numa linha de base: a página inteira é quadra */
@@ -1048,9 +1094,84 @@ h3 {
     justify-self: end;
   }
 
-  .terre,
   .guga {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* no celular o espaço da bola é uma faixa estreita, alternando de lado; o número da marca fica de pé */
+  .terre {
+    grid-template-columns: minmax(0, 1fr) 4.25rem;
+  }
+
+  .terre__text,
+  .terre__photo {
+    grid-column: 1;
+  }
+
+  .terre > .lane {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .legendes {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+  }
+
+  .numeros {
+    grid-template-columns: minmax(0, 1fr) 4.25rem;
+  }
+
+  /* no fechamento, a bola desce pela faixa da direita e entra no ingresso por cima */
+  .match {
+    grid-template-columns: minmax(0, 1fr) 4.25rem;
+  }
+
+  .match > h2,
+  .match > .chapter__lede {
+    grid-column: 1;
+  }
+
+  .lane--mobile {
+    display: flex;
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  .match .match__landing {
+    grid-column: 1 / -1;
+    grid-row: 3;
+  }
+
+  .lane .mark,
+  .chapter--right .lane .mark {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* o número de pé encosta na lateral da faixa: o traço desce pelo centro, ao lado dele */
+  .lane .mark .mark__caption {
+    align-self: flex-start;
+    margin-top: 0.5rem;
+    writing-mode: vertical-rl;
+    line-height: 1;
+  }
+
+  .lane .mark__number {
+    font-size: 1.125rem;
+  }
+
+  .chapter--right .lane .mark .mark__caption,
+  .terre .lane .mark .mark__caption,
+  .numeros .lane .mark .mark__caption {
+    align-self: flex-end;
+  }
+
+  .lane .mark__oval {
+    width: 52px;
+  }
+
+  .respiro {
+    height: clamp(9rem, 22vh, 14rem);
   }
 
   /* no celular a linha do tempo fica de pé: a linha à esquerda, as datas descendo */

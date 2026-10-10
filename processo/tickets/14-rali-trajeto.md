@@ -4,13 +4,17 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Vitest (TDD): o trajeto passa pelos pontos de passagem em ordem, é monótono em y, não entra em caixas proibidas e é estável
-- [ ] Layout: vazios reservados por seção + respiros; nenhum texto cruzado pelo traço (screenshots 1440/390)
-- [ ] Inércia: a ponta persegue o alvo do scroll de forma suave, sem saltos ao rolar aos trancos
-- [ ] Camadas: a bola passa por trás; placares com vão central
-- [ ] Reduced-motion: o traço completo e estático
-- [ ] As marcas das seções continuam afundando quando a bola chega (os testes existentes continuam verdes)
-- [ ] Fluidez com a CPU 4× mais lenta mantida (60 fps no mobile)
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Vitest (TDD): o trajeto passa pelos pontos de passagem em ordem, é monótono em y, não entra em caixas proibidas e é estável
+- [x] Layout: vazios reservados por seção + respiros; nenhum texto cruzado pelo traço (screenshots 1440/390)
+- [x] Inércia: a ponta persegue o alvo do scroll de forma suave, sem saltos ao rolar aos trancos
+- [x] Camadas: a bola passa por trás; placares com vão central
+- [x] Reduced-motion: o traço completo e estático
+- [x] As marcas das seções continuam afundando quando a bola chega (os testes existentes continuam verdes)
+- [x] Fluidez com a CPU 4× mais lenta mantida (60 fps no mobile)
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. Módulo `src/rally-path.js` (TDD), faixas reservadas + respiros, inércia, teste E2E de que o traço não cruza texto. A bola na Histoire fica para o ticket 16.
