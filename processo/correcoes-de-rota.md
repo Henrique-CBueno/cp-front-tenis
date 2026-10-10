@@ -154,3 +154,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O que foi:** na revisão final da rodada 2, o revisor manteve aberto um item: no celular, a bola desce a ~30–60 px da borda. A IA ofereceu duas saídas: (a) aceitar por escrito ou (b) uma terceira rodada, com o texto abrindo espaço para a bola no meio da tela.
 - **Minha escolha:** (a). A queixa original era a bola no canto do **desktop**, que foi resolvida.
 - **Por quê:** numa tela de 390 px não há largura para um vão central, e o traço nunca cruza texto.
+
+## #28 · Histoire: o reduced-motion ficou como antes (2026-10-10)
+- A spec pedia, para reduced-motion, o estado final com a bola parada na última data.
+- **O que a IA fez:** sem movimento, a Histoire não prende e as datas ficam em várias linhas, então o caminho "entrar pela 1ª e sair pela última" não existe. Nesse modo, o traço segue passando por trás da seção, como na rodada 2, e as datas já aparecem como marcas feitas.
+- **Por quê:** é um estado estático que continua legível e sem duas bolas. Inventar uma bola parada no meio de uma grade de datas exigiria um caminho só para esse modo.
+- **Fica para eu revisar** se quiser a bola visível ali.

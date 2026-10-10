@@ -56,6 +56,8 @@ function remeasure() {
   if (reducedMotion) rally.render(Infinity);
 }
 window.addEventListener('resize', remeasure);
+// o pin da Histoire muda a altura da página: depois de cada refresh do ScrollTrigger, o traço é medido de novo
+ScrollTrigger.addEventListener('refresh', remeasure);
 
 // Com reduced-motion, o estado final: o quadro estático, a bola já pousada, a marca no saibro.
 let progress = reducedMotion ? 1 : 0;

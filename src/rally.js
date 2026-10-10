@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { buildRallyPath } from './rally-path.js';
-import { stamp } from './impact.js';
+import { stamp, dust as dustAt } from './impact.js';
 
 // quanto a ponta persegue o alvo a cada quadro: abaixo de 1, a bola desliza em vez de grudar no scroll
 const INERTIA = 0.16;
@@ -50,11 +50,37 @@ export function createRally({ container, start }) {
     return { x: box.x + box.width / 2, y: box.y + box.height / 2 };
   };
 
+  // Docas: cenas presas que recebem a bola (a Histoire). A cena informa por onde a bola entra e sai, em
+  // coordenadas dela; o rali desenha a entrada e a saída do traço por cima da cena e entrega a bola a ela no meio.
+  let docks = [];
+
   // Os pontos de passagem, na ordem do documento: a marca e a saída de cada espaço reservado,
-  // os quiques de cada respiro (cruzando da estação anterior para a seguinte) e a marca final (o ingresso).
+  // os quiques de cada respiro (cruzando da estação anterior para a seguinte), as docas e a marca final (o ingresso).
   function waypoints() {
     const stations = [];
-    for (const el of container.querySelectorAll('[data-lane], [data-respiro], .ticket [data-chapter-mark]')) {
+    docks = [];
+    for (const el of container.querySelectorAll('[data-lane], [data-respiro], [data-dock], .ticket [data-chapter-mark]')) {
+      if (el.matches('[data-dock]')) {
+        const dock = el.rallyDock;
+        if (!dock) continue; // sem doca (reduced-motion): a bola passa por trás da cena
+        // durante o pin a cena fica fixa; a posição dela na página é a do pin-spacer
+        const frame = dock.frame();
+        const offIn = boxOf(frame).y;
+        const offOut = offIn + dock.total();
+        const { entry, exit } = dock.points();
+        const inPoints = entry.map((p) => ({ ...p, y: p.y + offIn }));
+        const outPoints = exit.map((p) => ({ ...p, y: p.y + offOut }));
+        docks.push({
+          dock,
+          offIn,
+          offOut,
+          inY: inPoints[inPoints.length - 1].y,
+          outY: outPoints[0].y,
+          bottom: offOut + el.offsetHeight,
+        });
+        stations.push({ points: [...inPoints, ...outPoints] });
+        continue;
+      }
       if (!el.offsetParent) continue; // espaço que só existe em outra largura de tela
       if (el.matches('[data-respiro]')) {
         stations.push({ respiro: el });
@@ -131,6 +157,48 @@ export function createRally({ container, start }) {
       const at = (length * i) / samples;
       return { at, y: path.getPointAtLength(at).y };
     });
+
+    for (const d of docks) {
+      const { trace, entryPath, exitPath } = d.dock.overlay;
+      trace.setAttribute('viewBox', `0 0 ${d.dock.el.clientWidth} ${d.dock.el.clientHeight}`);
+      for (const [p, off] of [[entryPath, d.offIn], [exitPath, d.offOut]]) {
+        p.setAttribute('d', rally.d);
+        p.setAttribute('transform', `translate(0 ${-off})`);
+      }
+      d.lin = lengthForY(d.inY);
+      d.lout = lengthForY(d.outY);
+    }
+  }
+
+  // A bola sobre a cena: na entrada e na saída ela segue o traço (no mesmo ponto em que estaria a do rali,
+  // que fica escondida atrás da cena opaca); entre a primeira e a última data, a cena a conduz.
+  function renderDocks(drawn, tip, height) {
+    for (const d of docks) {
+      const { entryPath, exitPath, ball: docked } = d.dock.overlay;
+      entryPath.style.strokeDasharray = `${Math.min(drawn, d.lin)} ${length}`;
+      exitPath.style.strokeDasharray = `0 ${d.lout} ${Math.max(0, drawn - d.lout)} ${length}`;
+
+      const near = head > d.offIn - 300 && head < d.bottom + 300;
+      if (!near || !Number.isFinite(head)) {
+        gsap.set(docked, { opacity: 0 });
+        continue;
+      }
+      if (head > d.inY && head < d.outY) {
+        d.dock.hop((head - d.inY) / (d.outY - d.inY));
+        continue;
+      }
+      if (head >= d.outY) d.dock.passed(); // as datas que ficaram para trás já são marcas
+      const off = head <= d.inY ? d.offIn : d.offOut;
+      const y = tip.y - height * 0.6 - off;
+      gsap.set(docked, {
+        x: tip.x,
+        y,
+        scaleX: 1 + height / 420,
+        scaleY: 1 + height / 420,
+        // fora da cena quem aparece é a bola do rali; a da cena só existe dentro dela
+        opacity: y > -15 && y < d.dock.el.clientHeight + 15 ? 1 : 0,
+      });
+    }
   }
 
   function lengthForY(y) {
@@ -138,27 +206,7 @@ export function createRally({ container, start }) {
     return found ? found.at : length;
   }
 
-  // A nuvem de pó do quique: alguns grãos de saibro que saltam e somem. Curta e barata.
-  function dust(x, y) {
-    for (let i = 0; i < 7; i++) {
-      const grain = document.createElement('span');
-      grain.className = 'rally__dust';
-      grain.style.left = `${x}px`;
-      grain.style.top = `${y}px`;
-      ground.append(grain);
-      const angle = Math.PI + (Math.PI * (i + 0.5)) / 7; // para cima, em leque
-      const reach = 18 + Math.random() * 22;
-      gsap.to(grain, {
-        x: Math.cos(angle) * reach,
-        y: Math.sin(angle) * reach * 0.6,
-        scale: 0.3,
-        opacity: 0,
-        duration: 0.7 + Math.random() * 0.3,
-        ease: 'expo.out',
-        onComplete: () => grain.remove(),
-      });
-    }
-  }
+  const dust = (x, y) => dustAt(ground, x, y);
 
   // target: a altura, no container, onde a ponta do traço deve estar (o meio da tela).
   // instant: pula a inércia (reduced-motion, ou o estado final).
@@ -178,6 +226,7 @@ export function createRally({ container, start }) {
     const visible = drawn > 0 && drawn < length;
     const squash = height < 6 ? 1 - (6 - height) / 6 : 1; // 0 no chão, 1 no ar
     tipNow = tip;
+    renderDocks(drawn, tip, height);
     gsap.set(ball, {
       x: tip.x,
       y: tip.y - height * 0.6 - kick.y,

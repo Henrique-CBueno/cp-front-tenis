@@ -82,11 +82,138 @@ test.describe('Face-à-face com prefers-reduced-motion', () => {
   });
 });
 
-test('uma bola só: enquanto a Histoire sobe pela tela, a bola dela fica escondida e a do rali aparece', async ({ page }) => {
+// Quantas bolas estão à vista: a do rali conta quando não está escondida atrás da Histoire (opaca);
+// a da Histoire conta quando está dentro dela.
+const visibleBalls = (page) =>
+  page.evaluate(() => {
+    const sec = document.querySelector('#histoire').getBoundingClientRect();
+    const center = (el) => {
+      const r = el.getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    };
+    const shown = (el) => getComputedStyle(el).opacity !== '0';
+    const inside = (c) => c.y > sec.top && c.y < sec.bottom;
+    const onScreen = (c) => c.y > 0 && c.y < innerHeight;
+    const rally = document.querySelector('[data-rally-ball]');
+    const docked = document.querySelector('[data-timeline-ball]');
+    const r = center(rally);
+    const d = center(docked);
+    return (shown(rally) && onScreen(r) && !inside(r) ? 1 : 0) + (shown(docked) && onScreen(d) && inside(d) ? 1 : 0);
+  });
+
+// a geometria do pin: onde ele começa e termina (a ponta do traço fica no meio da tela)
+const pinOf = (page) =>
+  page.evaluate(() => {
+    const sec = document.querySelector('#histoire');
+    const spacer = sec.parentElement;
+    const top = spacer.getBoundingClientRect().top + scrollY;
+    const dot = sec.querySelector('.timeline__dot');
+    let y = 0;
+    for (let n = dot; n && n !== sec; n = n.offsetParent) y += n.offsetTop;
+    const start = top + y - innerHeight / 2;
+    return { start, end: start + spacer.offsetHeight - sec.offsetHeight };
+  });
+
+async function glideTo(page, y) {
+  const from = await page.evaluate(() => scrollY);
+  for (let i = 1; i <= 10; i++) {
+    await page.evaluate((v) => window.scrollTo(0, v), from + ((y - from) * i) / 10);
+    await page.waitForTimeout(40);
+  }
+  await page.waitForTimeout(700);
+}
+
+const ballOnDot = (page, index) =>
+  page.evaluate((i) => {
+    const dots = [...document.querySelectorAll('.timeline__dot')];
+    const dot = dots.at(i).getBoundingClientRect();
+    const ball = document.querySelector('[data-timeline-ball]').getBoundingClientRect();
+    return Math.hypot(dot.left + dot.width / 2 - (ball.left + ball.width / 2), dot.top + dot.height / 2 - (ball.top + ball.height / 2));
+  }, index);
+
+test('Histoire: uma bola só do começo ao fim; ela espera na 1ª data e na última', async ({ page }) => {
   await page.goto('/');
-  const top = await page.evaluate(() => document.querySelector('#histoire').getBoundingClientRect().top + scrollY);
-  // a seção entra pela metade de baixo da tela: a ponta do rali (o meio da tela) ainda está no respiro acima dela
-  await page.evaluate((y) => window.scrollTo(0, y - 700), top);
-  await expect(page.locator('[data-timeline-ball]')).toHaveCSS('opacity', '0', { timeout: 4000 });
-  await expect(page.locator('[data-rally-ball]')).toHaveCSS('opacity', '1', { timeout: 4000 });
+  await page.waitForLoadState('load');
+  const pin = await pinOf(page);
+  for (const y of [pin.start - 900, pin.start - 400, pin.start - 150]) {
+    await glideTo(page, y);
+    expect(await visibleBalls(page)).toBe(1);
+  }
+  await glideTo(page, pin.start + 60);
+  expect(await visibleBalls(page)).toBe(1);
+  expect(await ballOnDot(page, 0)).toBeLessThan(14);
+  for (const f of [0.3, 0.6]) {
+    await glideTo(page, pin.start + (pin.end - pin.start) * f);
+    expect(await visibleBalls(page)).toBe(1);
+  }
+  await glideTo(page, pin.end - 40);
+  expect(await visibleBalls(page)).toBe(1);
+  expect(await ballOnDot(page, -1)).toBeLessThan(14);
+  for (const y of [pin.end + 200, pin.end + 700]) {
+    await glideTo(page, y);
+    expect(await visibleBalls(page)).toBe(1);
+  }
+});
+
+// pontos do traço desenhado sobre a Histoire que caem dentro de um texto dela
+const overlayCrossings = (page, which) =>
+  page.evaluate((w) => {
+    const sec = document.querySelector('#histoire');
+    const path = sec.querySelectorAll('.histoire__trace path')[w === 'entrada' ? 0 : 1];
+    const dash = getComputedStyle(path).strokeDasharray.split(',').map(parseFloat);
+    const [from, to] = w === 'entrada' ? [0, dash[0]] : [dash[1], dash[1] + dash[2]];
+    const ctm = path.getScreenCTM();
+    const box = sec.getBoundingClientRect();
+    // as linhas de texto de verdade (um bloco pode ocupar a largura toda com o texto só de um lado)
+    const texts = [...sec.querySelectorAll('h2, p, time')].flatMap((el) => {
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      return [...range.getClientRects()].map((r) => ({ el, r }));
+    });
+    const hits = new Set();
+    for (let at = from; at <= to; at += 3) {
+      const p = path.getPointAtLength(at).matrixTransform(ctm);
+      if (p.y < box.top || p.y > box.bottom) continue;
+      for (const { el, r } of texts) {
+        if (p.x > r.left + 2 && p.x < r.right - 2 && p.y > r.top + 2 && p.y < r.bottom - 2) hits.add(el.textContent.trim().slice(0, 30));
+      }
+    }
+    return { drawn: to - from, hits: [...hits] };
+  }, which);
+
+test('Histoire: o traço desenhado sobre a cena nunca cruza um texto (entrada e saída)', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('load');
+  const pin = await pinOf(page);
+  await glideTo(page, pin.start + 30);
+  const entry = await overlayCrossings(page, 'entrada');
+  expect(entry.drawn).toBeGreaterThan(50);
+  expect(entry.hits).toEqual([]);
+  await glideTo(page, pin.end + 900);
+  const exit = await overlayCrossings(page, 'saida');
+  expect(exit.drawn).toBeGreaterThan(50);
+  expect(exit.hits).toEqual([]);
+});
+
+test.describe('Histoire no celular', () => {
+  test.use({ viewport: { width: 390, height: 844 }, hasTouch: true, isMobile: true });
+
+  test('uma bola só, descendo de data em data, e o traço sem cruzar texto', async ({ page }) => {
+    await page.goto('/');
+    await page.waitForLoadState('load');
+    const g = await page.evaluate(() => {
+      const sec = document.querySelector('#histoire');
+      const top = sec.getBoundingClientRect().top + scrollY;
+      return { top, bottom: top + sec.offsetHeight };
+    });
+    for (let y = g.top - 600; y <= g.bottom + 300; y += 250) {
+      await glideTo(page, y - 422);
+      expect(await visibleBalls(page)).toBe(1);
+    }
+    for (const which of ['entrada', 'saida']) {
+      const { drawn, hits } = await overlayCrossings(page, which);
+      expect(drawn).toBeGreaterThan(30);
+      expect(hits).toEqual([]);
+    }
+  });
 });

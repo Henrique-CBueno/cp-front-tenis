@@ -10,10 +10,10 @@
 
 **Blocked by:** 22 (o quique na 1ª data usa o impacto novo)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Só uma bola visível antes, durante e depois do pin (Playwright)
-- [ ] Bola parada na 1ª data no início do pin e na última no fim (Playwright)
-- [ ] O traço chega à 1ª data e sai da última, sem cruzar texto
-- [ ] Celular e reduced-motion
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Só uma bola visível antes, durante e depois do pin (Playwright)
+- [x] Bola parada na 1ª data no início do pin e na última no fim (Playwright)
+- [x] O traço chega à 1ª data e sai da última, sem cruzar texto
+- [x] Celular e reduced-motion
+- [x] Log da etapa em `processo/prompts/`

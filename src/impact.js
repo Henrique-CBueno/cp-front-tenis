@@ -18,3 +18,25 @@ export function stamp(oval, { caption, instant = false } = {}) {
   if (caption) tl.fromTo(caption, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' }, 0.12);
   return tl;
 }
+
+// A nuvem de pó do quique: alguns grãos de saibro que saltam em leque e somem. Curta e barata.
+export function dust(parent, x, y) {
+  for (let i = 0; i < 7; i++) {
+    const grain = document.createElement('span');
+    grain.className = 'rally__dust';
+    grain.style.left = `${x}px`;
+    grain.style.top = `${y}px`;
+    parent.append(grain);
+    const angle = Math.PI + (Math.PI * (i + 0.5)) / 7; // para cima, em leque
+    const reach = 18 + Math.random() * 22;
+    gsap.to(grain, {
+      x: Math.cos(angle) * reach,
+      y: Math.sin(angle) * reach * 0.6,
+      scale: 0.3,
+      opacity: 0,
+      duration: 0.7 + Math.random() * 0.3,
+      ease: 'expo.out',
+      onComplete: () => grain.remove(),
+    });
+  }
+}

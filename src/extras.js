@@ -1,15 +1,18 @@
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { stamp, dust } from './impact.js';
 
-// A bola da Histoire: enquanto a linha do tempo passa, ela quica de data em data sobre a linha.
-// progress (0–1) vira um índice entre as datas; entre duas datas a bola faz um arco e achata ao tocar.
-function hopAlong(section, ball, progress, axis) {
-  const dots = [...section.querySelectorAll('.timeline__dot')];
+// A bola da Histoire. É a mesma bola do rali: ele a entrega à cena na primeira data e a recebe de volta na última
+// (ver as docas em rally.js). Entre as datas, ela quica de uma para a outra sobre a linha do tempo; cada data
+// é uma marca, que nasce quando a bola toca nela e fica.
+// f é o índice fracionário entre as datas (0 = primeira, n-1 = última); entre duas datas a bola faz um arco e
+// achata ao tocar.
+function hopAlong(section, ball, dots, f, axis) {
   const origin = section.getBoundingClientRect();
   const at = (i) => {
     const r = dots[i].getBoundingClientRect();
     return { x: r.left + r.width / 2 - origin.left, y: r.top + r.height / 2 - origin.top };
   };
-  const f = gsap.utils.clamp(0, dots.length - 1, progress * (dots.length - 1));
   const i = Math.min(dots.length - 2, Math.floor(f));
   const t = f - i;
   const [a, b] = [at(i), at(i + 1)];
@@ -20,59 +23,143 @@ function hopAlong(section, ball, progress, axis) {
     y: a.y + (b.y - a.y) * t - (axis === 'x' ? lift : 0),
     scaleX: ground ? 1.18 : 1,
     scaleY: ground ? 0.74 : 1,
+    opacity: 1,
   });
 }
 
+// posição de um elemento nas coordenadas da seção (medidas de layout: não mudam com o translate da linha)
+function localOf(el, section) {
+  let x = 0;
+  let y = 0;
+  for (let node = el; node && node !== section; node = node.offsetParent) {
+    x += node.offsetLeft;
+    y += node.offsetTop;
+  }
+  return { x, y, width: el.offsetWidth, height: el.offsetHeight };
+}
+
 // Histoire: no desktop a seção fica presa e a linha do tempo corre na horizontal, conduzida pelo scroll.
-// No celular ela fica de pé (CSS) e não há pin. Nos dois casos, uma bola quica de data em data.
+// O pin começa no instante em que a bola pousa na primeira data (que fica no meio da tela); a bola espera
+// ali, a linha corre, e na última data ela espera de novo antes de sair. No celular a linha fica de pé
+// (CSS), sem pin, e a bola desce de data em data. Sem movimento (reduced-motion), nada disso roda e a bola
+// do rali passa por trás da seção.
 export function runTimeline(section) {
   const track = section.querySelector('[data-timeline-track]');
+  const head = section.querySelector('.histoire__head');
+  const dots = [...section.querySelectorAll('.timeline__dot')];
+  const items = [...section.querySelectorAll('.timeline__item')];
+
   const ball = document.createElement('span');
   ball.className = 'court__ball timeline__ball';
   ball.setAttribute('aria-hidden', 'true');
   ball.dataset.timelineBall = '';
-  section.append(ball);
+  // a entrada e a saída do traço, desenhadas por cima da cena (o traço do rali corre por trás dela)
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const trace = document.createElementNS(svgNS, 'svg');
+  trace.classList.add('histoire__trace');
+  trace.setAttribute('aria-hidden', 'true');
+  const [entryPath, exitPath] = [0, 1].map(() => trace.appendChild(document.createElementNS(svgNS, 'path')));
+  section.append(trace, ball);
+  section.dataset.dock = '';
 
-  // Uma bola só em jogo: a da Histoire aparece quando a seção cobre o meio da tela, que é onde está a ponta do rali.
-  // Nesse momento a bola do rali passou para trás da seção; antes e depois, é a do rali que aparece.
-  gsap.ticker.add(() => {
-    const box = section.getBoundingClientRect();
-    const mid = window.innerHeight / 2;
-    gsap.set(ball, { opacity: box.top <= mid && box.bottom >= mid ? 1 : 0 });
-  });
+  // as datas são marcas: nascem quando a bola toca nelas
+  gsap.set(dots, { yPercent: -50, scale: 0 });
+  const made = dots.map(() => false);
+  function touch(i) {
+    if (made[i]) return;
+    made[i] = true;
+    stamp(dots[i]);
+    // o pó sai de onde a data está agora na tela (a linha pode estar deslocada pelo scroll lateral)
+    const [r, origin] = [dots[i].getBoundingClientRect(), section.getBoundingClientRect()];
+    dust(section, r.left + r.width / 2 - origin.left, r.top + r.height / 2 - origin.top);
+  }
+  let reached = -1;
+  function hopTo(f, axis) {
+    const n = dots.length - 1;
+    const clamped = gsap.utils.clamp(0, n, f);
+    hopAlong(section, ball, dots, clamped, axis);
+    for (let i = reached + 1; i <= Math.floor(clamped + 0.06); i++) touch(i);
+    reached = Math.max(reached, Math.floor(clamped + 0.06));
+  }
+
+  const dotAt = (i) => {
+    const d = localOf(dots[i], section);
+    return { x: d.x + d.width / 2, y: d.y };
+  };
+  const headBottom = () => localOf(head, section).y + head.offsetHeight;
+  const overlay = { trace, entryPath, exitPath, ball };
 
   gsap.matchMedia().add('(max-width: 720px)', () => {
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: track,
-        start: 'top 60%',
-        end: 'bottom 60%',
-        scrub: true,
-        onUpdate: (self) => hopAlong(section, ball, self.progress, 'y'),
-        onEnter: (self) => hopAlong(section, ball, self.progress, 'y'),
+    const lastIndex = dots.length - 1;
+    section.rallyDock = {
+      el: section,
+      overlay,
+      frame: () => section,
+      total: () => 0,
+      points: () => {
+        const first = dotAt(0);
+        const last = dotAt(lastIndex);
+        const trackBox = localOf(track, section);
+        // entra pela faixa da direita, passa no vão entre o texto e a linha e pousa na primeira data
+        const laneX = section.clientWidth - parseFloat(getComputedStyle(section).paddingRight) - 34;
+        return {
+          entry: [{ x: laneX, y: headBottom() + 8 }, { x: first.x, y: trackBox.y - 6 }, { ...first, contact: true }],
+          exit: [{ ...last, contact: true }, { x: last.x, y: trackBox.y + trackBox.height }],
+        };
       },
-    });
+      // u: de 0 (primeira data) a 1 (última); a bola segue a altura do meio da tela, de data em data
+      hop: (u) => {
+        const ys = dots.map((_, i) => dotAt(i).y);
+        const y = ys[0] + u * (ys[lastIndex] - ys[0]);
+        let i = 0;
+        while (i < lastIndex - 1 && y > ys[i + 1]) i++;
+        hopTo(i + gsap.utils.clamp(0, 1, (y - ys[i]) / (ys[i + 1] - ys[i])), 'y');
+      },
+      passed: () => dots.forEach((_, i) => touch(i)),
+    };
+    return () => delete section.rallyDock;
   });
 
   gsap.matchMedia().add('(min-width: 721px)', () => {
     // medidas de layout (offset*), que não mudam com o translate já aplicado
     const distance = () => Math.max(0, track.offsetLeft + track.offsetWidth - section.clientWidth);
-    const run = gsap.to(track, {
-      x: () => -distance(),
-      ease: 'none',
-      scrollTrigger: {
-        trigger: section,
-        start: 'top top',
-        end: () => `+=${distance()}`,
-        pin: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
+    const hold = () => window.innerHeight * 0.3; // a espera na primeira e na última data
+    const travel = (p, total) => gsap.utils.clamp(0, 1, (p * total - hold()) / Math.max(1, distance()));
+    const st = ScrollTrigger.create({
+      trigger: section,
+      // o pin começa quando a primeira data chega ao meio da tela: é onde a ponta do traço (e a bola) está
+      start: () => `top ${window.innerHeight / 2 - dotAt(0).y}px`,
+      end: () => `+=${distance() + 2 * hold()}`,
+      pin: true,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => gsap.set(track, { x: -distance() * travel(self.progress, self.end - self.start) }),
     });
-    // a bola acompanha a linha a cada quadro (os dots se movem com o translate da linha)
-    const follow = () => hopAlong(section, ball, run.scrollTrigger.progress, 'x');
-    gsap.ticker.add(follow);
-    return () => gsap.ticker.remove(follow);
+    const lastIndex = dots.length - 1;
+    section.rallyDock = {
+      el: section,
+      overlay,
+      frame: () => (section.parentElement.classList.contains('pin-spacer') ? section.parentElement : section),
+      total: () => st.end - st.start,
+      points: () => {
+        const first = dotAt(0);
+        const last = dotAt(lastIndex);
+        const lastItem = localOf(items[lastIndex], section);
+        const endX = last.x - distance();
+        // sai pela linha, para a direita do texto da última data, e só então desce
+        const outX = Math.min(section.clientWidth - 60, endX + items[lastIndex].offsetWidth);
+        return {
+          entry: [{ x: first.x, y: headBottom() + 8 }, { ...first, contact: true }],
+          exit: [{ x: endX, y: last.y, contact: true }, { x: outX, y: last.y + 8 }, { x: outX, y: lastItem.y + lastItem.height + 16 }],
+        };
+      },
+      // u: de 0 (pouso na primeira data) a 1 (saída da última), ao longo do pin inteiro
+      hop: (u) => hopTo(travel(u, st.end - st.start) * lastIndex, 'x'),
+      passed: () => dots.forEach((_, i) => touch(i)),
+    };
+    return () => {
+      delete section.rallyDock;
+      st.kill();
+    };
   });
 }
 
