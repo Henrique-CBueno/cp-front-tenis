@@ -55,6 +55,12 @@ typography:
     fontWeight: 600
     letterSpacing: "-0.01em"
     fontVariation: "'wdth' 140"
+  date:
+    fontFamily: "'Anybody Variable', sans-serif"
+    fontSize: "1.5rem"
+    fontWeight: 600
+    fontFeature: "'tnum'"
+    fontVariation: "'wdth' 140"
   lede:
     fontFamily: "'Schibsted Grotesk', sans-serif"
     fontSize: "clamp(1.0625rem, 1.5vw, 1.375rem)"
@@ -95,6 +101,7 @@ spacing:
   line: "clamp(6px, 0.7vw, 10px)"
   stack: "1.5rem"
   chapter-block: "clamp(5rem, 12vh, 9rem)"
+  timeline-step: "clamp(17rem, 24vw, 22rem)"
 components:
   cta-line:
     backgroundColor: "transparent"
@@ -126,6 +133,19 @@ components:
     backgroundColor: "{colors.chalk}"
     textColor: "{colors.clay-deep}"
     padding: "1.1rem 1rem"
+  timeline-dot:
+    backgroundColor: "{colors.mark-core}"
+    rounded: "{rounded.oval}"
+    width: "2.3rem"
+  timeline-item:
+    textColor: "{colors.chalk}"
+    typography: "{typography.date}"
+    width: "{spacing.timeline-step}"
+    padding: "2.75rem 2rem 0 0"
+  scoreboard-row-number:
+    textColor: "{colors.chalk}"
+    typography: "{typography.scoreboard}"
+    padding: "1.1rem 0"
   court-ball:
     backgroundColor: "{colors.ball}"
     rounded: "{rounded.oval}"
@@ -170,7 +190,7 @@ A densidade é baixa e teatral: capítulos de altura de tela, títulos condensad
 **Key Characteristics:**
 - Fundo saibro contínuo; o rodapé desce um tom (saibro escuro), nunca muda de material.
 - Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo.
-- Marcas ovais numeradas ("Marca 01…04") como sistema de seção e de navegação do traço.
+- Marcas ovais numeradas ("Marca 01…04") como sistema de seção e de navegação do traço; nas seções extras, a marca vira medida (as datas da linha do tempo são mini marcas sem número).
 - Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo.
 - Tipografia que estica: Anybody em largura condensada (62%) nos títulos e expandida (140–150%) nos números e no wordmark.
 - Movimento conduzido pelo scroll; com `prefers-reduced-motion`, o estado final completo e estático.
@@ -224,15 +244,18 @@ Uma família restrita ao Corte da Quadra: as cores dos materiais reais de cada c
 - **Feature** (`feature`): o h3 "Guga", a mesma receita condensada do headline, maior e mais apertada. É o clímax emocional, por isso supera o h2 do próprio capítulo.
 - **Wordmark** (`wordmark`): "la trace", em minúsculas, na largura expandida. É o oposto exato dos títulos condensados.
 - **Mark number** (`mark-number`): "Marca 01…04", largura 140%. No ticket cai para 0,875rem.
+- **Date** (`date`): os anos da linha do tempo da Histoire. É a receita do número de marca com algarismos tabulares, porque cada data também é uma marca.
 - **Lede** (`lede`): a frase de abertura de cada capítulo, até 34ch, `text-wrap: pretty`.
 - **Body** (`body`): parágrafos de capítulo, até 52ch (46ch na história do Guga, onde o corpo sobe para `clamp(1.0625rem, 1.3vw, 1.25rem)`).
-- **Scoreboard** (`scoreboard`): o tamanho único do placar, para nome e descrição.
+- **Scoreboard** (`scoreboard`): o tamanho único do placar, para nome e descrição. No placar de números (Le Score), o termo à esquerda não vai em caixa alta, porque carrega unidades (cm, mm), e usa algarismos tabulares com espaçamento de 0,02em.
 - **Small** (`small`): o texto do rodapé (aviso e créditos). Notas de apoio, como a nota sob o ticket, descem para 0,875rem em peso normal.
 - **Label grande** (`label-lg`): rótulos das camadas do corte, em caixa alta. O mesmo 0,875rem aparece no número da Marca 04 do ticket e no rótulo do ticket no celular, onde o espaçamento cai para 0,02em para caber numa linha.
 - **Label** (`label`): navegação, CTA, legenda das marcas, camadas do corte e legendas de figura; sempre em caixa alta, peso 700, espaçamento 0,06em (0,08em na dica de scroll, 0,04em no placar).
 
 ### Named Rules
 **The Stretch Rule.** A largura do Anybody carrega o sentido: condensada (62%) para títulos, expandida (125–150%) para wordmark, números de marca e títulos do rodapé. Não usar a largura normal (100%) da display.
+
+**The Honest Count Rule.** Um número animado sempre termina no valor exato e formatado em pt-BR, e esse valor já está no HTML: sem movimento, o leitor vê o número final, nunca um zero.
 
 **The One Size Scoreboard Rule.** Placares e números aparecem num único tamanho de texto (1,125rem no placar); a hierarquia vem só do peso, da caixa e de `tabular-nums`, nunca de um número gigante.
 
@@ -242,11 +265,13 @@ Coluna única de capítulos empilhados, cada um com `min-height: 100svh`, grid c
 
 - **Hero (quadra):** grid de duas linhas (título em cima, CTA embaixo à direita), com a linha de base a 80% da altura e a linha central a 61% da largura. O jogador fica num canvas atrás do texto, à direita, apoiado na linha de base. A seção fica fixa (pin) por 180% de scroll.
 - **Terre Battue:** duas colunas (texto 1fr, foto 0,85fr, foto em 4:5); o corte das camadas ocupa a largura toda e sangra até a borda (margem negativa igual ao gutter).
+- **Histoire:** cabeçalho (h2 + lede) e, abaixo, a linha do tempo. O trilho é uma faixa horizontal de itens de largura `timeline-step` sobre uma linha de cal de espessura `line`, que sangra pela margem esquerda. A seção tem fundo opaco de saibro (o traço do rali passa por trás dela) e esconde o que transborda.
 - **Les Légendes:** cabeçalho alinhado à direita, placar em largura total (colunas `minmax(10rem, 1fr)` / `2fr`), depois o artigo do Guga em duas colunas iguais (coração | história).
+- **Le Score:** capítulo à esquerda, com título e lede alinhados ao início e um segundo placar em largura total, com a mesma medida das Légendes.
 - **Jeu, Set et Match:** o hero repetido. Mesmas linhas de quadra; título à esquerda da linha central (61%) e o ticket pousado na caixa da direita.
 - **Rodapé:** saibro escuro, texto até 60–70ch.
 
-**Responsivo (≤ 720px):** tudo em uma coluna, navegação escondida (ficam wordmark e CTA discreto), texto sempre à esquerda, mas as marcas continuam alternando de lado. O jogador ocupa a largura toda acima da linha de base (que desce para 79%), a Marca 01 vai para baixo da linha, o CTA do hero estica em largura total, o placar empilha nome sobre descrição, a linha central do fechamento some e o traço do rali corre sempre pela margem direita.
+**Responsivo (≤ 720px):** tudo em uma coluna, navegação escondida (ficam wordmark e CTA discreto), texto sempre à esquerda, mas as marcas continuam alternando de lado. O jogador ocupa a largura toda acima da linha de base (que desce para 79%), a Marca 01 vai para baixo da linha, o CTA do hero estica em largura total, o placar empilha nome sobre descrição, a linha do tempo fica de pé (linha vertical à esquerda, datas descendo, sem pin), a linha central do fechamento some e o traço do rali corre sempre pela margem direita.
 
 ## Elevation & Depth
 
@@ -259,6 +284,8 @@ A profundidade é material, não de interface. Ela vem de camadas reais empilhad
 - **Marca afundada** (`box-shadow: inset 0 0 0 2px rgb(246 239 226 / 0.55)`): o anel de cal na borda do oval.
 
 ### Named Rules
+**The Opaque Ground Rule.** Toda seção que se move por conta própria por cima do rali (fotos, camadas, a Histoire fixa) tem fundo opaco, para o traço passar por trás em vez de cruzar o conteúdo.
+
 **The Warm Shadow Rule.** Toda sombra é `rgb(60 20 5)`, a cor de saibro na sombra, com deslocamento negativo igual a metade do desfoque. Nada de sombras pretas, neutras ou deslocadas em bloco.
 
 ## Shapes
@@ -283,16 +310,26 @@ O oval da bola no saibro, seguido do número ("Marca 0N") e, no hero, de uma leg
 - **Oval:** `mark-oval`, degradê radial do núcleo para o saibro escuro e para transparente, anel interno de cal a 55%.
 - **Estado:** começa em `scale(0)` e "afunda" (escala 0 → 1, `expo.out`) quando o traço chega; a legenda sobe 12px e aparece junto.
 - **Posição:** nos capítulos, o número fica ao lado do oval e abaixo do fio do traço; em capítulos à direita, a ordem se espelha.
-- Só existem quatro marcas, uma por seção narrativa; a última é o ticket.
+- Só existem quatro marcas numeradas, uma para cada seção principal (Le Service, Terre Battue, Les Légendes, Jeu, Set et Match); a última é o ticket. As seções extras (Histoire, Le Score) não abrem com marca numerada: na Histoire, a marca aparece como mini marca em cada data.
 
 ### O Traço e a Bola
-O fio de 1,5px em cal (opacidade 0,85), de ponta redonda, desenhado com `stroke-dashoffset`. No hero, ele é o voo da bola do ponto de contato do saque até a Marca 01; no rali, um único caminho que desce pela borda livre e entra em cada marca por cima, com a bola (`court-ball`) sempre na altura do meio da tela. Ele corre atrás dos blocos opacos (fotos e camadas).
+O fio de 1,5px em cal (opacidade 0,85), de ponta redonda, desenhado com `stroke-dashoffset`. No hero, ele é o voo da bola do ponto de contato do saque até a Marca 01; no rali, um único caminho que desce pela borda livre e entra em cada marca por cima, com a bola (`court-ball`) sempre na altura do meio da tela. Ele corre atrás dos blocos opacos (fotos, camadas e a seção Histoire inteira).
 
 ### O Ticket
 O CTA final, em forma de ingresso: fundo cal, texto saibro escuro, canhoto à esquerda com a Marca 04 separado por linha tracejada de 2px, label em caixa alta e seta. Sombra "Pouso". Hover: sobe 3px (220ms, mesma curva). No celular, o canhoto encolhe, a seta some e o label fica numa linha.
 
+### A Linha do Tempo (Histoire)
+A linha de base da quadra vira linha do tempo, e cada data é uma marca.
+- **Trilho:** linha de cal de espessura `line`, a 0,9rem do topo. Os itens (`timeline-item`) ficam lado a lado, cada um com a data em `date` e um texto curto de até 30ch.
+- **Mini marca (`timeline-dot`):** o mesmo oval da Marca (proporção 2,2, degradê do núcleo para o saibro escuro, anel de cal a 55%), com 2,3rem de largura e centralizado sobre a linha. Fica sempre visível e não afunda.
+- **Movimento:** no desktop (≥ 721px), a seção fica fixa e o trilho corre na horizontal, conduzido pelo scroll (`scrub`, easing linear), por uma distância igual ao que transborda da tela.
+- **Celular (≤ 720px):** o trilho fica de pé, com a linha vertical à esquerda e as mini marcas centralizadas sobre ela. Não há pin.
+- **Reduced-motion, ≥ 721px:** o trilho não corre; ele quebra em linhas (2,5rem entre linhas) e cada item carrega o seu próprio trecho de linha de base.
+
 ### O Placar
 Lista de definição em largura total, com linha de cal de 2px no topo e divisórias de 1px a 45%. Nome em caixa alta e peso 700, descrição em texto normal com o número em negrito e `tabular-nums`. A linha do Guga é invertida (fundo cal, texto saibro escuro) e sangra 1rem para os lados.
+
+**Variante números (Le Score):** a mesma estrutura e o mesmo tamanho único (`scoreboard-row-number`), agora com o número no termo à esquerda: sem caixa alta, com algarismos tabulares e 0,02em de espaçamento. Os números contam até o valor quando a linha entra na tela (1,6s, `expo.out`, uma vez só, formato pt-BR com ponto de milhar). Anos começam em valor − 120, e medidas sem contagem (1–2 mm) ficam fixas. Com reduced-motion, a contagem fica desligada e o valor já está escrito no HTML.
 
 ### O Corte da Quadra (strata)
 Cinco faixas de largura total, uma por camada real da quadra, cada uma com a foto do próprio material sob um véu da sua cor e uma altura proporcional à espessura (de 0,6rem a 3,4rem de respiro vertical). Rótulo à esquerda e medida (`tabular-nums`, peso 400) à direita, em `label-lg`. Cada texto fica numa etiqueta sólida na cor do tint da camada (padding `0.3em 0.6em`, canto vivo), para ficar legível sobre a textura. As cores vêm da família Material (estratos). No scroll, as camadas se afastam (14px por camada), como uma vista explodida.
@@ -305,10 +342,10 @@ Um único traço (`groove`, 9px, ponta e junção redondas) desenhado com o scro
 ### Do:
 - **Do** manter o saibro (`clay`) como fundo contínuo de todas as seções; escurecer para `clay-deep` só no rodapé.
 - **Do** estruturar seções com linhas de quadra em cal, de espessura `line` (`clamp(6px, 0.7vw, 10px)`), e fechar cada capítulo numa linha de base.
-- **Do** abrir cada seção narrativa com uma Marca numerada e ligá-la ao traço do rali.
+- **Do** abrir cada uma das quatro seções principais com uma Marca numerada e ligá-la ao traço do rali; nas seções extras, usar a marca como medida (mini marca de data), sem número.
 - **Do** usar o Anybody condensado (62%) nos títulos e expandido (125–150%) em números e wordmark.
 - **Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados, `expo.out` para marcas que afundam e easing linear (`scrub`) para parallax.
-- **Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque.
+- **Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas e números já no valor final.
 
 ### Don't:
 - **Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas do corte, o único creme sólido é o ticket e a linha do Guga.

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-10T14:49:23.219033+00:00",
+  "generatedAt": "2026-10-10T14:57:48.653843+00:00",
   "title": "Design System: La Trace",
   "extensions": {
     "colorMeta": {
@@ -294,6 +294,10 @@
         "displayName": "Número da Marca",
         "purpose": "\"Marca 01…04\" ao lado de cada oval."
       },
+      "date": {
+        "displayName": "Data",
+        "purpose": "Anos da linha do tempo da Histoire: receita do número de marca com algarismos tabulares."
+      },
       "lede": {
         "displayName": "Lede",
         "purpose": "Frase de abertura de cada capítulo, até 34ch."
@@ -377,9 +381,19 @@
         "purpose": "O fio da dica 'Role para sacar'; desligado com reduced-motion."
       },
       {
+        "name": "timeline-pin",
+        "value": "pin + scrub linear, distância = transbordo do trilho; só ≥721px",
+        "purpose": "A linha do tempo da Histoire corre na horizontal com a seção fixa."
+      },
+      {
+        "name": "counter",
+        "value": "1.6s expo.out, uma vez, ao entrar a 85% da tela; anos a partir de valor−120; Intl pt-BR",
+        "purpose": "Contagem dos números de Le Score; desligada com reduced-motion."
+      },
+      {
         "name": "reduced-motion",
         "value": "estado final estático",
-        "purpose": "Quadro do impacto, traço completo, todas as marcas visíveis; sem Lenis nem pin."
+        "purpose": "Quadro do impacto, traço completo, todas as marcas visíveis, linha do tempo quebrada em linhas com trecho de linha por item, números no valor final; sem Lenis nem pin."
       }
     ],
     "breakpoints": [
@@ -440,6 +454,22 @@
       "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);}.ds-score{display:grid;margin:0;border-top:2px solid var(--chalk);}.ds-row{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(0,2fr);gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgb(246 239 226 / .45);font-size:1.125rem;}.ds-row dt{font-weight:700;text-transform:uppercase;letter-spacing:.04em;}.ds-row dd{margin:0;}.ds-row strong{font-variant-numeric:tabular-nums;}.ds-row--guga{background:var(--chalk);color:var(--clay-deep);padding-inline:1rem;margin-inline:-1rem;}"
     },
     {
+      "name": "A Linha do Tempo",
+      "kind": "custom",
+      "refersTo": "timeline-item",
+      "description": "A linha de base vira linha do tempo; cada data é uma mini marca sobre o trilho.",
+      "html": "<div class=\"ds-court\"><ol class=\"ds-track\"><li class=\"ds-item\"><span class=\"ds-dot\"></span><time>1891</time><p>Começa como o campeonato dos clubes franceses.</p></li><li class=\"ds-item\"><span class=\"ds-dot\"></span><time>1928</time><p>Abre o estádio da Porte d'Auteuil.</p></li></ol></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);overflow:hidden;}.ds-track{position:relative;display:flex;margin:0;padding:0;list-style:none;}.ds-track::before{content:'';position:absolute;left:-32px;right:0;top:.9rem;height:8px;background:var(--chalk);}.ds-item{position:relative;width:15rem;padding:2.75rem 2rem 0 0;}.ds-dot{position:absolute;left:0;top:calc(.9rem + 4px);width:2.3rem;aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse at 45% 50%,#7c3013,var(--clay-deep) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgb(246 239 226 / .55);transform:translateY(-50%);}.ds-item time{display:block;font-family:var(--font-display);font-size:1.5rem;font-weight:600;font-stretch:140%;font-variant-numeric:tabular-nums;}.ds-item p{margin:.5rem 0 0;max-width:30ch;}"
+    },
+    {
+      "name": "Placar de Números",
+      "kind": "card",
+      "refersTo": "scoreboard-row-number",
+      "description": "Le Score: o mesmo placar de medida única, com o número (e a unidade) no termo, sem caixa alta.",
+      "html": "<div class=\"ds-court\"><dl class=\"ds-score\"><div class=\"ds-row\"><dt>727.500</dt><dd>pessoas passaram pelos portões em 2026.</dd></div><div class=\"ds-row\"><dt>80 cm</dt><dd>de quadra debaixo do saibro, em cinco camadas.</dd></div><div class=\"ds-row\"><dt>1–2 mm</dt><dd>de tijolo moído: tudo o que a bola toca.</dd></div></dl></div>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);}.ds-score{display:grid;margin:0;border-top:2px solid var(--chalk);}.ds-row{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(0,2fr);gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgb(246 239 226 / .45);font-size:1.125rem;}.ds-row dt{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;text-transform:none;}.ds-row dd{margin:0;}"
+    },
+    {
       "name": "O Corte da Quadra",
       "kind": "custom",
       "refersTo": "strata-limestone",
@@ -462,7 +492,7 @@
     "keyCharacteristics": [
       "Fundo saibro contínuo; o rodapé desce um tom (saibro escuro), nunca muda de material.",
       "Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo.",
-      "Marcas ovais numeradas (\"Marca 01…04\") como sistema de seção e de navegação do traço.",
+      "Marcas ovais numeradas (\"Marca 01…04\") como sistema de seção e de navegação do traço; nas seções extras, a marca vira medida (as datas da linha do tempo são mini marcas sem número).",
       "Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo.",
       "Tipografia que estica: Anybody em largura condensada (62%) nos títulos e expandida (140–150%) nos números e no wordmark.",
       "Movimento conduzido pelo scroll; com `prefers-reduced-motion`, o estado final completo e estático."
@@ -494,9 +524,19 @@
         "section": "typography"
       },
       {
+        "name": "The Honest Count Rule",
+        "body": "Um número animado sempre termina no valor exato e formatado em pt-BR, e esse valor já está no HTML: sem movimento, o leitor vê o número final, nunca um zero.",
+        "section": "typography"
+      },
+      {
         "name": "The One Size Scoreboard Rule",
         "body": "Placares e números aparecem num único tamanho de texto (1,125rem no placar); a hierarquia vem só do peso, da caixa e de `tabular-nums`, nunca de um número gigante.",
         "section": "typography"
+      },
+      {
+        "name": "The Opaque Ground Rule",
+        "body": "Toda seção que se move por conta própria por cima do rali (fotos, camadas, a Histoire fixa) tem fundo opaco, para o traço passar por trás em vez de cruzar o conteúdo.",
+        "section": "elevation"
       },
       {
         "name": "The Warm Shadow Rule",
@@ -507,10 +547,10 @@
     "dos": [
       "**Do** manter o saibro (`clay`) como fundo contínuo de todas as seções; escurecer para `clay-deep` só no rodapé.",
       "**Do** estruturar seções com linhas de quadra em cal, de espessura `line` (`clamp(6px, 0.7vw, 10px)`), e fechar cada capítulo numa linha de base.",
-      "**Do** abrir cada seção narrativa com uma Marca numerada e ligá-la ao traço do rali.",
+      "**Do** abrir cada uma das quatro seções principais com uma Marca numerada e ligá-la ao traço do rali; nas seções extras, usar a marca como medida (mini marca de data), sem número.",
       "**Do** usar o Anybody condensado (62%) nos títulos e expandido (125–150%) em números e wordmark.",
       "**Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados, `expo.out` para marcas que afundam e easing linear (`scrub`) para parallax.",
-      "**Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque."
+      "**Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas e números já no valor final."
     ],
     "donts": [
       "**Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas do corte, o único creme sólido é o ticket e a linha do Guga.",
