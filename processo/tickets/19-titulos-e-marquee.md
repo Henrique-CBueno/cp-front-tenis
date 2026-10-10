@@ -4,9 +4,9 @@
 
 **Blocked by:** None (can start immediately)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Títulos: o nome acessível continua sendo a palavra inteira (`aria-label`; letras com `aria-hidden`); Playwright confere
-- [ ] Marquee sem costura; velocidade ligada ao scroll; parado em reduced-motion
-- [ ] Sem transbordamento horizontal (o marquee é recortado na seção)
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Títulos: o nome acessível continua sendo a palavra inteira (`aria-label`; letras com `aria-hidden`); Playwright confere
+- [x] Marquee sem costura; velocidade ligada ao scroll; parado em reduced-motion
+- [x] Sem transbordamento horizontal (o marquee é recortado na seção)
+- [x] Log da etapa em `processo/prompts/`

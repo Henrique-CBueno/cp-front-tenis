@@ -1193,6 +1193,52 @@ h3 {
   }
 }
 
+/* Títulos letra a letra: as letras de uma palavra ficam juntas; cada uma se estica a partir da base */
+.title__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.title__letter {
+  display: inline-block;
+  transform-origin: 0 100%;
+}
+
+/* Marquee: uma faixa de saibro escuro entre as seções, com a frase em francês correndo.
+   É opaca: a bola do rali passa por trás dela, como pelas camadas da quadra. */
+.marquee {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(0.9rem, 2vw, 1.5rem);
+  background: var(--clay-deep);
+  border-block: 2px solid var(--chalk);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+}
+
+.marquee__group {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.marquee__item {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 6vw, 5rem);
+  font-weight: 700;
+  font-stretch: 140%;
+  line-height: 1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.marquee__item::after {
+  content: '·';
+  margin-inline: 0.45em;
+}
+
 /* Respiros: faixas de saibro sem conteúdo entre as seções, onde a bola cruza a página em arco e quica */
 .respiro {
   height: clamp(12rem, 32vh, 22rem);

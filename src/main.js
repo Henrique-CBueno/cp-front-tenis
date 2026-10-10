@@ -16,6 +16,8 @@ import { drawHeart } from './legendes.js';
 import { runTimeline, runCounters } from './extras.js';
 import { runFaceOff } from './face.js';
 import { runPalmares } from './palmares.js';
+import { revealTitles } from './titles.js';
+import { runMarquees } from './marquee.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -89,6 +91,8 @@ if (reducedMotion) {
   runTimeline(document.querySelector('#histoire'));
   runFaceOff(document.querySelector('#face-a-face'));
   runCounters(document.querySelector('#numeros'));
+  revealTitles([...document.querySelectorAll('.rally section h2')]);
+  runMarquees([...document.querySelectorAll('[data-marquee]')]);
 
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {
