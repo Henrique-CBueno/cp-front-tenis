@@ -12,11 +12,11 @@
 
 **Blocked by:** 22 (o quique na superfície)
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] O módulo do Medidor com testes Vitest (0 e 80 nas pontas, sempre crescente, fronteiras em progressos iguais)
-- [ ] Texturas em tela cheia recortadas dos originais, com procedência e créditos
-- [ ] A função de cada camada pesquisada, com fonte em `processo/pesquisa/` e no rodapé
-- [ ] Playwright: o medidor chega a 80 cm; o fim mostra o corte; reduced-motion sem pin
-- [ ] Sem transbordamento; o traço do rali não cruza texto
-- [ ] Log da etapa em `processo/prompts/`
+- [x] O módulo do Medidor com testes Vitest (0 e 80 nas pontas, sempre crescente, fronteiras em progressos iguais)
+- [x] Texturas em tela cheia recortadas dos originais, com procedência e créditos
+- [x] A função de cada camada pesquisada, com fonte em `processo/pesquisa/` e no rodapé
+- [x] Playwright: o medidor chega a 80 cm; o fim mostra o corte; reduced-motion sem pin
+- [x] Sem transbordamento; o traço do rali não cruza texto
+- [x] Log da etapa em `processo/prompts/`

@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 // Amostra o traço do rali e procura pontos dentro de caixas de texto visíveis. Fica de fora o que a bola
-// atravessa por trás de propósito (as camadas da quadra, a Histoire e o Face-à-face, que são opacos).
+// atravessa por trás de propósito (Sous la Terre, a Histoire e o Face-à-face, que são opacos).
 async function textCrossings(page) {
   return page.evaluate(() => {
     const path = document.querySelector('[data-rally-path]');
@@ -9,7 +9,7 @@ async function textCrossings(page) {
     const length = path.getTotalLength();
     // o ingresso fica de fora: ele é o destino final do traço
     const texts = [...document.querySelectorAll('.rally h2, .rally p, .rally dt, .rally dd, .rally li, .rally figcaption')]
-      .filter((el) => !el.closest('.strata, .histoire, .face'))
+      .filter((el) => !el.closest('.soil, .histoire, .face'))
       .map((el) => ({ el, box: el.getBoundingClientRect() }));
     const hits = new Set();
     for (let at = 0; at <= length; at += 4) {

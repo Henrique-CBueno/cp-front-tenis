@@ -29,14 +29,17 @@ ffmpeg -v error -y -i tools/source/pexels-38381015.jpg -filter_complex \
 ffmpeg -v error -y -i tools/source/pexels-38380408.jpg \
   -vf "crop=1800:2300:0:120,scale=960:-2" -c:v libwebp -quality 74 public/img/marca.webp
 
-# As camadas da quadra em corte, do fino ao grosso (todas Pexels License): calcário (3964794), clínquer/carvão
-# queimado (7138969), cascalho (414765) e pedras (4599912). Faixas largas e baixas, para o fundo de cada camada.
-for pair in calcario:3964794 clinquer:7138969 cascalho:414765 pedras:4599912; do
-  name=${pair%%:*}; id=${pair##*:}
-  [ -f "tools/source/pexels-$id.jpg" ] || curl -sSL -A "$UA" -o "tools/source/pexels-$id.jpg" \
-    "https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&w=1800"
-  ffmpeg -v error -y -i "tools/source/pexels-$id.jpg" \
-    -vf "scale=1600:-2,crop=1600:420" -c:v libwebp -quality 62 "public/img/camada-$name.webp"
+# Sous la Terre: as cinco camadas debaixo da quadra, em tela cheia (todas Pexels License, baixadas a 2400 px):
+# tijolo moído (38381015, o saibro acima da linha), calcário (3964794), clínquer/carvão queimado (7138969),
+# cascalho (414765) e pedras (4599912). Recorte 16:10 no centro (no tijolo, a parte de cima, sem a linha).
+mkdir -p tools/source/pexels-2400 public/img/terra
+for spec in tijolo:38381015:0 calcario:3964794:c clinquer:7138969:c cascalho:414765:c pedras:4599912:c; do
+  name=${spec%%:*}; rest=${spec#*:}; id=${rest%%:*}; top=${rest##*:}
+  [ -f "tools/source/pexels-2400/$id.jpg" ] || curl -sSL -A "$UA" -o "tools/source/pexels-2400/$id.jpg" \
+    "https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&cs=tinysrgb&w=2400"
+  if [ "$top" = "0" ]; then crop="crop=iw:iw*10/16:0:0"; else crop="crop='min(iw,ih*16/10)':'min(ih,iw*10/16)'"; fi
+  ffmpeg -v error -y -i "tools/source/pexels-2400/$id.jpg" \
+    -vf "$crop,scale=1920:1200" -c:v libwebp -quality 48 "public/img/terra/camada-$name.webp"
 done
 
 du -h public/img/*

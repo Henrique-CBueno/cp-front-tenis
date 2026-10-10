@@ -182,3 +182,14 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O que a IA fez:** em vez de uma quarta tentativa, mostrou três esboços (vir pela esquerda / a linha correr sob a bola / voltar ao da rodada 2) e me deixou escolher.
 - **Minha escolha:** vir pela esquerda, com o título passando para a direita, e sem os arcos.
 - **Lição:** quando a correção vira tentativa e erro sobre algo visual, um esboço (ASCII) da opção resolve mais rápido do que mais código.
+
+## #32 · Sous la Terre: texto sob a régua e o traço cruzando a frase (2026-10-10)
+- **Primeira versão:**
+  - o título da cena e a frase ficavam à direita, sobre a régua do medidor;
+  - no celular, o traço da chegada cruzava a frase;
+  - no desktop, a marca a 58% da altura fazia a cena prender com o topo acima da tela, e o título ficava sob a barra.
+- **Quem achou:** a IA, nos screenshots. O teste "o traço não cruza texto" não cobre o que a cena desenha sobre si mesma.
+- **Correção:**
+  - título e frase à esquerda (no celular, só na metade esquerda);
+  - a marca a 52% da altura;
+  - no celular, a bola desce entre o texto e o medidor.

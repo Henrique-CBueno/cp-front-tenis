@@ -16,6 +16,7 @@ import { drawHeart } from './legendes.js';
 import { runTimeline, runCounters } from './extras.js';
 import { runFaceOff } from './face.js';
 import { runPalmares } from './palmares.js';
+import { runSoil } from './sous-la-terre.js';
 import { revealTitles } from './titles.js';
 import { runMarquees } from './marquee.js';
 import { createRacket, racketAllowed } from './racket.js';
@@ -91,6 +92,7 @@ if (reducedMotion) {
   });
 
   animateTerre(document.querySelector('#terre-battue'));
+  runSoil(document.querySelector('#sous-la-terre'));
   runTimeline(document.querySelector('#histoire'));
   runFaceOff(document.querySelector('#face-a-face'));
   runCounters(document.querySelector('#numeros'));
