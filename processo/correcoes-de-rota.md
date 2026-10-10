@@ -51,3 +51,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 
 ## #11 · O detector da impeccable deu falso positivo (2026-10-10)
 - O `impeccable detect` acusou uma "hierarquia tipográfica plana" (h1 = 16px), porque leu o HTML sem o CSS, que é importado via JS pelo Vite. Na página renderizada, o h1 tem ~168px. Achado ignorado, com justificativa.
+
+## #12 · O canvas não respeitou top/bottom (2026-10-10)
+- **Sintoma (screenshot):** o vídeo do saque parava no meio da quadra, longe da linha de base.
+- **Causa:** `<canvas>` é um elemento substituído. Com `position: absolute`, `top` + `bottom` não esticam a altura dele, que segue a proporção intrínseca.
+- **Correção:** altura explícita (`height: 71%`). No mobile, a linha de base desceu para não cobrir o texto. Evidências em `evidencias/02/`.

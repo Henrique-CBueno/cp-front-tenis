@@ -145,6 +145,17 @@ a {
   background: var(--chalk);
 }
 
+/* O saque: fica atrás do texto e termina na linha de base */
+.court__serve {
+  position: absolute;
+  z-index: -1;
+  /* canvas é elemento substituído: top + bottom não esticam, a altura precisa ser explícita */
+  right: 0;
+  bottom: 29%;
+  width: min(62%, 1100px);
+  height: 71%;
+}
+
 /* Linha de base e linha central de saque, como fitas pintadas sobre o saibro */
 .court__line--base {
   left: 0;
@@ -224,9 +235,21 @@ h1 {
     max-width: calc(88% - var(--gutter));
   }
 
+  /* No celular a linha de base desce, para o saque caber entre o texto e ela */
+  .court__line--base {
+    top: 79%;
+  }
+
   .court__line--center {
     top: 5.5rem;
+    bottom: 21%;
     left: 88%;
+  }
+
+  .court__serve {
+    width: 100%;
+    bottom: 21%;
+    height: 42%;
   }
 
   .court > .cta--line {

@@ -24,3 +24,18 @@ test('o CTA "Garanta seu ingresso" leva à bilheteria oficial em nova aba', asyn
     await expect(cta).toHaveAttribute('rel', /noopener/);
   }
 });
+
+test('o canvas do saque desenha quadros depois de rolar pela seção', async ({ page }) => {
+  await page.goto('/');
+  await page.mouse.wheel(0, 900);
+  await page.waitForTimeout(800);
+
+  const painted = await page.locator('[data-serve-canvas]').evaluate((canvas) => {
+    const { data } = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
+    let opaque = 0;
+    for (let i = 3; i < data.length; i += 4) if (data[i] > 0) opaque++;
+    return opaque;
+  });
+
+  expect(painted).toBeGreaterThan(0);
+});

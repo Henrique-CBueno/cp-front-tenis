@@ -14,3 +14,7 @@
 - [ ] O hero passa a usar os quadros recortados; os testes 02 continuam verdes
 - [ ] Peso total do conjunto desktop registrado (meta: até ~8 MB)
 - [ ] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude, revisão do 02): os 90 quadros desktop de 1280×720, decodificados, ocupam ~330 MB de memória. Ao recortar, cortar cada quadro na caixa do jogador (não no frame inteiro) e medir o consumo. O script `tools/frames-provisorios.sh` já tem o trecho, o instante do impacto e a geração da lista dos conjuntos, então dá para estender.

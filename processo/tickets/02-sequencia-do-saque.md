@@ -4,13 +4,17 @@
 
 **Blocked by:** 01
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Vitest: progresso 0/1 e fora de [0,1] → primeiro/último quadro
-- [ ] Vitest: mapeamento proporcional ao número de quadros do conjunto ativo
-- [ ] Vitest: viewport estreito → mobile; largo → desktop; reduced-motion → estático (independe da largura)
-- [ ] Vitest: ordem de preload = primeiro quadro → quadros-chave → resto
-- [ ] Vitest: alvo não carregado → quadro carregado mais próximo; nada carregado → "nada a desenhar", sem erro
-- [ ] O primeiro quadro aparece quase imediatamente; o saque é fluido no scrub com pin (GSAP ScrollTrigger + Lenis)
-- [ ] Playwright: depois de rolar pela seção, o canvas tem pixels não transparentes
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Vitest: progresso 0/1 e fora de [0,1] → primeiro/último quadro
+- [x] Vitest: mapeamento proporcional ao número de quadros do conjunto ativo
+- [x] Vitest: viewport estreito → mobile; largo → desktop; reduced-motion → estático (independe da largura)
+- [x] Vitest: ordem de preload = primeiro quadro → quadros-chave → resto
+- [x] Vitest: alvo não carregado → quadro carregado mais próximo; nada carregado → "nada a desenhar", sem erro
+- [x] O primeiro quadro aparece quase imediatamente; o saque é fluido no scrub com pin (GSAP ScrollTrigger + Lenis)
+- [x] Playwright: depois de rolar pela seção, o canvas tem pixels não transparentes
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+
+- 2026-10-10 (Claude): concluído. 11 testes unitários escritos com TDD e 3 smoke tests verdes. Os quadros provisórios saem de `tools/frames-provisorios.sh`. Revisão de código: nenhum bug. Ponto de desempenho repassado ao ticket 03.

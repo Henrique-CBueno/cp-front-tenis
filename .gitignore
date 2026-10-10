@@ -4,3 +4,4 @@ test-results/
 playwright-report/
 .impeccable/
 tools/.venv/
+tools/source/
