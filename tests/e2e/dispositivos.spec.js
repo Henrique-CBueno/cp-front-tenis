@@ -65,6 +65,14 @@ for (const width of [360, 390]) {
         [...document.querySelectorAll('body *')]
           .filter((el) => el.getBoundingClientRect().right > window.innerWidth + 0.5)
           .filter((el) => !el.closest('svg') && getComputedStyle(el).position !== 'fixed')
+          // o que uma seção recorta de propósito (overflow hidden/clip) não vaza para a página
+          .filter((el) => {
+            for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+              const o = getComputedStyle(a).overflowX;
+              if ((o === 'hidden' || o === 'clip') && a.getBoundingClientRect().right <= window.innerWidth + 0.5) return false;
+            }
+            return true;
+          })
           .map((el) => el.className || el.tagName),
       );
       expect(offenders).toEqual([]);

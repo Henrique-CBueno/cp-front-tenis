@@ -47,3 +47,37 @@ test('a bola não some na Histoire: quica sobre a linha do tempo durante o pin',
   await expect(ball).toHaveCSS('opacity', '1', { timeout: 4000 });
   await expect(ball).toBeInViewport();
 });
+
+test('Face-à-face: ao fim do encontro, os dois estão em cor e os títulos são 3 e 14', async ({ page }) => {
+  await page.goto('/');
+  const top = await page.evaluate(() => document.querySelector('#face-a-face').getBoundingClientRect().top + scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y), top + 900 * 2.4);
+
+  const colorOf = (sel) => page.locator(sel).evaluate((img) => getComputedStyle(img).filter);
+  await expect.poll(() => colorOf('.face__player--guga img'), { timeout: 4000 }).toContain('grayscale(0)');
+  await expect.poll(() => colorOf('.face__player--nadal img'), { timeout: 4000 }).toContain('grayscale(0)');
+  await expect(page.locator('[data-face-count="3"]')).toHaveText('3');
+  await expect(page.locator('[data-face-count="14"]')).toHaveText('14');
+  await expect(page.locator('.face__line')).toHaveCSS('opacity', '1');
+});
+
+test('Face-à-face: no começo, os dois entram em tom de saibro', async ({ page }) => {
+  await page.goto('/');
+  const top = await page.evaluate(() => document.querySelector('#face-a-face').getBoundingClientRect().top + scrollY);
+  await page.evaluate((y) => window.scrollTo(0, y + 200), top);
+  await expect
+    .poll(() => page.locator('.face__player--guga img').evaluate((img) => getComputedStyle(img).filter), { timeout: 4000 })
+    .toContain('grayscale(1)');
+});
+
+test.describe('Face-à-face com prefers-reduced-motion', () => {
+  test.use({ reducedMotion: 'reduce' });
+
+  test('mostra direto o encontro: em cor, 3 e 14 e a frase', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('[data-face-count="14"]')).toHaveText('14');
+    const filter = await page.locator('.face__player--nadal img').evaluate((img) => getComputedStyle(img).filter);
+    expect(filter).toBe('none');
+    await expect(page.locator('.face__line')).toHaveCSS('opacity', '1');
+  });
+});

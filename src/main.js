@@ -14,6 +14,7 @@ import { createRally } from './rally.js';
 import { animateTerre } from './terre.js';
 import { drawHeart } from './legendes.js';
 import { runTimeline, runCounters } from './extras.js';
+import { runFaceOff } from './face.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -62,7 +63,7 @@ gsap.ticker.add(() => {
 // Fontes e imagens mudam a altura das seções: mede o traço de novo quando tudo carregou.
 window.addEventListener('load', remeasure);
 
-drawHeart(document.querySelector('#les-legendes'), { animate: !reducedMotion });
+drawHeart(document.querySelector('#guga'), { animate: !reducedMotion });
 
 if (reducedMotion) {
   rally.render(Infinity);
@@ -84,6 +85,7 @@ if (reducedMotion) {
 
   animateTerre(document.querySelector('#terre-battue'));
   runTimeline(document.querySelector('#histoire'));
+  runFaceOff(document.querySelector('#face-a-face'));
   runCounters(document.querySelector('#numeros'));
 
   // a ponta do traço acompanha o meio da tela

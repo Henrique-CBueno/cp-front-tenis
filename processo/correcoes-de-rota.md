@@ -108,3 +108,15 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 
 ## #22 · A bola da Histoire encostava no texto (2026-10-10)
 - O primeiro arco do quique entre as datas (70 px no desktop, 36 px no celular) fazia a bola tocar o parágrafo e o texto das datas. Baixado para 30 / 18 px.
+
+## #23 · Face-à-face: a rede riscava o texto e o celular ficou pequeno (2026-10-10)
+- **Primeira versão:**
+  - a linha central (a "rede") passava por cima de "FACE-À-FACE" e da frase;
+  - "KUERTEN" saía cortado;
+  - no celular, os dois ficavam minúsculos no rodapé, com o corpo terminando no ar.
+- **Correção:**
+  - fundo de saibro atrás do título e da frase (a rede passa por trás);
+  - nomes menores;
+  - no celular, jogadores a 60% da largura, sobrepostos na rede e erguidos;
+  - borda de baixo das fotos dissolvida no saibro.
+- **Testes ajustados com justificativa:** o teste "nenhum elemento passa da borda" acusava o nome e a foto do Nadal, que saem da tela de propósito mas são recortados pela seção. O teste agora ignora o que um ancestral com `overflow: hidden` já recorta.

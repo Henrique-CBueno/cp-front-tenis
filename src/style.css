@@ -722,7 +722,7 @@ h2 {
 
 .legendes > .lane {
   grid-column: 1;
-  grid-row: 1 / span 3;
+  grid-row: 1 / span 2;
 }
 
 .legendes__head {
@@ -768,10 +768,183 @@ h2 {
   margin-inline: -1rem;
 }
 
+/* Face-à-face: Guga × Nadal dos dois lados da rede. Fundo opaco: o traço do rali passa por trás. */
+.face {
+  position: relative;
+  height: 100svh;
+  min-height: 34rem;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--clay);
+}
+
+/* o grão por cima de tudo: une as duas fotos e disfarça a resolução baixa da do Guga */
+.face::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: url('/img/saibro.webp') 0 0 / 900px auto repeat;
+  mix-blend-mode: soft-light;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.face__net {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% - var(--line) / 2);
+  z-index: 3;
+  width: var(--line);
+  background: var(--chalk);
+  transform-origin: top;
+}
+
+.face__title,
+.face__line {
+  /* fundo de saibro: a rede passa por trás do texto, sem riscá-lo */
+  width: fit-content;
+  margin-inline: auto;
+  padding: 0.15em 0.6em;
+  background: var(--clay);
+}
+
+.face__title {
+  position: absolute;
+  top: clamp(4.5rem, 10vh, 6.5rem);
+  left: 0;
+  right: 0;
+  z-index: 4;
+  font-size: 1rem;
+  font-weight: 700;
+  font-stretch: 140%;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.face__line {
+  position: absolute;
+  top: calc(clamp(4.5rem, 10vh, 6.5rem) + 2.25rem);
+  left: 0;
+  right: 0;
+  z-index: 4;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  font-weight: 500;
+  font-stretch: 75%;
+  text-align: center;
+}
+
+.face__line strong {
+  font-weight: 800;
+}
+
+.face__name {
+  position: absolute;
+  top: 16%;
+  z-index: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 14.5vw, 16rem); /* "KUERTEN" cabe na metade da tela */
+  font-weight: 800;
+  font-stretch: 62%;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: rgb(246 239 226 / 0.13);
+  white-space: nowrap;
+}
+
+.face__name--guga {
+  right: 50%;
+  padding-right: 1.5rem;
+}
+
+.face__name--nadal {
+  left: 50%;
+  padding-left: 1.5rem;
+}
+
+.face__player {
+  position: absolute;
+  bottom: 0;
+  z-index: 2;
+  margin: 0;
+}
+
+.face__player img {
+  display: block;
+  width: 100%;
+  height: auto;
+  /* como o sacador do hero, os dois nascem do saibro: a borda de baixo da foto se dissolve */
+  -webkit-mask-image: linear-gradient(to top, transparent, #000 28%);
+  mask-image: linear-gradient(to top, transparent, #000 28%);
+}
+
+/* os dois encostam na rede: o braço do Guga e a raquete do Nadal quase se tocam */
+.face__player--guga {
+  right: 49%;
+  width: min(46vw, 62vh * 1.42);
+}
+
+.face__player--nadal {
+  left: 49%;
+  width: min(48vw, 62vh * 1.43);
+}
+
+.face__score {
+  position: absolute;
+  top: 34%;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+
+.face__count {
+  display: grid;
+  gap: 0.25rem;
+}
+
+.face__count--guga {
+  justify-items: end;
+  padding-right: clamp(1.5rem, 4vw, 4rem);
+}
+
+.face__count--nadal {
+  justify-items: start;
+  padding-left: clamp(1.5rem, 4vw, 4rem);
+}
+
+.face__count dt {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.face__count dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 8vw, 8rem);
+  font-weight: 600;
+  font-stretch: 140%;
+  line-height: 0.9;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Guga: o coração no saibro */
+.guga-chapter {
+  justify-items: stretch;
+}
+
 .guga {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) minmax(7rem, 0.4fr) minmax(0, 1fr);
   align-items: center;
   gap: clamp(2rem, 6vw, 6rem);
   text-align: left;
@@ -1143,7 +1316,36 @@ h3 {
   }
 
   .guga {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) 4.25rem;
+  }
+
+  .guga__heart,
+  .guga__story {
+    grid-column: 1;
+  }
+
+  .guga > .lane {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+  }
+
+  /* no celular os dois crescem e se sobrepõem na rede; o rosto de cada um continua dentro da tela */
+  .face__player--guga,
+  .face__player--nadal {
+    width: 60vw;
+    bottom: 14%;
+  }
+
+  .face__player--guga {
+    right: 46%;
+  }
+
+  .face__player--nadal {
+    left: 46%;
+  }
+
+  .face__score {
+    top: 30%;
   }
 
   /* no celular o espaço da bola é uma faixa estreita, alternando de lado; o número da marca fica de pé */
