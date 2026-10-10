@@ -53,3 +53,21 @@ test.describe('com prefers-reduced-motion', () => {
     expect(pinned).toBe(0);
   });
 });
+
+// O teste com isMobile usa o viewport de dispositivo; estes pegam transbordamentos em janelas estreitas comuns.
+for (const width of [360, 390]) {
+  test.describe(`numa janela de ${width}px`, () => {
+    test.use({ viewport: { width, height: 800 }, reducedMotion: 'reduce' });
+
+    test('nenhum elemento passa da borda direita', async ({ page }) => {
+      await page.goto('/');
+      const offenders = await page.evaluate(() =>
+        [...document.querySelectorAll('body *')]
+          .filter((el) => el.getBoundingClientRect().right > window.innerWidth + 0.5)
+          .filter((el) => !el.closest('svg') && getComputedStyle(el).position !== 'fixed')
+          .map((el) => el.className || el.tagName),
+      );
+      expect(offenders).toEqual([]);
+    });
+  });
+}

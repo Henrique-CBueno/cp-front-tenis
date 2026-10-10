@@ -28,3 +28,20 @@ ship / fix / rebuild / recapture.
 - **R3:** no desktop, a quadra do fechamento fica vazia do lado direito.
 
 Também corrigido nesta rodada: o `expo.out` do GSAP termina em 0,999, então os estados finais não chegavam a 1. Um teste pegou isso.
+
+## Rodada 2: fix (veredito do lote)
+Eu (aluno) escolhi **mais uma rodada**, e **ainda não publicar**.
+
+| Item | Veredito |
+|---|---|
+| Fix 1, raquete | **partial**: resolvido no desktop (o canvas encosta no topo e a raquete sai pela moldura); no mobile, o braço se dissolve no meio da composição |
+| Fix 8, camadas com material real | **partial**: sem mudança (limitação de licença) |
+| R1, traço tachando "MARCA 0N" | **resolved**: o rótulo fica abaixo do fio |
+| R2, linha central e ingresso quebrado no mobile | **resolved**: o ingresso cabe numa linha em 360/390; teste novo contra transbordamento, validado por mutação |
+| R3, quadra vazia no fechamento | **resolved**: o ingresso (Marca 04) pousa na caixa da direita da quadra |
+
+Regressões novas: nenhuma. **Pendências:** só as duas limitações de material. Para saírem da lista, eu preciso aceitá-las por escrito.
+- **Raquete no mobile:** no contato, a raquete está acima da borda do vídeo original e não há material para recuperá-la.
+- **Camadas sem foto:** calcário, clínquer, cascalho e pedras não têm foto com licença em mãos.
+
+**Achado do processo:** o teste antigo "sem scroll horizontal" não pegou um transbordamento real, porque rodava com `isMobile`. Foram adicionados testes em janelas de 360/390 px.

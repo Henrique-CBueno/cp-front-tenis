@@ -223,7 +223,7 @@ a {
   right: 2%;
   bottom: 20%;
   width: min(58%, 1040px);
-  height: 70%;
+  height: 80%;
   -webkit-mask-image: linear-gradient(to top, transparent, #000 16%);
   mask-image: linear-gradient(to top, transparent, #000 16%);
 }
@@ -714,21 +714,48 @@ h3 {
   background: var(--chalk);
 }
 
-/* 2. a marca fica no traço: oval e número na mesma linha */
+/* a marca fica no traço: o número ao lado do oval, mas abaixo do fio (o traço sai na altura do centro do oval) */
 .chapter .mark {
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.9rem;
+}
+
+.chapter .mark .mark__caption {
+  margin-top: calc(clamp(72px, 7.5vw, 120px) / 4.4 + 0.5rem);
 }
 
 .chapter--right .mark {
   flex-direction: row-reverse;
 }
 
-/* Jeu, Set et Match: termina como começou, numa quadra; a última marca é o ingresso */
+/* Jeu, Set et Match: termina como começou, numa quadra; a última marca é o ingresso, que pousa na caixa da direita */
 .match {
   min-height: 100svh;
   isolation: isolate;
+  grid-template-columns: 61% minmax(0, 1fr);
+  align-content: stretch;
+  align-items: center;
+  padding-bottom: 22svh;
+}
+
+.match > h2,
+.match > .chapter__lede {
+  grid-column: 1;
+  align-self: end;
+}
+
+.match > .chapter__lede {
+  align-self: start;
+}
+
+.match__landing {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  justify-self: center;
+  display: grid;
+  gap: 1rem;
+  padding-left: var(--gutter);
 }
 
 .match__lines {
@@ -776,8 +803,9 @@ h3 {
 
 .ticket__label {
   align-self: center;
+  white-space: nowrap;
   padding: 1.1rem 0.6rem 1.1rem 1.4rem;
-  font-size: clamp(1.125rem, 1.6vw, 1.5rem);
+  font-size: clamp(1.0625rem, 1.3vw, 1.25rem);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -851,12 +879,49 @@ h3 {
     top: 79%;
   }
 
+  /* no celular o ingresso cabe numa linha e a linha central sai do fechamento */
+  .ticket__stub {
+    padding: 0.7rem 0.75rem;
+  }
+
+  .ticket__stub .mark__oval {
+    width: 52px;
+  }
+
+  .ticket {
+    max-width: 100%;
+  }
+
   .ticket__label {
-    padding-inline: 1rem 0.4rem;
+    padding-inline: 0.9rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.02em;
   }
 
   .ticket .cta__arrow {
-    margin-right: 1rem;
+    display: none;
+  }
+
+
+  .match {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .match__landing {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    padding-left: 0;
+  }
+
+  .match__lines .court__line--center {
+    display: none;
+  }
+
+  /* a raquete se dissolve na borda de cima do saque, em vez de ser cortada */
+  .court__serve {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 84%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 14%, #000 84%, transparent);
   }
 
   .court__line--center {
