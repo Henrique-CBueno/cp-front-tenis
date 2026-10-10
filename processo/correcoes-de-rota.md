@@ -56,3 +56,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Sintoma (screenshot):** o vídeo do saque parava no meio da quadra, longe da linha de base.
 - **Causa:** `<canvas>` é um elemento substituído. Com `position: absolute`, `top` + `bottom` não esticam a altura dele, que segue a proporção intrínseca.
 - **Correção:** altura explícita (`height: 71%`). No mobile, a linha de base desceu para não cobrir o texto. Evidências em `evidencias/02/`.
+
+## #13 · Chroma/luma-key e "placa limpa" não servem para este vídeo (2026-10-10)
+- **Plano da spec:** comparar luma-key do ffmpeg × rembg.
+- **Resultado:** os keys removem o céu, mas a camisa branca some junto e o alambrado fica.
+- **Tentativa extra da IA:** montar uma placa limpa do fundo (a câmera parecia parada) para recuperar raquete e bola pela diferença. **Falhou:** a câmera se move.
+- **Ficou:** rembg (birefnet-lite). A bola vira elemento próprio da página. Ver `decisoes/008`.

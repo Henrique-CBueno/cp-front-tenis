@@ -1,10 +1,17 @@
 {
-  "source": "Mixkit 873 (provis\u00f3rio, sem recorte)",
+  "source": "Mixkit 873, recortado com rembg (birefnet-general-lite)",
   "mobileMaxWidth": 720,
   "keyframeEvery": 8,
   "impactProgress": 0.852,
+  "crop": {
+    "x": 0.06640625,
+    "y": 0.0,
+    "width": 0.63046875,
+    "height": 1.0
+  },
   "sets": {
     "desktop": [
+      "/frames/desktop/000.webp",
       "/frames/desktop/001.webp",
       "/frames/desktop/002.webp",
       "/frames/desktop/003.webp",
@@ -93,10 +100,10 @@
       "/frames/desktop/086.webp",
       "/frames/desktop/087.webp",
       "/frames/desktop/088.webp",
-      "/frames/desktop/089.webp",
-      "/frames/desktop/090.webp"
+      "/frames/desktop/089.webp"
     ],
     "mobile": [
+      "/frames/mobile/000.webp",
       "/frames/mobile/001.webp",
       "/frames/mobile/002.webp",
       "/frames/mobile/003.webp",
@@ -140,8 +147,7 @@
       "/frames/mobile/041.webp",
       "/frames/mobile/042.webp",
       "/frames/mobile/043.webp",
-      "/frames/mobile/044.webp",
-      "/frames/mobile/045.webp"
+      "/frames/mobile/044.webp"
     ],
     "static": [
       "/frames/static/impacto.webp"

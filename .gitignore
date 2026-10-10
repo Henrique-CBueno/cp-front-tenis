@@ -5,3 +5,4 @@ playwright-report/
 .impeccable/
 tools/.venv/
 tools/source/
+tools/work/

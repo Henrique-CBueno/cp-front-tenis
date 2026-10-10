@@ -13,11 +13,11 @@ export function createServeCanvas(canvas) {
     draw(frame);
   }
 
-  // "cover" ancorado embaixo: os pés do jogador ficam na linha de base.
+  // "contain" ancorado embaixo: o jogador recortado inteiro, apoiado na linha de base.
   function draw(frame) {
     if (!frame || frame === current) return;
     current = frame;
-    const scale = Math.max(canvas.width / frame.naturalWidth, canvas.height / frame.naturalHeight);
+    const scale = Math.min(canvas.width / frame.naturalWidth, canvas.height / frame.naturalHeight);
     const w = frame.naturalWidth * scale;
     const h = frame.naturalHeight * scale;
     context.clearRect(0, 0, canvas.width, canvas.height);

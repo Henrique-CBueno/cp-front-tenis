@@ -4,17 +4,18 @@
 
 **Blocked by:** 02
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Script reproduzível: download/trecho → ffmpeg → remoção de fundo → WebP com alpha → lista dos conjuntos
-- [ ] rembg roda numa venv local (não é instalado no sistema); o luma-key do ffmpeg é testado como comparação
-- [ ] Comparação visual dos dois métodos (cabelo, raquete, bola) salva em `processo/pesquisa/` e decisão em `processo/decisoes/`
-- [ ] A bola continua visível no lançamento depois do recorte
-- [ ] Os conjuntos desktop, mobile e estático existem e a lista os descreve (contagem, dimensões)
-- [ ] O hero passa a usar os quadros recortados; os testes 02 continuam verdes
-- [ ] Peso total do conjunto desktop registrado (meta: até ~8 MB)
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Script reproduzível: download/trecho → ffmpeg → remoção de fundo → WebP com alpha → lista dos conjuntos
+- [x] rembg roda numa venv local (não é instalado no sistema); o luma-key do ffmpeg é testado como comparação
+- [x] Comparação visual dos dois métodos (cabelo, raquete, bola) salva em `processo/pesquisa/` e decisão em `processo/decisoes/`
+- [x] A bola continua visível no lançamento depois do recorte
+- [x] Os conjuntos desktop, mobile e estático existem e a lista os descreve (contagem, dimensões)
+- [x] O hero passa a usar os quadros recortados; os testes 02 continuam verdes
+- [x] Peso total do conjunto desktop registrado (meta: até ~8 MB)
+- [x] Log da etapa em `processo/prompts/`
 
 ## Comments
 
 - 2026-10-10 (Claude, revisão do 02): os 90 quadros desktop de 1280×720, decodificados, ocupam ~330 MB de memória. Ao recortar, cortar cada quadro na caixa do jogador (não no frame inteiro) e medir o consumo. O script `tools/frames-provisorios.sh` já tem o trecho, o instante do impacto e a geração da lista dos conjuntos, então dá para estender.
+- 2026-10-10 (Claude): concluído com rembg `birefnet-general-lite` (decisão 008). O luma-key foi testado e reprovado. Desktop com 2,3 MB, abaixo da meta de 8 MB. A bola não é preservada por nenhum método e vira elemento próprio no ticket 04. A raquete some nos quadros ~28–50.
