@@ -110,11 +110,9 @@ const pinOf = (page) =>
     const dot = sec.querySelector('.timeline__dot');
     let y = 0;
     for (let n = dot; n && n !== sec; n = n.offsetParent) y += n.offsetTop;
-    // o pin começa com a bola 60 px acima da linha, à direita da frase
-    const start = top + y - 60 - innerHeight / 2;
-    // as fases do pin (em extras.js): voo até 1891, espera, linha correndo, espera, salto para fora
-    const vh = innerHeight;
-    return { start, end: start + spacer.offsetHeight - sec.offsetHeight, glide: vh * 0.45, hold: vh * 0.2, leap: vh * 0.45 };
+    // o pin começa quando a bola pousa em 1891 (no meio da tela); espera, a linha corre, espera em 2020
+    const start = top + y - innerHeight / 2;
+    return { start, end: start + spacer.offsetHeight - sec.offsetHeight, hold: innerHeight * 0.25 };
   });
 
 async function glideTo(page, y) {
@@ -142,20 +140,16 @@ test('Histoire: uma bola só do começo ao fim; ela espera na 1ª data e na últ
     await glideTo(page, y);
     expect(await visibleBalls(page)).toBe(1);
   }
-  await glideTo(page, pin.start + pin.glide * 0.5); // planando até 1891
-  expect(await visibleBalls(page)).toBe(1);
-  await glideTo(page, pin.start + pin.glide + pin.hold * 0.5); // pousou e espera
+  await glideTo(page, pin.start + pin.hold * 0.5); // pousou em 1891 e espera
   expect(await visibleBalls(page)).toBe(1);
   expect(await ballOnDot(page, 0)).toBeLessThan(14);
   for (const f of [0.3, 0.6]) {
     await glideTo(page, pin.start + (pin.end - pin.start) * f);
     expect(await visibleBalls(page)).toBe(1);
   }
-  await glideTo(page, pin.end - pin.leap - pin.hold * 0.5); // espera em 2020
+  await glideTo(page, pin.end - pin.hold * 0.5); // espera em 2020
   expect(await visibleBalls(page)).toBe(1);
   expect(await ballOnDot(page, -1)).toBeLessThan(14);
-  await glideTo(page, pin.end - pin.leap * 0.5); // saltando para fora da linha
-  expect(await visibleBalls(page)).toBe(1);
   for (const y of [pin.end + 200, pin.end + 700]) {
     await glideTo(page, y);
     expect(await visibleBalls(page)).toBe(1);
@@ -166,10 +160,7 @@ test('Histoire: uma bola só do começo ao fim; ela espera na 1ª data e na últ
 const overlayCrossings = (page, which) =>
   page.evaluate((w) => {
     const sec = document.querySelector('#histoire');
-    // a ordem dos caminhos: entrada, saída, os arcos dos pulos e, no desktop, o voo até 1891 e o salto de 2020
-    const paths = [...sec.querySelectorAll('.histoire__trace path')];
-    const pick = { entrada: 0, saida: 1, voo: paths.length - 2, salto: paths.length - 1 };
-    const path = paths[pick[w]];
+    const path = sec.querySelectorAll('.histoire__trace path')[w === 'entrada' ? 0 : 1];
     const dash = getComputedStyle(path).strokeDasharray.split(',').map(parseFloat);
     const [from, to] = w === 'saida' ? [dash[1], dash[1] + dash[2]] : [0, dash[0]];
     const ctm = path.getScreenCTM();
@@ -195,18 +186,14 @@ test('Histoire: o traço desenhado sobre a cena nunca cruza um texto (entrada e 
   await page.goto('/');
   await page.waitForLoadState('load');
   const pin = await pinOf(page);
-  await glideTo(page, pin.start + pin.glide + 10);
-  for (const which of ['entrada', 'voo']) {
-    const { drawn, hits } = await overlayCrossings(page, which);
-    expect(drawn).toBeGreaterThan(50);
-    expect(hits).toEqual([]);
-  }
+  await glideTo(page, pin.start + 10);
+  const entry = await overlayCrossings(page, 'entrada');
+  expect(entry.drawn).toBeGreaterThan(50);
+  expect(entry.hits).toEqual([]);
   await glideTo(page, pin.end + 900);
-  for (const which of ['saida', 'salto']) {
-    const { drawn, hits } = await overlayCrossings(page, which);
-    expect(drawn).toBeGreaterThan(50);
-    expect(hits).toEqual([]);
-  }
+  const exit = await overlayCrossings(page, 'saida');
+  expect(exit.drawn).toBeGreaterThan(50);
+  expect(exit.hits).toEqual([]);
 });
 
 test.describe('Histoire no celular', () => {

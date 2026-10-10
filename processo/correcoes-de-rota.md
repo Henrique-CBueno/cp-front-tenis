@@ -176,3 +176,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Correção:**
   - os movimentos laterais passaram a acontecer **com a seção presa**: um voo planado até 1891 e um salto em arco para fora de 2020, os dois conduzidos pelo scroll e desenhados como rastro;
   - no celular, um vão maior entre o texto e a linha, para a curva até 1891.
+
+## #31 · "Piorou": a IA parou de tentar e perguntou (2026-10-10)
+- **O que aconteceu:** depois de três versões da chegada e da saída da Histoire, eu disse que piorou.
+- **O que a IA fez:** em vez de uma quarta tentativa, mostrou três esboços (vir pela esquerda / a linha correr sob a bola / voltar ao da rodada 2) e me deixou escolher.
+- **Minha escolha:** vir pela esquerda, com o título passando para a direita, e sem os arcos.
+- **Lição:** quando a correção vira tentativa e erro sobre algo visual, um esboço (ASCII) da opção resolve mais rápido do que mais código.

@@ -631,15 +631,21 @@ h2 {
    Fundo opaco: o traço do rali passa por trás, como passa por trás das camadas. */
 .histoire {
   background: var(--clay);
+  /* a coluna fica na largura da tela (a linha do tempo é mais larga e corre recortada) */
+  grid-template-columns: minmax(0, 1fr);
   justify-items: stretch;
   align-content: center;
   gap: clamp(2.5rem, 6vh, 4rem);
   overflow: hidden;
 }
 
+/* o título e a frase ficam à direita: a bola desce pela esquerda até 1891 */
 .histoire__head {
   display: grid;
   gap: 1.5rem;
+  justify-self: end;
+  justify-items: end;
+  text-align: right;
 }
 
 .timeline__ball {
@@ -1917,11 +1923,6 @@ h3 {
 
   .respiro {
     height: clamp(9rem, 22vh, 14rem);
-  }
-
-  /* um vão maior entre a frase e a linha: é por ali que a bola faz a curva até 1891 */
-  .histoire {
-    row-gap: clamp(5.5rem, 13vh, 7rem);
   }
 
   /* no celular a linha do tempo fica de pé: a linha à esquerda, as datas descendo */
