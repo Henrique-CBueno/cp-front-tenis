@@ -103,3 +103,18 @@ test.describe('Sous la Terre com prefers-reduced-motion', () => {
     expect(cut).toBe('1');
   });
 });
+
+test('Sous la Terre ocupa a tela inteira enquanto cava: nada da próxima seção aparece embaixo', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('load');
+  const { start, h } = await pinOf(page);
+  for (const x of [0.05, 1.3, 3.3]) {
+    await glideTo(page, start + h * x);
+    const [top, below] = await page.evaluate(() => {
+      const r = document.querySelector('#sous-la-terre').getBoundingClientRect();
+      return [r.top, innerHeight - r.bottom];
+    });
+    expect(Math.abs(top)).toBeLessThan(1);
+    expect(below).toBeLessThan(1);
+  }
+});

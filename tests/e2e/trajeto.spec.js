@@ -94,3 +94,23 @@ test.describe('quiques com prefers-reduced-motion', () => {
     expect(scales.every((s) => Math.abs(s - 0.96) < 0.001)).toBe(true);
   });
 });
+
+test('a bola quica por cima das marcas dos capítulos, sem sumir debaixo delas', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForLoadState('load');
+  const y = await page.evaluate(() => {
+    const oval = document.querySelector('#terre-battue .mark__oval');
+    return oval.getBoundingClientRect().top + scrollY + oval.offsetHeight / 2;
+  });
+  for (let s = 0; s < y - 450; s += 250) {
+    await page.evaluate((v) => window.scrollTo(0, v), s);
+    await page.waitForTimeout(30);
+  }
+  await page.evaluate((v) => window.scrollTo(0, v), y - 450 + 4);
+  await page.waitForTimeout(1500);
+  const top = await page.evaluate(() => {
+    const r = document.querySelector('[data-rally-ball]').getBoundingClientRect();
+    return document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2).matches('[data-rally-ball]');
+  });
+  expect(top).toBe(true);
+});

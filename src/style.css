@@ -386,10 +386,18 @@ h1 {
   }
 }
 
-/* O rali: depois do saque, um traço contínuo desce a página ligando as marcas.
-   Traço e bola correm no mesmo plano, por trás dos blocos opacos (fotos, camadas). */
+/* O rali: depois do saque, um traço contínuo desce a página ligando as marcas. A bola fica acima do conteúdo
+   das seções (quica por cima das marcas, sem sumir debaixo delas); as cenas opacas sobem um nível a mais, e é
+   atrás delas que a bola passa. O traço e o chão (marcas dos quiques, pó) ficam por baixo de tudo. */
 .rally__ball {
-  z-index: -1;
+  z-index: 1;
+}
+
+.soil,
+.histoire,
+.face,
+.marquee {
+  z-index: 2;
 }
 
 /* o chão do rali: mini marcas dos quiques e o pó, no mesmo plano do traço */
@@ -425,7 +433,7 @@ h1 {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: 1; /* com a bola, acima das marcas */
   width: 22px;
   height: 8px;
   margin: -4px 0 0 -11px;
@@ -658,7 +666,7 @@ h2 {
 
 .soil__mark {
   left: 62%;
-  top: 52%;
+  top: 50%;
   width: clamp(72px, 7.5vw, 120px);
   margin: calc(clamp(72px, 7.5vw, 120px) / -4.4) 0 0 calc(clamp(72px, 7.5vw, 120px) / -2);
 }
@@ -2102,7 +2110,7 @@ h3 {
 
   .soil__mark {
     left: 66%;
-    top: 52%;
+    top: 50%;
   }
 
   .soil__gauge {

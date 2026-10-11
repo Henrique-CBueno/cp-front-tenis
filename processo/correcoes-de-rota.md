@@ -198,3 +198,14 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O que o revisor apontou:** sem movimento, a cena não prende e não recebe a bola. O traço do rali termina no topo dela e a marca do tijolo fica solta, sem ligação com ele.
 - **Decisão da IA, para eu revisar:** é a mesma situação da Histoire na correção #28. A cena é opaca e estática nesse modo, e o traço segue por trás dela. A marca do tijolo aparece feita, como todas as marcas no reduced-motion.
 - **Por quê:** ligar o traço à marca exigiria um caminho só para esse modo, por cima de uma cena que é uma pilha de cinco telas.
+
+## #34 · A bola sumia debaixo das marcas, e sobrava uma faixa laranja em Sous la Terre (2026-10-10)
+- **O que eu vi:**
+  - a bola não quicava por cima da marca, desaparecia nela;
+  - ao entrar nas camadas, ficava uma faixa laranja da próxima seção embaixo.
+- **Causa 1:** desde a rodada 1, a bola corria num plano abaixo do conteúdo, para passar por trás das cenas opacas. Por isso também passava por baixo dos ovais das marcas.
+- **Causa 2:** a marca do tijolo fora de 50% da altura fazia a cena prender 18 px acima da tela.
+- **Correção:**
+  - a bola e a sombra ficam acima do conteúdo, e as cenas opacas um nível acima dela;
+  - a marca do tijolo foi para o meio exato;
+  - 2 testes novos.
