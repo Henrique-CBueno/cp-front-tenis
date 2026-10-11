@@ -2089,10 +2089,10 @@ h3 {
     width: 2.25rem;
   }
 
-  /* no celular o rótulo de tributo sai do topo (o aviso inteiro está no rodapé); a marca e o ingresso
-     encolhem para caberem lado a lado */
+  /* no celular a marca e o ingresso encolhem para caberem lado a lado; o rótulo "tributo de fã" fica,
+     empilhado sob o wordmark (o logo oficial nunca aparece sem ele, decisão 016) */
   .topbar .brand__tag {
-    display: none;
+    font-size: 0.625rem;
   }
 
   .topbar .brand {

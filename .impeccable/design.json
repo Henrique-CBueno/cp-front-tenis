@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-10T21:07:50.184201+00:00",
+  "generatedAt": "2026-10-11T00:37:15.007700+00:00",
   "title": "Design System: La Trace",
   "extensions": {
     "colorMeta": {
@@ -218,7 +218,7 @@
       },
       "small": {
         "displayName": "Small",
-        "purpose": "Texto do rodapé (aviso e créditos) e nome da taça no Palmarès."
+        "purpose": "Nome da taça no Palmarès e tamanho de base do rodapé; o aviso do rodapé desce para 0,8125rem (0,75rem no celular)."
       },
       "label-lg": {
         "displayName": "Label grande",
@@ -226,7 +226,7 @@
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Parágrafos de capítulo, até 52ch."
+        "purpose": "Parágrafos de capítulo, até 52ch; também as listas da página de créditos, na coluna de 76ch (títulos das listas em 1rem, 700, 125%, caixa alta)."
       },
       "label": {
         "displayName": "Label",
@@ -259,6 +259,14 @@
       "depth-gauge": {
         "displayName": "Medidor",
         "purpose": "Exceção de cena: o numeral da profundidade em Sous la Terre, 140% e tabular; 1,75rem no celular. A régua do corte usa a mesma receita em 0,9375rem (0,75rem no celular)."
+      },
+      "brand-tag": {
+        "displayName": "Rótulo da marca",
+        "purpose": "Exceção de identidade (rodada 4): \"tributo de fã\" no topo e \"Roland-Garros por um fã brasileiro\" no rodapé, sob o wordmark e ao lado do logo; o menor texto da página (0,6875rem), caixa alta, 700, 0,08em, sem quebra. Sai no celular. Nunca para texto corrido."
+      },
+      "credits-title": {
+        "displayName": "Título dos créditos",
+        "purpose": "Exceção de identidade (rodada 4): o h1 da página de créditos, a receita condensada (62%) dos títulos num degrau abaixo do headline. Só nessa página."
       }
     },
     "shadows": [
@@ -459,7 +467,7 @@
       {
         "name": "mobile",
         "value": "720px",
-        "purpose": "max-width: uma coluna, faixa da bola de 4,25rem alternando de lado, linha do tempo de pé, Sous la Terre com o texto no pé e o medidor no alto à direita, Palmarès em lista com revelação pelo centro da tela."
+        "purpose": "max-width: uma coluna, faixa da bola de 4,25rem alternando de lado, linha do tempo de pé, Sous la Terre com o texto no pé e o medidor no alto à direita, Palmarès em lista com revelação pelo centro da tela. No topo, logo 2,25rem, sem rótulo, wordmark 1,0625rem e CTA 0,75rem; rodapé em uma coluna, seções em duas colunas, sem o ingresso, aviso em 0,75rem."
       },
       {
         "name": "mobile-short",
@@ -486,7 +494,7 @@
       "name": "CTA discreto",
       "kind": "button",
       "refersTo": "cta-quiet",
-      "description": "O CTA da barra do topo: só texto sublinhado.",
+      "description": "O CTA da barra do topo: só texto sublinhado (\"Garanta seu ingresso\"; \"Voltar ao saibro\" na página de créditos). O sublinhado de 2px é uma linha de quadra, não uma faixa lateral; o aviso do detector sobre essa borda é aceito.",
       "html": "<div class=\"ds-court\"><a class=\"ds-cta-quiet\" href=\"#\">Garanta seu ingresso</a></div>",
       "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;}.ds-cta-quiet{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--chalk);padding:.55em 0;border-bottom:2px solid currentColor;transition:color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-cta-quiet:hover{color:var(--chalk-soft);}.ds-cta-quiet:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}"
     },
@@ -494,9 +502,17 @@
       "name": "Navegação do topo",
       "kind": "nav",
       "refersTo": "",
-      "description": "Wordmark expandido, os cinco nomes das quadras e CTA discreto, sobre degradê do saibro; 'Le Service' sai até 1180px e a navegação some até 1000px.",
-      "html": "<header class=\"ds-topbar\"><a class=\"ds-wordmark\" href=\"#\">la trace</a><nav class=\"ds-nav\"><a href=\"#\">Le Service</a><a href=\"#\">Terre Battue</a><a href=\"#\">Les Légendes</a><a href=\"#\">Palmarès</a><a href=\"#\">Jeu, Set et Match</a></nav></header>",
-      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 24px 1.75rem;background:linear-gradient(var(--clay) 55%,transparent);color:var(--chalk);}.ds-wordmark{font-family:var(--font-display);font-size:1.25rem;font-weight:800;font-stretch:150%;letter-spacing:-.02em;text-decoration:none;color:inherit;}.ds-nav{display:flex;gap:1.5rem;white-space:nowrap;}.ds-nav a{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:inherit;padding-block:.55em;border-bottom:2px solid transparent;transition:border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-nav a:hover{border-color:var(--chalk);}.ds-nav a:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}"
+      "description": "A marca (logo oficial em giz, wordmark expandido e o rótulo \"tributo de fã\"), os cinco nomes das quadras e o CTA discreto, sobre degradê do saibro; 'Le Service' sai até 1180px e a navegação some até 1000px. O logo aqui é um marcador: na página, é o SVG em giz de public/img/marca.",
+      "html": "<header class=\"ds-topbar\"><a class=\"ds-brand\" href=\"#\"><span class=\"ds-logo\" role=\"img\" aria-label=\"Logo de Roland-Garros (versão em giz)\"></span><span class=\"ds-name\"><span class=\"ds-wordmark\">la trace</span><span class=\"ds-tag\">tributo de fã</span></span></a><nav class=\"ds-nav\"><a href=\"#\">Le Service</a><a href=\"#\">Terre Battue</a><a href=\"#\">Les Légendes</a><a href=\"#\">Palmarès</a><a href=\"#\">Jeu, Set et Match</a></nav><a class=\"ds-cta-quiet\" href=\"#\">Garanta seu ingresso</a></header>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 24px 1.75rem;background:linear-gradient(var(--clay) 55%,transparent);color:var(--chalk);}.ds-brand{display:inline-flex;align-items:center;gap:.75rem;text-decoration:none;color:inherit;}.ds-logo{display:block;width:2.75rem;aspect-ratio:1;flex-shrink:0;border-radius:50%;border:3px solid var(--chalk);}.ds-name{display:grid;gap:.15rem;line-height:1;}.ds-wordmark{font-family:var(--font-display);font-size:1.25rem;font-weight:800;font-stretch:150%;letter-spacing:-.02em;}.ds-tag{font-family:var(--font-text);font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}.ds-nav{display:flex;gap:1.5rem;white-space:nowrap;}.ds-nav a{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:inherit;padding-block:.55em;border-bottom:2px solid transparent;transition:border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-nav a:hover{border-color:var(--chalk);}.ds-nav a:focus-visible,.ds-brand:focus-visible,.ds-cta-quiet:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}.ds-cta-quiet{font-family:var(--font-text);font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:inherit;padding:.55em 0;border-bottom:2px solid currentColor;transition:color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-cta-quiet:hover{color:var(--chalk-soft);}"
+    },
+    {
+      "name": "Rodapé compacto",
+      "kind": "nav",
+      "refersTo": "",
+      "description": "Faixa de saibro escuro (≤ 40% da tela): a marca à esquerda, as seções ao centro, o ingresso à direita e o aviso de tributo em linha inteira, sob um fio de cal a 0,35, com o link para a página de créditos. No celular: uma coluna, seções em duas colunas, sem o ingresso.",
+      "html": "<footer class=\"ds-footer\"><a class=\"ds-brand ds-brand--footer\" href=\"#\"><span class=\"ds-logo\" role=\"img\" aria-label=\"Logo de Roland-Garros (versão em giz)\"></span><span class=\"ds-name\"><span class=\"ds-wordmark\">la trace</span><span class=\"ds-tag\">Roland-Garros por um fã brasileiro</span></span></a><nav class=\"ds-fnav\"><a href=\"#\">Le Service</a><a href=\"#\">Terre Battue</a><a href=\"#\">Les Légendes</a><a href=\"#\">Palmarès</a><a href=\"#\">Jeu, Set et Match</a></nav><a class=\"ds-cta-line\" href=\"#\">Garanta seu ingresso</a><p class=\"ds-disclaimer\">Tributo de fã · Projeto acadêmico (FIAP) · Sem vínculo com a FFT nem com Roland-Garros. <a href=\"#\">Créditos e fontes</a></p></footer>",
+      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-footer{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:1.5rem clamp(1.5rem,4vw,4rem);padding:clamp(2.5rem,5vw,3.5rem) 24px 1.75rem;background:var(--clay-deep);color:var(--chalk);font-family:var(--font-text);font-size:.9375rem;}.ds-brand{display:inline-flex;align-items:center;gap:.75rem;text-decoration:none;color:inherit;}.ds-logo{display:block;width:2.75rem;aspect-ratio:1;flex-shrink:0;border-radius:50%;border:3px solid var(--chalk);}.ds-name{display:grid;gap:.15rem;line-height:1;}.ds-wordmark{font-family:var(--font-display);font-size:1.25rem;font-weight:800;font-stretch:150%;letter-spacing:-.02em;}.ds-tag{font-family:var(--font-text);font-size:.6875rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;white-space:nowrap;}.ds-brand--footer .ds-logo{width:3.5rem;}.ds-brand--footer .ds-wordmark{font-size:1.5rem;}.ds-fnav{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.75rem;}.ds-fnav a{font-size:.8125rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:inherit;padding-block:.45em;border-bottom:2px solid transparent;transition:border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-fnav a:hover{border-color:var(--chalk);}.ds-cta-line{display:inline-flex;align-items:center;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-decoration:none;color:var(--chalk);font-size:1rem;padding:1em 1.4em;border:3px solid var(--chalk);transition:background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),color 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-cta-line:hover{background:var(--chalk);color:var(--clay-deep);}.ds-footer a:focus-visible{outline:3px solid var(--chalk);outline-offset:4px;}.ds-disclaimer{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 2rem;margin:0;padding-top:1.25rem;border-top:1px solid rgb(246 239 226 / .35);font-size:.8125rem;color:var(--chalk-soft);}.ds-disclaimer a{color:var(--chalk);font-weight:700;}@media (max-width:720px){.ds-footer{grid-template-columns:minmax(0,1fr);gap:1rem;}.ds-fnav{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;}.ds-cta-line,.ds-brand--footer .ds-tag{display:none;}.ds-disclaimer{font-size:.75rem;}}"
     },
     {
       "name": "A Marca",
@@ -597,7 +613,7 @@
   ],
   "narrative": {
     "northStar": "A página é a quadra",
-    "overview": "O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o rali, a bola que nasce no saque real do hero e desce a página inteira num traço contínuo, quicando entre as seções e deixando uma marca em cada quique.\n\nA densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás, e a escavação de Sous la Terre, que desce pelos materiais debaixo da quadra) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro \"hype\", logo oficial ou imitação do site oficial.",
+    "overview": "O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o rali, a bola que nasce no saque real do hero e desce a página inteira num traço contínuo, quicando entre as seções e deixando uma marca em cada quique.\n\nA densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás, e a escavação de Sous la Terre, que desce pelos materiais debaixo da quadra) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro \"hype\", imitação do site oficial. O logo oficial de Roland-Garros entrou na rodada 4, por decisão do aluno (decisão 016), sempre acompanhado do aviso de tributo de fã.",
     "keyCharacteristics": [
       "Fundo saibro contínuo; o rodapé e as faixas do marquee descem um tom (saibro escuro), nunca mudam de material.",
       "Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo, a rede no Face-à-face.",
@@ -635,7 +651,7 @@
       },
       {
         "name": "The Stretch Rule",
-        "body": "A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, medidas (o medidor e a régua de Sous la Terre), marquee e títulos do rodapé. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.",
+        "body": "A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, medidas (o medidor e a régua de Sous la Terre), marquee e títulos das listas de créditos. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.",
         "section": "typography"
       },
       {
@@ -689,7 +705,7 @@
       "**Don't** deixar o traço do rali cruzar títulos ou parágrafos; ele corre pelas faixas da bola e pelos respiros.",
       "**Don't** usar sombras pretas, neutras ou em bloco; toda sombra é saibro na sombra.",
       "**Don't** reutilizar os tamanhos de cena (nome-fantasma, contagem de cena, marquee, ano do campeão, linha de cena) fora das suas cenas.",
-      "**Don't** usar neon, modo escuro, o logo oficial ou a linguagem visual do site oficial de Roland-Garros.",
+      "**Don't** usar neon, modo escuro ou a linguagem visual do site oficial de Roland-Garros. O logo oficial só aparece com o aviso de tributo por perto (topo e rodapé) e na versão em giz sobre o saibro; a versão em cor fica para o favicon, os ícones e o cartão de compartilhamento.",
       "**Don't** escrever texto corrido sobre o saibro em cor diferente da cal: o contraste do saibro com a cal é 4,63:1, sem folga para tons mais escuros. Cal translúcida só em ornamento `aria-hidden` (os nomes-fantasma)."
     ]
   }

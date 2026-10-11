@@ -133,6 +133,19 @@ typography:
     fontWeight: 700
     lineHeight: 1.35
     letterSpacing: "0.06em"
+  brand-tag:
+    fontFamily: "'Schibsted Grotesk', sans-serif"
+    fontSize: "0.6875rem"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "0.08em"
+  credits-title:
+    fontFamily: "'Anybody Variable', sans-serif"
+    fontSize: "clamp(3rem, 8vw, 6rem)"
+    fontWeight: 500
+    lineHeight: 0.85
+    letterSpacing: "-0.03em"
+    fontVariation: "'wdth' 62"
 rounded:
   none: "0"
   oval: "50%"
@@ -295,7 +308,7 @@ Na escavação, as cores dos materiais vêm das próprias fotos de cada camada, 
 ### Neutral
 - **Cal** (`chalk`): todo texto, as linhas da quadra, a rede, o traço, o contorno do CTA, o aro e as cordas da raquete, o foco (`outline` de 3px) e as superfícies invertidas (ticket, destaque do placar).
 - **Cal Suja** (`chalk-soft`): o aviso do rodapé (só sobre o saibro escuro), hover do CTA discreto e a barra de rolagem. Sobre o saibro claro, texto corrido é sempre giz (a página de créditos inclusive).
-- **Cal translúcida** (cal com alfa, nunca um cinza): divisórias do placar (0,45), anel do oval (0,55; 0,45 nos quiques), cordas da raquete em espera (0,25) e os nomes-fantasma do Face-à-face (0,13).
+- **Cal translúcida** (cal com alfa, nunca um cinza): divisórias do placar (0,45), o fio acima do aviso do rodapé (0,35), anel do oval (0,55; 0,45 nos quiques), cordas da raquete em espera (0,25) e os nomes-fantasma do Face-à-face (0,13).
 
 ### Duotone de saibro
 As fotos de pessoas (Face-à-face e campeões do Palmarès) entram tingidas de saibro e ganham a cor de verdade no momento do encontro ou da revelação. O filtro é um só, em CSS e no JS: `grayscale(1) sepia(1) saturate(2.4) hue-rotate(-14deg) brightness(0.8) contrast(1.1)`, interpolado para a identidade (`grayscale(0) sepia(0) saturate(1) hue-rotate(0deg) brightness(1) contrast(1)`).
@@ -333,17 +346,21 @@ As fotos de pessoas (Face-à-face e campeões do Palmarès) entram tingidas de s
 - **Mark number** (`mark-number`): "Marca 01…04", largura 140%. No ticket cai para 0,875rem; na faixa da bola no celular, para 1,125rem, de pé.
 - **Date** (`date`): os anos da linha do tempo da Histoire. É a receita do número de marca com algarismos tabulares, porque cada data também é uma marca.
 - **Lede** (`lede`): a frase de abertura de cada capítulo, até 34ch, `text-wrap: pretty`.
-- **Body** (`body`): parágrafos de capítulo, até 52ch (46ch na história do Guga, onde o corpo sobe para `clamp(1.0625rem, 1.3vw, 1.25rem)`).
+- **Body** (`body`): parágrafos de capítulo, até 52ch (46ch na história do Guga, onde o corpo sobe para `clamp(1.0625rem, 1.3vw, 1.25rem)`), e as listas da página de créditos, na coluna de 76ch. Os títulos dessas listas usam 1rem, peso 700, largura 125%, caixa alta e 0,04em.
 - **Scoreboard** (`scoreboard`): o tamanho único do placar, para nome e descrição. No placar de números (Le Score), o termo à esquerda não vai em caixa alta, porque carrega unidades (cm, mm), e usa algarismos tabulares com espaçamento de 0,02em.
-- **Small** (`small`): o texto da página de créditos e o nome da taça no Palmarès; o aviso do rodapé desce para 0,8125rem (0,75rem no celular). Notas de apoio, como a nota sob o ticket, descem para 0,875rem em peso normal.
+- **Small** (`small`): o nome da taça no Palmarès e o tamanho de base do rodapé; o aviso do rodapé desce para 0,8125rem (0,75rem no celular). Notas de apoio, como a nota sob o ticket, descem para 0,875rem em peso normal.
 - **Label grande** (`label-lg`): o número da Marca 04 do ticket e o rótulo do ticket no celular, onde o espaçamento cai para 0,02em para caber numa linha. Os nomes das camadas ao lado do corte em escala usam o mesmo 0,875rem (0,75rem no celular): nome em caixa alta, peso 700, 0,04em, e a medida em peso normal, sem quebra.
+- **Título dos créditos** (`credits-title`): o h1 "Créditos e fontes" da página de créditos, a receita condensada dos títulos num degrau abaixo do headline, porque abre uma página de leitura e não um capítulo.
+- **Rótulo da marca** (`brand-tag`): "tributo de fã" (no topo) e "Roland-Garros por um fã brasileiro" (no rodapé), sob o wordmark, ao lado do logo; caixa alta, peso 700, 0,08em, sem quebra. Sai no celular, no topo e no rodapé.
 - **Label** (`label`): navegação, CTA, legenda das marcas, rótulos do placar de cena e legendas de figura; sempre em caixa alta, peso 700, espaçamento 0,06em (0,08em na dica de scroll, 0,04em no placar e no nome do campeão).
 
 ### Exceções de escala
 Os sete papéis fluidos `ghost-name`, `scene-count`, `marquee`, `champion-year`, `scene-line`, `layer-title` e `depth-gauge` ficam fora da rampa original de título (display/headline/feature) de propósito: cada um pertence a uma única cena e é dimensionado pela cena, não pela hierarquia. O nome-fantasma precisa caber em meia tela; a contagem de cena e o marquee são pôster; o ano do campeão precisa caber na coluna do card; a linha de cena precisa caber acima da rede, no vão que ela abre; o título de camada divide a tela com a frase e o véu; o medidor precisa caber entre a régua e a borda. Não reutilizar esses tamanhos fora das suas cenas.
 
+Duas exceções de identidade entraram na rodada 4, pelo mesmo motivo: pertencem a um lugar só. O **rótulo da marca** (`brand-tag`, 0,6875rem) é o menor texto da página, um degrau abaixo do `label`, porque é uma assinatura sob o wordmark e não pode disputar com a navegação; é sempre caixa alta e peso 700 em cal, e nunca carrega texto corrido. O **título dos créditos** (`credits-title`, `clamp(3rem, 8vw, 6rem)`) existe só na página de créditos. No celular, o topo também encolhe o wordmark para 1,0625rem e o CTA discreto para 0,75rem (0,03em), para a marca e o ingresso caberem lado a lado.
+
 ### Named Rules
-**The Stretch Rule.** A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, medidas (o medidor e a régua de Sous la Terre), marquee e títulos do rodapé. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.
+**The Stretch Rule.** A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, medidas (o medidor e a régua de Sous la Terre), marquee e títulos das listas de créditos. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.
 
 **The Honest Count Rule.** Um número animado sempre termina no valor exato e formatado em pt-BR, e esse valor já está no HTML: sem movimento, o leitor vê o número final, nunca um zero.
 
@@ -367,8 +384,8 @@ Ordem da página: hero, marquee, Terre Battue, Sous la Terre, Histoire, Les Lég
 - **Palmarès:** no desktop, a faixa da bola é o vão central (`vao`), posicionada pela seção inteira; os cards ficam em duas colunas espelhadas dos dois lados do vão, como os dois lados da rede, cada um com a foto virada para o vão (à esquerda, texto alinhado à direita e foto junto ao vão). A faixa é longa e a bola balança de um lado ao outro dentro dela. Lê-se da esquerda para a direita, de cima para baixo.
 - **Le Score:** conteúdo à esquerda (título, lede e placar de números) e faixa da bola à direita (`minmax(9rem, 0.6fr)`).
 - **Jeu, Set et Match:** o hero repetido. Mesmas linhas de quadra; título à esquerda da linha central (61%) e o ticket pousado na caixa da direita.
-- **Rodapé:** compacto, uma faixa de saibro escuro (≤ 40% da altura da tela): a marca (logo + wordmark) à esquerda, as seções ao centro, o ingresso à direita e, embaixo, o aviso numa linha com o link "Créditos e fontes". No celular: a marca, as seções em duas colunas e o aviso; o ingresso fica só no topo.
-- **Página de créditos** (`creditos.html`): o mesmo topo e uma coluna de leitura de 76ch com todos os créditos de imagem/vídeo/fonte e as fontes dos fatos. É ali que as licenças CC BY-SA são atendidas, por link a partir do rodapé.
+- **Rodapé:** compacto, uma faixa de saibro escuro (≤ 40% da altura da tela), em grade de três colunas (`auto | 1fr | auto`): a marca (logo de 3,5rem + wordmark em 1,5rem + rótulo) à esquerda, as seções ao centro, o ingresso (CTA de linha) à direita e, embaixo, em linha inteira, o aviso com o link "Créditos e fontes", separado por um fio de cal a 0,35. No celular: uma coluna, a marca (logo de 2,75rem, wordmark em 1,25rem, sem rótulo), as seções em duas colunas e o aviso; o ingresso fica só no topo.
+- **Página de créditos** (`creditos.html`): o mesmo topo (com "Voltar ao saibro" no lugar do ingresso e sem navegação) e uma coluna de leitura de 76ch, centrada, com todos os créditos de imagem/vídeo/fonte e as fontes dos fatos. É ali que as licenças CC BY-SA são atendidas, por link a partir do rodapé.
 
 **Navegação por largura:** cinco links (Le Service, Terre Battue, Les Légendes, Palmarès, Jeu, Set et Match). Até 1180px o "Le Service" sai (o wordmark já leva ao topo); até 1000px a navegação some e ficam wordmark e CTA discreto.
 
@@ -397,7 +414,7 @@ A profundidade é material, não de interface. Ela vem de camadas reais empilhad
 
 ## Shapes
 
-Retângulos de canto vivo e ovais; nada no meio. Botões, ticket, fotos, cards do Palmarès, placar, faixas do marquee, camadas, a etiqueta do medidor e a fatia do corte têm raio zero, porque são fitas e recortes de quadra. O único raio é o círculo: a bola, sua sombra, o pó, e o oval da marca (proporção 2,2:1, `border-radius: 50%`), que cresce a partir da borda do lado de onde o traço chega e se repete nas datas, nos quiques, no tijolo de Sous la Terre (e no topo do corte) e sob os troféus. A única curva livre é a onda de saibro do Palmarès (uma máscara SVG com borda ondulada que sobe pelo card). Bordas são linhas de quadra: 3px no CTA, 2px no sublinhado do CTA discreto, no topo do placar, no topo da legenda do campeão e nas bordas do marquee, 1px a 45% entre as linhas do placar, 2px tracejado no canhoto do ticket, 2px na régua do medidor e na régua do corte (com tiques de 2px; os do medidor a cada 41px, por um `repeating-linear-gradient` de cal a 0,85). Os traços (rali, voo do saque, coração) têm ponta redonda. A raquete-cursor é o único desenho figurativo: aro oval, cordas, garganta em V e cabo arredondado.
+Retângulos de canto vivo e ovais; nada no meio. Botões, ticket, fotos, cards do Palmarès, placar, faixas do marquee, camadas, a etiqueta do medidor e a fatia do corte têm raio zero, porque são fitas e recortes de quadra. O único raio é o círculo: a bola, sua sombra, o pó, e o oval da marca (proporção 2,2:1, `border-radius: 50%`), que cresce a partir da borda do lado de onde o traço chega e se repete nas datas, nos quiques, no tijolo de Sous la Terre (e no topo do corte) e sob os troféus. A única curva livre é a onda de saibro do Palmarès (uma máscara SVG com borda ondulada que sobe pelo card). Bordas são linhas de quadra: 3px no CTA, 2px no sublinhado do CTA discreto, no topo do placar, no topo da legenda do campeão e nas bordas do marquee, 1px a 45% entre as linhas do placar, 2px tracejado no canhoto do ticket, 1px a 35% acima do aviso do rodapé, 2px na régua do medidor e na régua do corte (com tiques de 2px; os do medidor a cada 41px, por um `repeating-linear-gradient` de cal a 0,85). Os traços (rali, voo do saque, coração) têm ponta redonda. A raquete-cursor é o único desenho figurativo: aro oval, cordas, garganta em V e cabo arredondado.
 
 ## Components
 
@@ -405,12 +422,12 @@ Retângulos de canto vivo e ovais; nada no meio. Botões, ticket, fotos, cards d
 Fitas de cal sobre o saibro: firmes, sem raio, sem preenchimento em repouso.
 - **Shape:** canto vivo (`rounded.none`).
 - **CTA de linha (`cta-line`):** contorno de 3px em cal, label em caixa alta, seta SVG de traço quadrado à direita. Hover inverte: fundo cal, texto saibro escuro.
-- **CTA discreto (`cta-quiet`):** só texto com sublinhado de 2px, na barra do topo. Hover: cal suja.
+- **CTA discreto (`cta-quiet`):** só texto com sublinhado de 2px, na barra do topo ("Garanta seu ingresso" na landing, "Voltar ao saibro" na página de créditos). Hover: cal suja. O sublinhado é uma borda inferior de 2px em `currentColor`: uma linha de quadra sob a palavra, não uma faixa lateral de destaque; o detector o aponta como aviso, e ele fica.
 - **Transição:** cor e fundo em 220ms com `cubic-bezier(0.16, 1, 0.3, 1)`; a seta anda 4px no hover.
 - **Foco:** `outline` de 3px em cal com 4px de afastamento (global).
 
 ### Navegação
-Barra fixa no topo: a marca à esquerda (o logo oficial de Roland-Garros em giz, 2,75rem, ao lado do wordmark "la trace" e do rótulo "tributo de fã" em 0,6875rem caixa-alta; no celular o rótulo sai e o wordmark e o CTA encolhem), nomes das quadras (labels) ao centro, CTA discreto à direita. Fundo em degradê do saibro para transparente (55%), sem borda. Hover dos links: sublinhado de 2px em cal. Cinco links; "Le Service" some até 1180px e a navegação inteira até 1000px (ficam wordmark e CTA). A rolagem por âncora é suave (Lenis).
+Barra fixa no topo: a marca à esquerda (o logo oficial de Roland-Garros em giz, 2,75rem, ao lado do wordmark "la trace" e do rótulo "tributo de fã" em `brand-tag`; no celular o logo cai para 2,25rem, o rótulo desce para 0,625rem e fica sob o wordmark (o logo nunca aparece sem ele) e o wordmark e o CTA encolhem), nomes das quadras (labels) ao centro, CTA discreto à direita. Fundo em degradê do saibro para transparente (55%), sem borda. Hover dos links: sublinhado de 2px em cal. Cinco links; "Le Service" some até 1180px e a navegação inteira até 1000px (ficam wordmark e CTA). A rolagem por âncora é suave (Lenis).
 
 ### A Marca (componente assinatura)
 O oval da bola no saibro, seguido do número ("Marca 0N") e, no hero, de uma legenda curta.
@@ -532,6 +549,6 @@ Um único traço (`groove`, 9px, ponta e junção redondas) desenhado com o scro
 
 ## Identidade e compartilhamento (rodada 4)
 
-- **Logo oficial** (decisão 016): `public/img/marca/roland-garros-giz.svg` (versão de uma cor, em giz `#f6efe2`, para o topo e o rodapé) e `roland-garros.svg` (versão em cor: anel verde, centro laranja), as duas do site oficial. É marca registrada da FFT, usada sem licença num tributo acadêmico; o aviso de "sem vínculo" acompanha o logo.
+- **Logo oficial** (decisão 016): `public/img/marca/roland-garros-giz.svg` (versão de uma cor, em giz `#f6efe2`, para o topo e o rodapé) e `roland-garros.svg` (versão em cor: anel verde `#05482f`, centro laranja `#d35220`), as duas do site oficial. O verde e o laranja são da arte do logo, não do sistema: não são tokens e não aparecem em nenhum fundo, texto ou destaque da página. Na página, o logo é sempre a versão em giz. É marca registrada da FFT, usada sem licença num tributo acadêmico; o aviso de "sem vínculo" acompanha o logo.
 - **Favicon e ícones:** `favicon.svg` (o logo em cor), `favicon-32.png`, `apple-touch-icon.png` e `icon-192/512.png` (o logo em cor sobre o saibro, com 10% de respiro) e `site.webmanifest` (`theme_color` e fundo `#b04e29`). Gerados por `tools/identidade.mjs`.
 - **Cartão de compartilhamento:** `og.jpg`, 1200×630, o hero no estado final (o saque, a Marca 01, o logo no topo). A URL de `og:image` precisa ficar absoluta quando houver domínio.
