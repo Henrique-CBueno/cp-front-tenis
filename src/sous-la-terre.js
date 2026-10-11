@@ -16,7 +16,6 @@ export function runSoil(section) {
   const gauge = section.querySelector('[data-soil-depth]');
   const gaugeBox = section.querySelector('.soil__gauge');
   const cut = section.querySelector('[data-soil-cut]');
-  const slab = section.querySelector('.soil__slab');
   const cutMark = section.querySelector('[data-soil-cut-mark]');
   const steps = LAYERS.length - 1;
 
@@ -89,7 +88,9 @@ export function runSoil(section) {
   }
 
   const anchorY = () => localOf(mark).y;
-  const exitPoint = () => ({ x: Math.min(section.clientWidth - 40, localOf(slab).right + 70), y: anchorY() });
+  // a saída: à direita do corte inteiro (a fatia e a régua)
+  const figure = section.querySelector('.soil__figure');
+  const exitPoint = () => ({ x: Math.min(section.clientWidth - 30, localOf(figure).right + 50), y: anchorY() });
 
   const st = ScrollTrigger.create({
     trigger: section,
@@ -141,7 +142,7 @@ export function runSoil(section) {
       const o = gsap.utils.clamp(0, 1, (t - outStart) / p.out);
       const from = onScreen(cutMark);
       const to = exitPoint();
-      const lift = 4 * o * (1 - o) * 70;
+      const lift = 4 * o * (1 - o) * 120; // alto o bastante para passar por cima da régua do corte
       place({ x: from.x + (to.x - from.x) * o, y: from.y + (to.y - from.y) * o * o - lift });
     },
     passed: () => {

@@ -181,6 +181,9 @@ export function createRally({ container, start }) {
       const { entryPath, exitPath, ball: docked } = d.dock.overlay;
       entryPath.style.strokeDasharray = `${Math.min(drawn, d.lin)} ${length}`;
       exitPath.style.strokeDasharray = `0 ${d.lout} ${Math.max(0, drawn - d.lout)} ${length}`;
+      // um traço de comprimento zero com ponta redonda vira um ponto: some até ter comprimento
+      entryPath.style.visibility = drawn > 0.5 ? 'visible' : 'hidden';
+      exitPath.style.visibility = drawn - d.lout > 0.5 ? 'visible' : 'hidden';
 
       const near = head > d.offIn - 300 && head < d.bottom + 300;
       if (!near || !Number.isFinite(head)) {

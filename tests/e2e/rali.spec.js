@@ -4,7 +4,9 @@ test('a navegação leva até a seção escolhida', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('navigation', { name: 'Seções' }).getByRole('link', { name: 'Les Légendes' }).click();
 
-  await expect(page.getByRole('heading', { name: 'Les Légendes' })).toBeInViewport({ timeout: 4000 });
+  // o caminho até Les Légendes passa por duas cenas presas (Sous la Terre e a Histoire): com a suíte inteira
+  // rodando em paralelo, a rolagem suave pode passar de 4 s
+  await expect(page.getByRole('heading', { name: 'Les Légendes' })).toBeInViewport({ timeout: 8000 });
 });
 
 test('a navegação funciona pelo teclado, com foco visível', async ({ page }) => {

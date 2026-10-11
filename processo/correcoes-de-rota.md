@@ -193,3 +193,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - título e frase à esquerda (no celular, só na metade esquerda);
   - a marca a 52% da altura;
   - no celular, a bola desce entre o texto e o medidor.
+
+## #33 · Sous la Terre no reduced-motion: o traço termina no topo da cena (2026-10-10)
+- **O que o revisor apontou:** sem movimento, a cena não prende e não recebe a bola. O traço do rali termina no topo dela e a marca do tijolo fica solta, sem ligação com ele.
+- **Decisão da IA, para eu revisar:** é a mesma situação da Histoire na correção #28. A cena é opaca e estática nesse modo, e o traço segue por trás dela. A marca do tijolo aparece feita, como todas as marcas no reduced-motion.
+- **Por quê:** ligar o traço à marca exigiria um caminho só para esse modo, por cima de uma cena que é uma pilha de cinco telas.

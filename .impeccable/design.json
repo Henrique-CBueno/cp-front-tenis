@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-10T19:36:50.397855+00:00",
+  "generatedAt": "2026-10-10T21:07:50.184201+00:00",
   "title": "Design System: La Trace",
   "extensions": {
     "colorMeta": {
@@ -122,144 +122,34 @@
           "oklch(95% 0.15 112)"
         ]
       },
-      "strata-brick-tint": {
-        "role": "material",
-        "displayName": "Estrato: Tijolo (tint)",
+      "soil-veil": {
+        "role": "secondary",
+        "displayName": "Véu de Saibro Escuro",
+        "canonical": "oklch(24.9% 0.059 41.9)",
         "tonalRamp": [
-          "oklch(15% 0.1 40)",
-          "oklch(26% 0.1 40)",
-          "oklch(37% 0.1 40)",
-          "oklch(48% 0.1 40)",
-          "oklch(59% 0.1 40)",
-          "oklch(70% 0.1 40)",
-          "oklch(82% 0.1 40)",
-          "oklch(95% 0.1 40)"
+          "oklch(15% 0.059 41.9)",
+          "oklch(26% 0.059 41.9)",
+          "oklch(37% 0.059 41.9)",
+          "oklch(48% 0.059 41.9)",
+          "oklch(59% 0.059 41.9)",
+          "oklch(70% 0.059 41.9)",
+          "oklch(82% 0.059 41.9)",
+          "oklch(95% 0.059 41.9)"
         ]
       },
-      "strata-limestone": {
-        "role": "material",
-        "displayName": "Estrato: Calcário",
+      "brick-band": {
+        "role": "secondary",
+        "displayName": "Faixa de Tijolo",
+        "canonical": "oklch(58.9% 0.145 41.9)",
         "tonalRamp": [
-          "oklch(15% 0.02 80)",
-          "oklch(26% 0.02 80)",
-          "oklch(37% 0.02 80)",
-          "oklch(48% 0.02 80)",
-          "oklch(59% 0.02 80)",
-          "oklch(70% 0.02 80)",
-          "oklch(82% 0.02 80)",
-          "oklch(95% 0.02 80)"
-        ]
-      },
-      "strata-limestone-ink": {
-        "role": "material",
-        "displayName": "Estrato: Tinta do Calcário",
-        "tonalRamp": [
-          "oklch(15% 0.03 55)",
-          "oklch(26% 0.03 55)",
-          "oklch(37% 0.03 55)",
-          "oklch(48% 0.03 55)",
-          "oklch(59% 0.03 55)",
-          "oklch(70% 0.03 55)",
-          "oklch(82% 0.03 55)",
-          "oklch(95% 0.03 55)"
-        ]
-      },
-      "strata-clinker": {
-        "role": "material",
-        "displayName": "Estrato: Clínquer",
-        "tonalRamp": [
-          "oklch(15% 0.01 40)",
-          "oklch(26% 0.01 40)",
-          "oklch(37% 0.01 40)",
-          "oklch(48% 0.01 40)",
-          "oklch(59% 0.01 40)",
-          "oklch(70% 0.01 40)",
-          "oklch(82% 0.01 40)",
-          "oklch(95% 0.01 40)"
-        ]
-      },
-      "strata-clinker-tint": {
-        "role": "material",
-        "displayName": "Estrato: Clínquer (tint)",
-        "tonalRamp": [
-          "oklch(15% 0.01 40)",
-          "oklch(26% 0.01 40)",
-          "oklch(37% 0.01 40)",
-          "oklch(48% 0.01 40)",
-          "oklch(59% 0.01 40)",
-          "oklch(70% 0.01 40)",
-          "oklch(82% 0.01 40)",
-          "oklch(95% 0.01 40)"
-        ]
-      },
-      "strata-gravel": {
-        "role": "material",
-        "displayName": "Estrato: Cascalho",
-        "tonalRamp": [
-          "oklch(15% 0.02 65)",
-          "oklch(26% 0.02 65)",
-          "oklch(37% 0.02 65)",
-          "oklch(48% 0.02 65)",
-          "oklch(59% 0.02 65)",
-          "oklch(70% 0.02 65)",
-          "oklch(82% 0.02 65)",
-          "oklch(95% 0.02 65)"
-        ]
-      },
-      "strata-gravel-tint": {
-        "role": "material",
-        "displayName": "Estrato: Cascalho (tint)",
-        "tonalRamp": [
-          "oklch(15% 0.02 65)",
-          "oklch(26% 0.02 65)",
-          "oklch(37% 0.02 65)",
-          "oklch(48% 0.02 65)",
-          "oklch(59% 0.02 65)",
-          "oklch(70% 0.02 65)",
-          "oklch(82% 0.02 65)",
-          "oklch(95% 0.02 65)"
-        ]
-      },
-      "strata-gravel-ink": {
-        "role": "material",
-        "displayName": "Estrato: Tinta do Cascalho",
-        "tonalRamp": [
-          "oklch(15% 0.02 55)",
-          "oklch(26% 0.02 55)",
-          "oklch(37% 0.02 55)",
-          "oklch(48% 0.02 55)",
-          "oklch(59% 0.02 55)",
-          "oklch(70% 0.02 55)",
-          "oklch(82% 0.02 55)",
-          "oklch(95% 0.02 55)"
-        ]
-      },
-      "strata-stone": {
-        "role": "material",
-        "displayName": "Estrato: Pedras",
-        "tonalRamp": [
-          "oklch(15% 0.015 60)",
-          "oklch(26% 0.015 60)",
-          "oklch(37% 0.015 60)",
-          "oklch(48% 0.015 60)",
-          "oklch(59% 0.015 60)",
-          "oklch(70% 0.015 60)",
-          "oklch(82% 0.015 60)",
-          "oklch(95% 0.015 60)"
-        ]
-      },
-      "strata-stone-tint": {
-        "role": "material",
-        "displayName": "Estrato: Pedras (tint)",
-        "tonalRamp": [
-          "oklch(15% 0.015 60)",
-          "oklch(26% 0.015 60)",
-          "oklch(37% 0.015 60)",
-          "oklch(48% 0.015 60)",
-          "oklch(59% 0.015 60)",
-          "oklch(70% 0.015 60)",
-          "oklch(82% 0.015 60)",
-          "oklch(95% 0.015 60)"
+          "oklch(15% 0.145 41.9)",
+          "oklch(26% 0.145 41.9)",
+          "oklch(37% 0.145 41.9)",
+          "oklch(48% 0.145 41.9)",
+          "oklch(59% 0.145 41.9)",
+          "oklch(70% 0.145 41.9)",
+          "oklch(82% 0.145 41.9)",
+          "oklch(95% 0.145 41.9)"
         ]
       },
       "chalk": {
@@ -296,7 +186,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "O h1 do hero; a largura anima de 62% a 72% quando a Marca 01 afunda."
+        "purpose": "O h1 do hero; a largura anima de 62% a 72% quando a Marca 01 nasce."
       },
       "headline": {
         "displayName": "Headline",
@@ -332,7 +222,7 @@
       },
       "label-lg": {
         "displayName": "Label grande",
-        "purpose": "Rótulos das camadas do corte; também número do ticket e rótulo do ticket no celular."
+        "purpose": "Número da Marca 04 do ticket e rótulo do ticket no celular; os nomes das camadas ao lado do corte usam o mesmo 0,875rem (0,75rem no celular)."
       },
       "body": {
         "displayName": "Body",
@@ -340,7 +230,7 @@
       },
       "label": {
         "displayName": "Label",
-        "purpose": "Navegação, CTA, legendas, rótulos do placar de cena, camadas; caixa alta, peso 700."
+        "purpose": "Navegação, CTA, legendas, rótulos do placar de cena e legendas de figura; caixa alta, peso 700."
       },
       "ghost-name": {
         "displayName": "Nome-fantasma",
@@ -361,6 +251,14 @@
       "scene-line": {
         "displayName": "Linha de cena",
         "purpose": "Exceção de cena: o h2 do Face-à-face, frase acima da rede, largura 75% (a única intermediária), trecho final em 800."
+      },
+      "layer-title": {
+        "displayName": "Título de camada",
+        "purpose": "Exceção de cena: o nome de cada camada de Sous la Terre (h3), condensado, um degrau abaixo do headline."
+      },
+      "depth-gauge": {
+        "displayName": "Medidor",
+        "purpose": "Exceção de cena: o numeral da profundidade em Sous la Terre, 140% e tabular; 1,75rem no celular. A régua do corte usa a mesma receita em 0,9375rem (0,75rem no celular)."
       }
     },
     "shadows": [
@@ -375,9 +273,14 @@
         "purpose": "A foto da marca em Terre Battue."
       },
       {
+        "name": "fatia-no-chao-fundo",
+        "value": "0 30px 60px -30px rgb(20 8 2 / 0.8)",
+        "purpose": "A fatia do corte em escala de Sous la Terre, pousada sobre o saibro escuro."
+      },
+      {
         "name": "sombra-da-bola",
         "value": "0 6px 10px -4px rgb(60 20 5 / 0.55)",
-        "purpose": "A bola do saque e a da Histoire."
+        "purpose": "A bola do saque e a bola sobre as cenas presas (Histoire, Sous la Terre)."
       },
       {
         "name": "sombra-no-chao",
@@ -403,6 +306,11 @@
         "name": "quique-afundado",
         "value": "inset 0 0 0 1.5px rgb(246 239 226 / 0.45)",
         "purpose": "Anel das mini marcas de quique do rali."
+      },
+      {
+        "name": "contorno-da-regua",
+        "value": "2px 0 0 rgb(56 22 8 / 0.55)",
+        "purpose": "Não é sombra: um contorno do véu ao lado da régua do medidor, para ela continuar à vista sobre o calcário branco."
       }
     ],
     "motion": [
@@ -423,13 +331,23 @@
       },
       {
         "name": "ease-sink",
-        "value": "expo.out (GSAP), forçado a 1 no fim do trecho",
-        "purpose": "Ovais afundando (marcas e quiques, scale 0→1 ao longo de 110px de scroll), voo da bola até a Marca 01, pó e letras dos títulos."
+        "value": "expo.out (GSAP)",
+        "purpose": "Legenda das marcas (0,5s, 0,12s depois do toque), voo da bola até a Marca 01, pó e letras dos títulos."
+      },
+      {
+        "name": "stamp",
+        "value": "scaleX 0.35 / scaleY 0.15 (brightness 1.12) → 1.2 / 0.78 em 90ms power3.out → 1 em 0,55s elastic.out(1, 0.45); +0,15s → escala 0.96, brightness(0.8) em 2,4s sine.inOut",
+        "purpose": "O Quique: toda marca nasce no instante do toque e afunda devagar; uma vez feita, fica (não se desfaz no scroll para cima). Marcas 01–04, mini marcas dos respiros, datas da Histoire, pouso de Sous la Terre."
+      },
+      {
+        "name": "jolt",
+        "value": "v 1 → 0 em 0,22s power2.out; inércia × (1 − 0.75v), scaleX × (1 + 0.3v), scaleY × (1 − 0.32v)",
+        "purpose": "O tranco do quique no rali: a bola achata mais e a ponta perde inércia por um instante."
       },
       {
         "name": "ease-scrub",
         "value": "linear (ScrollTrigger scrub: true)",
-        "purpose": "Parallax da foto (-12% → 0), afastamento das camadas (14px por camada), desenho do coração, cenas fixas."
+        "purpose": "Parallax da foto (-12% → 0), desenho do coração, cenas presas (saque, Sous la Terre, Histoire, Face-à-face)."
       },
       {
         "name": "hero-pin",
@@ -457,9 +375,24 @@
         "purpose": "A bola balança dentro de faixas longas ([data-sway], o vão do Palmarès)."
       },
       {
+        "name": "rally-dock",
+        "value": "a cena dá entry/exit; o rali desenha esses trechos num SVG sobre a cena e entrega a bola entre o pouso e a saída",
+        "purpose": "Cenas presas que recebem a bola (Sous la Terre, Histoire): uma bola só à vista. Sem doca no reduced-motion."
+      },
+      {
         "name": "face-pin",
         "value": "+=220% de scroll, scrub; rede 0–0.15, entrada 0.05–0.5 (power2.out, 85%), cor e pulso da rede 0.5, placar 0.6, contagem 0.62–0.82, frase 0.85",
         "purpose": "A cena do Face-à-face."
+      },
+      {
+        "name": "soil-pin",
+        "value": "começa com a marca do tijolo no meio da tela; pouso 0,3 tela, escavação 1 tela por fronteira (4), pausa 0,2, corte 1, saída 0,4; scrub",
+        "purpose": "A escavação de Sous la Terre: a pilha sobe uma tela por camada, texturas com parallax de ±9%, o corte chega de 125% e a pilha encolhe 35%; a bola salta do topo do corte (arco de 70px)."
+      },
+      {
+        "name": "depth-gauge",
+        "value": "Medidor (depth.js): nós de profundidade nas fronteiras entre telas (0,2 · 7 · 15 · 45 cm), linear entre eles, 80 cm no fim; mm abaixo de 1 cm",
+        "purpose": "Converte o progresso da escavação em profundidade real com o mesmo scroll por camada."
       },
       {
         "name": "clay-duotone",
@@ -493,13 +426,13 @@
       },
       {
         "name": "timeline-pin",
-        "value": "pin + scrub linear, distância = transbordo do trilho; só ≥721px",
-        "purpose": "A linha do tempo da Histoire corre na horizontal com a seção fixa."
+        "value": "começa com 1891 no meio da tela; espera 25% de tela, linha corre (distância = transbordo), espera 25% em 2020, último pulo 30% de tela até a ponta da linha; só ≥721px",
+        "purpose": "A Histoire presa: a bola pousa em 1891, pula de data em data enquanto a linha corre e cai da ponta da linha."
       },
       {
         "name": "timeline-hop",
-        "value": "arco 4t(1−t)·30px (18px de pé); achata 1.18 × 0.74 a menos de 6% de cada data",
-        "purpose": "A bola da Histoire quicando de data em data."
+        "value": "arco 4t(1−t)·30px (18px de lado no celular), sem voltas; achata 1.18 × 0.74 a menos de 6% de cada data",
+        "purpose": "A bola da Histoire quicando de data em data; cada data nasce como marca no toque."
       },
       {
         "name": "counter",
@@ -509,7 +442,7 @@
       {
         "name": "reduced-motion",
         "value": "estado final estático",
-        "purpose": "Quadro do impacto, traço completo, todas as marcas visíveis, linha do tempo quebrada em linhas, números no valor final, Face-à-face final, títulos inteiros, marquee parado, sem raquete, sem transições no Palmarès; sem Lenis nem pin."
+        "purpose": "Quadro do impacto, traço completo, todas as marcas visíveis, linha do tempo quebrada em linhas, Sous la Terre como pilha de camadas com o corte no fim e sem medidor, números no valor final, Face-à-face final, títulos inteiros, marquee parado, sem raquete, sem transições no Palmarès; sem Lenis, sem pin e sem docas (o traço passa por trás das cenas)."
       }
     ],
     "breakpoints": [
@@ -526,7 +459,7 @@
       {
         "name": "mobile",
         "value": "720px",
-        "purpose": "max-width: uma coluna, faixa da bola de 4,25rem alternando de lado, linha do tempo de pé, Palmarès em lista com revelação pelo centro da tela."
+        "purpose": "max-width: uma coluna, faixa da bola de 4,25rem alternando de lado, linha do tempo de pé, Sous la Terre com o texto no pé e o medidor no alto à direita, Palmarès em lista com revelação pelo centro da tela."
       },
       {
         "name": "mobile-short",
@@ -593,7 +526,7 @@
       "name": "A Linha do Tempo",
       "kind": "custom",
       "refersTo": "timeline-item",
-      "description": "A linha de base vira linha do tempo; cada data é uma mini marca sobre o trilho.",
+      "description": "A linha de base vira linha do tempo; cada data é uma mini marca que nasce quando a bola toca nela.",
       "html": "<div class=\"ds-court\"><ol class=\"ds-track\"><li class=\"ds-item\"><span class=\"ds-dot\"></span><time>1891</time><p>Começa como o campeonato dos clubes franceses.</p></li><li class=\"ds-item\"><span class=\"ds-dot\"></span><time>1928</time><p>Abre o estádio da Porte d'Auteuil.</p></li></ol></div>",
       "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);overflow:hidden;}.ds-track{position:relative;display:flex;margin:0;padding:0;list-style:none;}.ds-track::before{content:'';position:absolute;left:-32px;right:0;top:.9rem;height:8px;background:var(--chalk);}.ds-item{position:relative;width:15rem;padding:2.75rem 2rem 0 0;}.ds-dot{position:absolute;left:0;top:calc(.9rem + 4px);width:2.3rem;aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse at 45% 50%,#7c3013,var(--clay-deep) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgb(246 239 226 / .55);transform:translateY(-50%);}.ds-item time{display:block;font-family:var(--font-display);font-size:1.5rem;font-weight:600;font-stretch:140%;font-variant-numeric:tabular-nums;}.ds-item p{margin:.5rem 0 0;max-width:30ch;}"
     },
@@ -606,18 +539,26 @@
       "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{background:var(--clay);padding:32px;color:var(--chalk);font-family:var(--font-text);}.ds-score{display:grid;margin:0;border-top:2px solid var(--chalk);}.ds-row{display:grid;grid-template-columns:minmax(10rem,1fr) minmax(0,2fr);gap:1rem;padding:1.1rem 0;border-bottom:1px solid rgb(246 239 226 / .45);font-size:1.125rem;}.ds-row dt{font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.02em;text-transform:none;}.ds-row dd{margin:0;}"
     },
     {
-      "name": "O Corte da Quadra",
+      "name": "A Escavação (Sous la Terre)",
       "kind": "custom",
-      "refersTo": "strata-limestone",
-      "description": "As camadas reais da quadra em faixas de largura total, altura proporcional à espessura.",
-      "html": "<ol class=\"ds-strata\"><li class=\"ds-l ds-brick\"><span>Tijolo moído</span><span>1–2 mm</span></li><li class=\"ds-l ds-lime\"><span>Calcário branco</span><span>6–7 cm</span></li><li class=\"ds-l ds-clinker\"><span>Clínquer</span><span>7–8 cm</span></li><li class=\"ds-l ds-gravel\"><span>Cascalho</span><span>30 cm ou mais</span></li><li class=\"ds-l ds-stone\"><span>Pedras e dreno</span><span>até ~80 cm</span></li></ol>",
-      "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-strata{display:grid;margin:0;padding:0;list-style:none;}.ds-l{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.85rem 24px;font-family:var(--font-text);font-size:.875rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;transition:transform 220ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-strata:hover .ds-l:nth-child(2){transform:translateY(4px);}.ds-strata:hover .ds-l:nth-child(3){transform:translateY(8px);}.ds-strata:hover .ds-l:nth-child(4){transform:translateY(12px);}.ds-strata:hover .ds-l:nth-child(5){transform:translateY(16px);}.ds-l span{padding:.3em .6em;background:var(--tint);}.ds-l span:last-child{font-variant-numeric:tabular-nums;font-weight:400;}.ds-brick{--tint:#5a210b;background:var(--clay-deep);color:var(--chalk);padding-block:.6rem;}.ds-lime{--tint:#ece3d2;background:linear-gradient(rgb(236 227 210 / .72),rgb(236 227 210 / .72)),#ece3d2;color:#3a2a20;padding-block:1.6rem;}.ds-clinker{--tint:#28221f;background:linear-gradient(rgb(40 34 31 / .55),rgb(40 34 31 / .55)),#3b3330;color:var(--chalk);padding-block:1.8rem;}.ds-gravel{--tint:#a0968a;background:linear-gradient(rgb(160 150 138 / .7),rgb(160 150 138 / .7)),#93877b;color:#1f1813;padding-block:3.4rem;}.ds-stone{--tint:#463f39;background:linear-gradient(rgb(70 63 57 / .68),rgb(70 63 57 / .68)),#5e554d;color:var(--chalk);padding-block:2.4rem;}"
+      "refersTo": "soil-gauge",
+      "description": "Cena presa: camada em tela cheia sob o véu de saibro escuro, texto à esquerda e o medidor de profundidade numa régua de cal à direita.",
+      "html": "<div class=\"ds-soil\"><div class=\"ds-soil__text\"><h3>Calcário</h3><p class=\"ds-soil__thick\">6–7 cm</p></div><p class=\"ds-soil__gauge\"><span>4 cm</span></p></div>",
+      "css": ".ds-soil { position: relative; height: 320px; overflow: hidden; background: #8f3a18 linear-gradient(135deg, #e9e0cf, #cbbfa9); color: #f6efe2; } .ds-soil::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgb(56 22 8 / 0.9) 0%, rgb(56 22 8 / 0.7) 32%, rgb(56 22 8 / 0) 62%); } .ds-soil__text { position: absolute; left: 24px; top: 50%; z-index: 1; transform: translateY(-50%); } .ds-soil__text h3 { margin: 0; font-family: 'Anybody Variable', sans-serif; font-size: 4rem; font-weight: 500; font-stretch: 62%; line-height: 0.85; letter-spacing: -0.03em; } .ds-soil__thick { margin: 0.9rem 0 0; font-family: 'Anybody Variable', sans-serif; font-size: 1.5rem; font-weight: 600; font-stretch: 140%; } .ds-soil__gauge { position: absolute; top: 0; bottom: 0; right: 24px; z-index: 2; display: grid; align-items: center; margin: 0; padding-right: 1.25rem; border-right: 2px solid rgb(246 239 226 / 0.85); background: repeating-linear-gradient(to bottom, transparent 0 39px, rgb(246 239 226 / 0.85) 39px 41px) right / 0.75rem 100% no-repeat; box-shadow: 2px 0 0 rgb(56 22 8 / 0.55); font-family: 'Anybody Variable', sans-serif; font-size: 2.75rem; font-weight: 600; font-stretch: 140%; font-variant-numeric: tabular-nums; } .ds-soil__gauge span { padding: 0.05em 0.35em 0.1em; background: rgb(56 22 8 / 0.82); }"
+    },
+    {
+      "name": "O Corte em Escala",
+      "kind": "custom",
+      "refersTo": "soil-cut-slab",
+      "description": "O fim da escavação: as cinco camadas numa fatia em escala real, nomes à esquerda, régua de 0 a 80 cm à direita, a marca no topo.",
+      "html": "<div class=\"ds-cut\"><ul class=\"ds-cut__labels\"><li style=\"--at:0%\"><b>Tijolo moído</b> 1–2 mm</li><li style=\"--at:37.5%\"><b>Cascalho</b> 30 cm</li><li style=\"--at:78%\"><b>Pedras e dreno</b> até 80 cm</li></ul><div class=\"ds-cut__slab\"><span class=\"ds-cut__mark\"></span><i style=\"flex-basis:0.25%;background:#c25a2e\"></i><i style=\"flex-basis:18.5%;background:#e2d8c4\"></i><i style=\"flex-basis:37.5%;background:#93877b\"></i><i style=\"flex-basis:43.75%;background:#5e554d\"></i></div><ol class=\"ds-cut__scale\"><li style=\"--at:0%\">0 cm</li><li style=\"--at:50%\">40 cm</li><li style=\"--at:100%\">80 cm</li></ol></div>",
+      "css": ".ds-cut { display: grid; grid-template-columns: auto auto auto; column-gap: 1.5rem; padding: 24px; background: #8f3a18; color: #f6efe2; } .ds-cut__labels, .ds-cut__scale { position: relative; margin: 0; padding: 0; list-style: none; } .ds-cut__labels { min-width: 11rem; font-family: 'Schibsted Grotesk', sans-serif; font-size: 0.875rem; text-align: right; } .ds-cut__labels li, .ds-cut__scale li { position: absolute; top: var(--at); transform: translateY(-50%); white-space: nowrap; } .ds-cut__labels li { right: 0; padding-right: 1.1rem; } .ds-cut__labels b { text-transform: uppercase; letter-spacing: 0.04em; } .ds-cut__slab { position: relative; display: flex; flex-direction: column; width: 9rem; height: 260px; box-shadow: 0 30px 60px -30px rgb(20 8 2 / 0.8); } .ds-cut__slab i { min-height: 2px; } .ds-cut__mark { position: absolute; left: 50%; top: 0; width: 2.4rem; aspect-ratio: 2.2; margin: -0.55rem 0 0 -1.2rem; border-radius: 50%; background: radial-gradient(ellipse at 45% 50%, #7c3013, #8f3a18 60%, transparent 72%); box-shadow: inset 0 0 0 2px rgb(246 239 226 / 0.55); transform: scale(0.96); filter: brightness(0.8); } .ds-cut__scale { width: 4.5rem; border-left: 2px solid #f6efe2; font-family: 'Anybody Variable', sans-serif; font-size: 0.9375rem; font-weight: 600; font-stretch: 140%; font-variant-numeric: tabular-nums; } .ds-cut__scale li { left: 0; padding-left: 0.9rem; } .ds-cut__scale li::before { content: ''; position: absolute; left: 0; top: 50%; width: 0.6rem; height: 2px; background: #f6efe2; } .ds-cut__scale li:last-child { font-size: 1.5rem; }"
     },
     {
       "name": "O Rali",
       "kind": "custom",
       "refersTo": "court-ball",
-      "description": "O fio de cal da trajetória da bola, com a bola no arco, a sombra no chão e a mini marca do quique com o pó.",
+      "description": "O fio de cal da trajetória da bola, com a bola no arco, a sombra no chão e a mini marca do quique, que nasce com um tranco, solta pó e fica.",
       "html": "<div class=\"ds-court\"><svg viewBox=\"0 0 300 120\" class=\"ds-trace\"><path d=\"M20,10 C40,60 120,90 150,96 C200,104 250,60 270,20\"/></svg><span class=\"ds-bounce\"></span><span class=\"ds-shadow\"></span><span class=\"ds-ball\"></span><span class=\"ds-dust\"></span></div>",
       "css": ":host{--clay:#b04e29;--clay-deep:#8f3a18;--chalk:#f6efe2;--chalk-soft:#ecd9c6;--font-display:'Anybody Variable','Anybody',sans-serif;--font-text:'Schibsted Grotesk',sans-serif;}.ds-court{position:relative;background:var(--clay);padding:24px;height:180px;}.ds-trace{position:absolute;inset:24px;width:calc(100% - 48px);height:calc(100% - 48px);overflow:visible;}.ds-trace path{fill:none;stroke:var(--chalk);stroke-width:1.5;stroke-linecap:round;opacity:.85;}.ds-bounce{position:absolute;left:calc(50% - 17px);top:calc(24px + 80% - 8px);width:34px;aspect-ratio:2.2;border-radius:50%;background:radial-gradient(ellipse at 45% 50%,#7c3013,var(--clay-deep) 60%,transparent 72%);box-shadow:inset 0 0 0 1.5px rgb(246 239 226 / .45);}.ds-shadow{position:absolute;left:62%;top:calc(24px + 70%);width:22px;height:8px;border-radius:50%;background:rgb(60 20 5 / .55);filter:blur(2px);}.ds-ball{position:absolute;left:calc(62% + 3px);top:calc(24px + 70% - 40px);width:16px;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 30%,#f3f7a2,#d4dc3a 55%,#9fa524);transition:transform 420ms cubic-bezier(0.16, 1, 0.3, 1);}.ds-court:hover .ds-ball{transform:translateY(32px) scale(1.2,.72);}.ds-dust{position:absolute;left:calc(50% - 12px);top:calc(24px + 80% - 14px);width:5px;height:5px;border-radius:50%;background:#c9673a;box-shadow:10px -6px 0 #c9673a,20px -3px 0 #c9673a;}"
     },
@@ -656,14 +597,15 @@
   ],
   "narrative": {
     "northStar": "A página é a quadra",
-    "overview": "O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o rali, a bola que nasce no saque real do hero e desce a página inteira num traço contínuo, quicando entre as seções e afundando cada marca.\n\nA densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro \"hype\", logo oficial ou imitação do site oficial.",
+    "overview": "O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o rali, a bola que nasce no saque real do hero e desce a página inteira num traço contínuo, quicando entre as seções e deixando uma marca em cada quique.\n\nA densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás, e a escavação de Sous la Terre, que desce pelos materiais debaixo da quadra) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro \"hype\", logo oficial ou imitação do site oficial.",
     "keyCharacteristics": [
       "Fundo saibro contínuo; o rodapé e as faixas do marquee descem um tom (saibro escuro), nunca mudam de material.",
       "Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo, a rede no Face-à-face.",
-      "Marcas ovais numeradas (\"Marca 01…04\") como sistema de seção; o mesmo oval sem número vira medida e chão (datas da linha do tempo, quiques do rali, base dos troféus).",
-      "Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo, e há uma só bola em jogo.",
+      "Marcas ovais numeradas (\"Marca 01…04\") como sistema de seção; o mesmo oval sem número vira medida e chão (datas da linha do tempo, quiques do rali, o pouso no tijolo de Sous la Terre, base dos troféus).",
+      "Toda marca nasce no instante do quique, com um tranco, e afunda devagar; uma vez feita, fica (rolar para cima não a desfaz).",
+      "Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo, e há uma só bola à vista. Nas cenas presas que recebem a bola, o rali a entrega à cena e a recebe de volta.",
       "Tipografia que estica: Anybody em largura condensada (62%) nos títulos e expandida (140–150%) nos números, no marquee e no wordmark; os títulos entram em quadra letra a letra.",
-      "Movimento conduzido pelo scroll, com cenas fixas (saque, Histoire, Face-à-face); com `prefers-reduced-motion`, o estado final completo e estático, sem raquete."
+      "Movimento conduzido pelo scroll, com cenas presas (saque, Sous la Terre, Histoire, Face-à-face); com `prefers-reduced-motion`, o estado final completo e estático, sem raquete."
     ],
     "rules": [
       {
@@ -673,12 +615,12 @@
       },
       {
         "name": "The One Ball Rule",
-        "body": "O amarelo-esverdeado existe apenas na bola, e só há uma bola em jogo. A bola do saque vira a bola do rali, e na Histoire a bola quica de data em data enquanto a do rali passa escondida atrás da seção opaca. O visitante é o jogador: a raquete-cursor nunca usa a cor da bola (é cal e saibro escuro), então nenhum segundo objeto amarelo aparece na tela. Nenhum botão, destaque ou ícone usa essa cor.",
+        "body": "O amarelo-esverdeado existe apenas na bola, e só há uma bola à vista. A bola do saque vira a bola do rali; nas cenas presas que recebem a bola (Sous la Terre e a Histoire), o rali a entrega à cena no pouso e a recebe de volta na saída, e a do rali fica escondida atrás da cena opaca enquanto isso. O visitante é o jogador: a raquete-cursor nunca usa a cor da bola (é cal e saibro escuro), então nenhum segundo objeto amarelo aparece na tela. Nenhum botão, destaque ou ícone usa essa cor.",
         "section": "colors"
       },
       {
         "name": "The Material Stays Underground Rule",
-        "body": "As cores de estrato pertencem só ao Corte da Quadra. Elas descrevem o que está debaixo do saibro e não sobem para fundos, textos ou destaques em outras partes da página.",
+        "body": "As fotos das camadas, o véu de saibro escuro e a faixa de tijolo pertencem só a Sous la Terre (a escavação e o corte). Eles descrevem o que está debaixo do saibro e não sobem para fundos, textos ou destaques em outras partes da página.",
         "section": "colors"
       },
       {
@@ -688,12 +630,12 @@
       },
       {
         "name": "The Clay Duotone Rule",
-        "body": "Foto de pessoa entra em tom de saibro e só ganha cor num gesto (o encontro na rede, a revelação do campeão). Fotos de material e de lugar (a marca, as camadas, a arquibancada) não passam pelo duotone.",
+        "body": "Foto de pessoa entra em tom de saibro e só ganha cor num gesto (o encontro na rede, a revelação do campeão). Fotos de material e de lugar (a marca, as camadas de Sous la Terre, a arquibancada) não passam pelo duotone.",
         "section": "colors"
       },
       {
         "name": "The Stretch Rule",
-        "body": "A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, marquee e títulos do rodapé. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.",
+        "body": "A largura do Anybody carrega o sentido: condensada (62%) para títulos e para o que funciona como título (o ano do campeão, o nome-fantasma), expandida (125–150%) para wordmark, números de marca, contagens, medidas (o medidor e a régua de Sous la Terre), marquee e títulos do rodapé. A única largura intermediária é a linha de cena (75%). Não usar a largura normal (100%) da display.",
         "section": "typography"
       },
       {
@@ -713,12 +655,17 @@
       },
       {
         "name": "The Opaque Ground Rule",
-        "body": "Toda seção ou bloco que fica por cima do rali (fotos, camadas, a Histoire fixa, o Face-à-face, as faixas do marquee) tem fundo opaco, para o traço e a bola passarem por trás em vez de cruzar o conteúdo.",
+        "body": "Toda seção ou bloco que fica por cima do rali (fotos, Sous la Terre, a Histoire fixa, o Face-à-face, as faixas do marquee) tem fundo opaco, para o traço e a bola passarem por trás em vez de cruzar o conteúdo.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Hand-Off Rule",
+        "body": "Uma cena presa que recebe a bola (Sous la Terre, a Histoire) é uma doca do rali: ela dá o ponto de entrada e o de saída, o rali desenha por cima da cena o trecho de traço que chega e o que sai, e entrega a bola à cena no pouso e a recebe de volta na saída. Nunca aparecem duas bolas. Sem movimento, não há doca: a cena não prende e o traço passa por trás dela.",
         "section": "elevation"
       },
       {
         "name": "The Warm Shadow Rule",
-        "body": "Toda sombra é saibro na sombra: `rgb(60 20 5)` para o que está no chão, `rgb(40 12 2)` (mais escuro, mais curto) para o que está erguido em `drop-shadow` (troféu, raquete). Nas `box-shadow` de objetos pousados, o deslocamento negativo é metade do desfoque. Nada de sombras pretas, neutras ou deslocadas em bloco.",
+        "body": "Toda sombra é saibro na sombra: `rgb(60 20 5)` para o que está no chão, `rgb(40 12 2)` (mais escuro, mais curto) para o que está erguido em `drop-shadow` (troféu, raquete), e `rgb(20 8 2)` só para o que pousa sobre o saibro escuro (a fatia do corte). Nas `box-shadow` de objetos pousados, o deslocamento negativo é metade do desfoque. Nada de sombras pretas, neutras ou deslocadas em bloco.",
         "section": "elevation"
       }
     ],
@@ -729,12 +676,15 @@
       "**Do** dar fundo opaco a todo bloco que fica por cima do rali, para a bola passar por trás.",
       "**Do** abrir as quatro seções principais com uma Marca numerada; nas demais, usar o oval sem número como medida, quique ou chão.",
       "**Do** usar o Anybody condensado (62%) nos títulos e expandido (125–150%) em números, marquee e wordmark.",
-      "**Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados e em 0,6s (`--rise`) para revelações, `expo.out` para marcas que afundam e letras que entram, e easing linear (`scrub`) para parallax e cenas fixas.",
+      "**Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados e em 0,6s (`--rise`) para revelações, o Quique (tranco `power3.out` + `elastic.out(1, 0.45)` e afundar em 2,4s) para toda marca que a bola faz, `expo.out` para letras que entram e pó, e easing linear (`scrub`) para parallax e cenas presas.",
+      "**Do** tratar toda cena presa que recebe a bola como doca do rali: ela dá a entrada e a saída, o rali desenha esses trechos por cima dela e entrega a bola, para nunca haver duas bolas à vista.",
+      "**Do** manter toda marca feita: ela nasce no quique e não se desfaz no scroll para cima.",
       "**Do** tingir fotos de pessoas com o duotone de saibro e liberar a cor só num gesto (encontro, revelação).",
-      "**Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas, números no valor final, Face-à-face no estado final, marquee parado e cursor do sistema."
+      "**Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas, Sous la Terre como pilha de camadas com o corte no fim (sem pin nem doca; o traço passa por trás), números no valor final, Face-à-face no estado final, marquee parado e cursor do sistema."
     ],
     "donts": [
-      "**Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas do corte, o único creme sólido é o ticket e a linha do Guga.",
+      "**Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas de Sous la Terre, o único creme sólido é o ticket e a linha do Guga.",
+      "**Don't** usar o véu de saibro escuro, as fotos das camadas ou a faixa de tijolo fora de Sous la Terre.",
       "**Don't** usar o amarelo da bola em qualquer outro elemento, nem na raquete-cursor; e nunca mostrar duas bolas em jogo ao mesmo tempo.",
       "**Don't** deixar o traço do rali cruzar títulos ou parágrafos; ele corre pelas faixas da bola e pelos respiros.",
       "**Don't** usar sombras pretas, neutras ou em bloco; toda sombra é saibro na sombra.",

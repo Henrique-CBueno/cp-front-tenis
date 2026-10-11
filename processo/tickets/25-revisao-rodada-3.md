@@ -9,10 +9,10 @@
 
 **Blocked by:** 22, 23, 24
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] Detector rodado; avisos explicados ou corrigidos
-- [ ] Veredito registrado em `processo/revisao-final.md` (seção rodada 3)
-- [ ] DESIGN.md e `.impeccable/design.json` atualizados
-- [ ] Vitest e Playwright verdes; fluidez medida
-- [ ] Log da etapa em `processo/prompts/`
+- [x] Detector rodado; avisos explicados ou corrigidos
+- [x] Veredito registrado em `processo/revisao-final.md` (seção rodada 3)
+- [x] DESIGN.md e `.impeccable/design.json` atualizados
+- [x] Vitest e Playwright verdes; fluidez medida
+- [x] Log da etapa em `processo/prompts/`

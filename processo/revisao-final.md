@@ -90,3 +90,38 @@ Regressões novas: nenhuma. **Pendências:** só as duas limitações de materia
 - **DESIGN.md:** atualizado pelo documentador.
 
 **Situação final:** com o aceite, os dois itens que o revisor deixou abertos estão fechados. Pela regra do revisor, isso fecha os itens desta revisão, não a página inteira.
+
+---
+
+# Rodada 3: revisão final (ticket 25)
+
+**Data:** 2026-10-10 · **Como:** um agente revisor novo, sem o histórico, seguindo o `impeccable_finish_reviewer`.
+- **Evidência:** página inteira em reduced-motion (1440 e 390), mais as sequências de movimento em `processo/evidencias/22..25/`.
+- **Limite:** no máximo 2 rodadas de correção.
+
+## Revisão: fix (5 correções)
+| # | Correção pedida | Depois da rodada 1 | Depois da rodada 2 |
+|---|---|---|---|
+| 1 | Medidor ilegível sobre o calcário e o cascalho (~1,1–1,5:1) | **resolved**: numeral numa etiqueta de saibro escuro, régua com contorno | — |
+| 2 | Rótulos do corte passando da borda no celular | **resolved**: coluna de 30vw, com quebra de linha | — |
+| 3 | O corte pequeno num campo vazio, sem fechar a medição | **resolved**: fatia maior, com uma régua de 0 a 80 cm ao lado | — |
+| 4 | No reduced-motion, o traço termina no topo de Sous la Terre, sem citação | **resolved** como registro: correção de rota #33 (como a #28) | — |
+| 5 | DESIGN.md desatualizado | pendente | **resolved**: o documentador registrou Sous la Terre, o Quique, a regra das docas e a Histoire nova |
+
+**Regressões do lote 1, todas no corte do celular:**
+- rótulos do tijolo e do calcário colados;
+- "cm" sozinho numa linha;
+- a bola cobrindo o "0 cm" da régua no salto.
+
+As três ficaram **resolved** no lote 2.
+
+**Também corrigido** (a partir do relatório do documentador e da última observação do revisor):
+- um fio escuro solto ao lado do medidor no celular;
+- a régua do corte desenhada com `border-left` (o detector acusou "side-tab"), trocada por um pseudo-elemento;
+- um ponto de 1–2 px ao lado da régua: era um traço de comprimento zero com ponta redonda, que agora fica escondido até ter comprimento.
+
+**Veredito final do revisor:** `disposition: ship`. Pela regra do revisor, esse ship cobre os itens pontuados (as 5 correções e as 3 regressões), não a superfície inteira.
+
+**Pendentes de revisão minha:** as correções de rota #28 e #33 (a Histoire e Sous la Terre sem a bola no reduced-motion).
+
+**Ponto do teto que ficou de fora:** "o grão reage ao quadro" (o grão do saibro reagir ao pouso da bola). Nenhuma correção pediu.
