@@ -31,7 +31,7 @@ O fã brasileiro de tênis, no notebook, revivendo Roland Garros. Modo **Persuad
 
 ## 5. Escopo e anti-objetivos
 - MVP: 1, 2, 4 e 6. Extras: 3 e 5. Página única, PT-BR com títulos em francês.
-- **Não pode:** virar "site de esporte genérico" (foto grande + cards), usar neon ou modo escuro "hype", usar o logo oficial ou imitar o site oficial.
+- **Não pode:** virar "site de esporte genérico" (foto grande + cards), usar neon ou modo escuro "hype" ou imitar o site oficial. (O logo oficial passou a ser usado na rodada 4, por decisão do aluno: ver decisão 016.)
 - **Tipografia:** decidida no build. Nada de Georgia nem das fontes padrão de IA. A fonte tem que ter ponto de vista.
 
 ## 6. Interação e layout

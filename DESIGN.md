@@ -260,7 +260,7 @@ components:
 
 O saibro não é um detalhe nem uma foto de fundo: ele é a superfície da página inteira, em tela cheia, do topo ao rodapé. As linhas brancas da quadra são a estrutura (o grid), e cada seção abre com uma **marca**, o oval que a bola deixa no saibro e que o árbitro desce da cadeira para conferir. A página tem uma única cor de fundo (estratégia *Drenched*), um único material de linha (o creme da cal) e um único gesto de movimento: o rali, a bola que nasce no saque real do hero e desce a página inteira num traço contínuo, quicando entre as seções e deixando uma marca em cada quique.
 
-A densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás, e a escavação de Sous la Terre, que desce pelos materiais debaixo da quadra) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro "hype", logo oficial ou imitação do site oficial.
+A densidade é baixa e teatral: capítulos de altura de tela, títulos condensados enormes, texto curto em colunas estreitas. Cada seção reserva uma faixa vazia para a bola passar, e entre as seções há respiros de saibro sem conteúdo, onde ela cruza a página em arco. Profundidade vem de camadas reais (arquibancada tingida, grão do saibro, fotos, blocos opacos por onde a bola passa por trás, e a escavação de Sous la Terre, que desce pelos materiais debaixo da quadra) e de movimento conduzido pelo scroll, não de cartões ou sombras de interface. O visitante entra na quadra como jogador: com mouse, o cursor é uma raquete. Rejeições confirmadas no brief: site de esporte genérico (foto grande + cards), neon ou modo escuro "hype", imitação do site oficial. O logo oficial de Roland-Garros entrou na rodada 4, por decisão do aluno (decisão 016), sempre acompanhado do aviso de tributo de fã.
 
 **Key Characteristics:**
 - Fundo saibro contínuo; o rodapé e as faixas do marquee descem um tom (saibro escuro), nunca mudam de material.
@@ -294,7 +294,7 @@ Na escavação, as cores dos materiais vêm das próprias fotos de cada camada, 
 
 ### Neutral
 - **Cal** (`chalk`): todo texto, as linhas da quadra, a rede, o traço, o contorno do CTA, o aro e as cordas da raquete, o foco (`outline` de 3px) e as superfícies invertidas (ticket, destaque do placar).
-- **Cal Suja** (`chalk-soft`): texto secundário do rodapé, hover do CTA discreto e a barra de rolagem.
+- **Cal Suja** (`chalk-soft`): o aviso do rodapé (só sobre o saibro escuro), hover do CTA discreto e a barra de rolagem. Sobre o saibro claro, texto corrido é sempre giz (a página de créditos inclusive).
 - **Cal translúcida** (cal com alfa, nunca um cinza): divisórias do placar (0,45), anel do oval (0,55; 0,45 nos quiques), cordas da raquete em espera (0,25) e os nomes-fantasma do Face-à-face (0,13).
 
 ### Duotone de saibro
@@ -335,7 +335,7 @@ As fotos de pessoas (Face-à-face e campeões do Palmarès) entram tingidas de s
 - **Lede** (`lede`): a frase de abertura de cada capítulo, até 34ch, `text-wrap: pretty`.
 - **Body** (`body`): parágrafos de capítulo, até 52ch (46ch na história do Guga, onde o corpo sobe para `clamp(1.0625rem, 1.3vw, 1.25rem)`).
 - **Scoreboard** (`scoreboard`): o tamanho único do placar, para nome e descrição. No placar de números (Le Score), o termo à esquerda não vai em caixa alta, porque carrega unidades (cm, mm), e usa algarismos tabulares com espaçamento de 0,02em.
-- **Small** (`small`): o texto do rodapé (aviso e créditos) e o nome da taça no Palmarès. Notas de apoio, como a nota sob o ticket, descem para 0,875rem em peso normal.
+- **Small** (`small`): o texto da página de créditos e o nome da taça no Palmarès; o aviso do rodapé desce para 0,8125rem (0,75rem no celular). Notas de apoio, como a nota sob o ticket, descem para 0,875rem em peso normal.
 - **Label grande** (`label-lg`): o número da Marca 04 do ticket e o rótulo do ticket no celular, onde o espaçamento cai para 0,02em para caber numa linha. Os nomes das camadas ao lado do corte em escala usam o mesmo 0,875rem (0,75rem no celular): nome em caixa alta, peso 700, 0,04em, e a medida em peso normal, sem quebra.
 - **Label** (`label`): navegação, CTA, legenda das marcas, rótulos do placar de cena e legendas de figura; sempre em caixa alta, peso 700, espaçamento 0,06em (0,08em na dica de scroll, 0,04em no placar e no nome do campeão).
 
@@ -367,7 +367,8 @@ Ordem da página: hero, marquee, Terre Battue, Sous la Terre, Histoire, Les Lég
 - **Palmarès:** no desktop, a faixa da bola é o vão central (`vao`), posicionada pela seção inteira; os cards ficam em duas colunas espelhadas dos dois lados do vão, como os dois lados da rede, cada um com a foto virada para o vão (à esquerda, texto alinhado à direita e foto junto ao vão). A faixa é longa e a bola balança de um lado ao outro dentro dela. Lê-se da esquerda para a direita, de cima para baixo.
 - **Le Score:** conteúdo à esquerda (título, lede e placar de números) e faixa da bola à direita (`minmax(9rem, 0.6fr)`).
 - **Jeu, Set et Match:** o hero repetido. Mesmas linhas de quadra; título à esquerda da linha central (61%) e o ticket pousado na caixa da direita.
-- **Rodapé:** saibro escuro, texto até 60–70ch.
+- **Rodapé:** compacto, uma faixa de saibro escuro (≤ 40% da altura da tela): a marca (logo + wordmark) à esquerda, as seções ao centro, o ingresso à direita e, embaixo, o aviso numa linha com o link "Créditos e fontes". No celular: a marca, as seções em duas colunas e o aviso; o ingresso fica só no topo.
+- **Página de créditos** (`creditos.html`): o mesmo topo e uma coluna de leitura de 76ch com todos os créditos de imagem/vídeo/fonte e as fontes dos fatos. É ali que as licenças CC BY-SA são atendidas, por link a partir do rodapé.
 
 **Navegação por largura:** cinco links (Le Service, Terre Battue, Les Légendes, Palmarès, Jeu, Set et Match). Até 1180px o "Le Service" sai (o wordmark já leva ao topo); até 1000px a navegação some e ficam wordmark e CTA discreto.
 
@@ -409,7 +410,7 @@ Fitas de cal sobre o saibro: firmes, sem raio, sem preenchimento em repouso.
 - **Foco:** `outline` de 3px em cal com 4px de afastamento (global).
 
 ### Navegação
-Barra fixa no topo: wordmark à esquerda, nomes das quadras (labels) ao centro, CTA discreto à direita. Fundo em degradê do saibro para transparente (55%), sem borda. Hover dos links: sublinhado de 2px em cal. Cinco links; "Le Service" some até 1180px e a navegação inteira até 1000px (ficam wordmark e CTA). A rolagem por âncora é suave (Lenis).
+Barra fixa no topo: a marca à esquerda (o logo oficial de Roland-Garros em giz, 2,75rem, ao lado do wordmark "la trace" e do rótulo "tributo de fã" em 0,6875rem caixa-alta; no celular o rótulo sai e o wordmark e o CTA encolhem), nomes das quadras (labels) ao centro, CTA discreto à direita. Fundo em degradê do saibro para transparente (55%), sem borda. Hover dos links: sublinhado de 2px em cal. Cinco links; "Le Service" some até 1180px e a navegação inteira até 1000px (ficam wordmark e CTA). A rolagem por âncora é suave (Lenis).
 
 ### A Marca (componente assinatura)
 O oval da bola no saibro, seguido do número ("Marca 0N") e, no hero, de uma legenda curta.
@@ -526,5 +527,11 @@ Um único traço (`groove`, 9px, ponta e junção redondas) desenhado com o scro
 - **Don't** deixar o traço do rali cruzar títulos ou parágrafos; ele corre pelas faixas da bola e pelos respiros.
 - **Don't** usar sombras pretas, neutras ou em bloco; toda sombra é saibro na sombra.
 - **Don't** reutilizar os tamanhos de cena (nome-fantasma, contagem de cena, marquee, ano do campeão, linha de cena) fora das suas cenas.
-- **Don't** usar neon, modo escuro, o logo oficial ou a linguagem visual do site oficial de Roland-Garros.
+- **Don't** usar neon, modo escuro ou a linguagem visual do site oficial de Roland-Garros. O logo oficial só aparece com o aviso de tributo por perto (topo e rodapé) e na versão em giz sobre o saibro; a versão em cor fica para o favicon, os ícones e o cartão de compartilhamento.
 - **Don't** escrever texto corrido sobre o saibro em cor diferente da cal: o contraste do saibro com a cal é 4,63:1, sem folga para tons mais escuros. Cal translúcida só em ornamento `aria-hidden` (os nomes-fantasma).
+
+## Identidade e compartilhamento (rodada 4)
+
+- **Logo oficial** (decisão 016): `public/img/marca/roland-garros-giz.svg` (versão de uma cor, em giz `#f6efe2`, para o topo e o rodapé) e `roland-garros.svg` (versão em cor: anel verde, centro laranja), as duas do site oficial. É marca registrada da FFT, usada sem licença num tributo acadêmico; o aviso de "sem vínculo" acompanha o logo.
+- **Favicon e ícones:** `favicon.svg` (o logo em cor), `favicon-32.png`, `apple-touch-icon.png` e `icon-192/512.png` (o logo em cor sobre o saibro, com 10% de respiro) e `site.webmanifest` (`theme_color` e fundo `#b04e29`). Gerados por `tools/identidade.mjs`.
+- **Cartão de compartilhamento:** `og.jpg`, 1200×630, o hero no estado final (o saque, a Marca 01, o logo no topo). A URL de `og:image` precisa ficar absoluta quando houver domínio.

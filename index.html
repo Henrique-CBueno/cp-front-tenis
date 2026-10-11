@@ -4,12 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#b04e29" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:title" content="La Trace · Roland-Garros por um fã brasileiro" />
+    <meta property="og:description" content="Um tributo de fã a Roland-Garros: o saque, o saibro, a história, o Guga. Todo saque deixa uma marca." />
+    <meta property="og:image" content="/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="description" content="La Trace: um tributo de fã brasileiro a Roland-Garros. Todo saque deixa uma marca no saibro." />
     <title>La Trace · Roland-Garros por um fã brasileiro</title>
   </head>
   <body>
     <header class="topbar">
-      <a class="wordmark" href="#le-service" aria-label="La Trace, início">la trace</a>
+      <a class="brand" href="#le-service">
+        <img class="brand__logo" src="/img/marca/roland-garros-giz.svg" alt="Roland-Garros" width="56" height="56" />
+        <span class="brand__name"><span class="wordmark">la trace</span><span class="brand__tag">tributo de fã</span></span>
+      </a>
       <nav class="topnav" aria-label="Seções">
         <a href="#le-service">Le Service</a>
         <a href="#terre-battue">Terre Battue</a>
@@ -399,31 +414,25 @@
     </main>
 
     <footer class="footer">
+      <a class="brand brand--footer" href="#le-service">
+        <img class="brand__logo" src="/img/marca/roland-garros-giz.svg" alt="Roland-Garros" width="56" height="56" />
+        <span class="brand__name"><span class="wordmark">la trace</span><span class="brand__tag">Roland-Garros por um fã brasileiro</span></span>
+      </a>
+      <nav class="footer__nav" aria-label="Navegação do rodapé">
+        <a href="#le-service">Le Service</a>
+        <a href="#terre-battue">Terre Battue</a>
+        <a href="#les-legendes">Les Légendes</a>
+        <a href="#palmares">Palmarès</a>
+        <a href="#jeu-set-et-match">Jeu, Set et Match</a>
+      </nav>
+      <a class="cta cta--line footer__cta" data-cta href="#" target="_blank" rel="noopener noreferrer">
+        Garanta seu ingresso
+        <svg class="cta__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" /></svg>
+      </a>
       <p class="footer__disclaimer">
-        Tributo de fã. Projeto acadêmico (FIAP), sem vínculo com a Fédération Française de Tennis nem com o torneio Roland-Garros.
+        Tributo de fã · Projeto acadêmico (FIAP) · Sem vínculo com a Fédération Française de Tennis nem com Roland-Garros, cujo logo é marca registrada da FFT.
+        <a href="/creditos.html">Créditos e fontes</a>
       </p>
-      <section class="footer__credits" aria-labelledby="creditos">
-        <h2 id="creditos">Créditos</h2>
-        <ul>
-          <li>Arquibancada do Court Philippe-Chatrier: "Court Philippe Chatrier 2024", MFonzatti, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.pt-br">CC BY-SA 4.0</a>, via <a href="https://commons.wikimedia.org/wiki/File:Court_Philippe_Chatrier_2024.jpg">Wikimedia Commons</a>. Recortada e convertida para tons de cinza; esta versão também está sob CC BY-SA 4.0.</li>
-          <li>A marca vista de perto: foto de <a href="https://www.pexels.com/photo/tennis-ball-on-clay-court-close-up-38380408/">Pexels</a> (Pexels License).</li>
-          <li>Sous la Terre, as camadas debaixo da quadra: fotos de <a href="https://www.pexels.com/photo/close-up-of-a-clay-tennis-court-line-texture-38381015/">saibro</a>, <a href="https://www.pexels.com/photo/white-and-gray-stone-fragments-3964794/">calcário</a>, <a href="https://www.pexels.com/photo/backdrop-of-burnt-coal-with-rugged-surface-7138969/">carvão queimado</a>, <a href="https://www.pexels.com/photo/gray-stones-wallpaper-414765/">cascalho</a> e <a href="https://www.pexels.com/photo/macro-photography-of-gravel-4599912/">pedras</a>, Pexels (Pexels License).</li>
-          <li>Fotos do Face-à-face e do Palmarès, via Wikimedia Commons: <a href="https://commons.wikimedia.org/wiki/File:Kuerten_2004_Toronto_01.jpg">Guga (Face-à-face)</a>, ataelw, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a> (recortada e espelhada); <a href="https://commons.wikimedia.org/wiki/File:Paris-FR-75-open_de_tennis-2-6--17-Roland_Garros-Rafael_Nadal-11.jpg">Nadal (Face-à-face)</a>, François GOGLINS, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Coupe_des_Mousquetaires_(cropped).jpg">Coupe des Mousquetaires</a>, Chabe01 derivative work: Kacir, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Coupe_Suzanne-Lenglen_(cropped).jpg">Coupe Suzanne-Lenglen</a>, Chabe01 derivative work: Kacir, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Rafael_Nadal_at_the_2006_French_Open.jpg">Nadal 2006</a>, Sylvain WEBER, <a href="https://creativecommons.org/licenses/by-sa/2.0">CC BY-SA 2.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Maria_Sharapova_Roland_Garros_2012.jpg">Sharapova 2012</a>, Fred Romero from Paris, France, <a href="https://creativecommons.org/licenses/by/2.0">CC BY 2.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Serena_Williams_Won_Roland_Garros_in_2015.JPG">Serena Williams 2015</a>, Azilko, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Djokovic_2016.jpg">Djokovic 2016</a>, https://www.flickr.com/photos/babac/, <a href="http://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Jelena_Ostapenko_RG17.jpg">Ostapenko 2017</a>, Azilko, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Simona_Halep_Roland_Garros_2018.jpg">Halep 2018</a>, Azilko88, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Novak_%C4%90okovi%C4%87_2023.jpg">Djokovic 2023</a>, Partynia, <a href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0</a> (recortada); <a href="https://commons.wikimedia.org/wiki/File:Carlos_Alcaraz_-_Vainqueur_Roland_Garros_2024.jpg">Alcaraz 2024</a>, Vegafi, <a href="https://creativecommons.org/licenses/by/4.0">CC BY 4.0</a> (recortada). As versões editadas de obras CC BY-SA seguem CC BY-SA.</li>
-          <li>Textura do saibro: foto de <a href="https://www.pexels.com/photo/close-up-of-a-clay-tennis-court-line-texture-38381015/">Pexels</a> (Pexels License).</li>
-          <li>Vídeo do saque: "Tennis player serving", Mixkit (Mixkit Free License).</li>
-          <li>Tipografia: Anybody (Tyler Finck, SIL Open Font License) e Schibsted Grotesk (Schibsted, SIL Open Font License).</li>
-        </ul>
-      </section>
-      <section class="footer__credits" aria-labelledby="fontes">
-        <h2 id="fontes">Fontes dos fatos</h2>
-        <ul>
-          <li>Camadas da quadra e o que cada uma faz: <a href="https://www.rolandgarros.com/en-us/page/roland-garros-tournament-clay-the-hallowed-red-dirt">Roland-Garros</a>, <a href="https://www.si.com/tennis/what-makes-roland-garros-different-explaining-french-open-site">Sports Illustrated</a>, <a href="https://wearetennis.bnpparibas/en/news-tennis/news-results/2617-the-true-or-false-of-roland-garros-clay-courts">BNP Paribas</a>, <a href="https://landscapearchitect.com/landscape-articles/terre-battue-whats-beneath-the-brick-dustterre-battue-whats-beneath-the-brick-dust-9112">Landscape Architect</a>, <a href="https://www.tennisnerd.net/?p=65447">TennisNerd</a>.</li>
-          <li>A marca decide o lance: <a href="https://www.foxnews.com/world/choreography-comes-to-clay-no-replay-review-at-french-open">Fox News</a>, <a href="https://www.oskaloosa.com/sports/national_sports/french-open-chief-mauresmo-backs-human-judgment-after-ruud-line-call-controversy/article_c440a35a-c2bc-5472-9d81-58907f428094.html">AP</a>.</li>
-          <li>História e números: <a href="https://www.tennismajors.com/?p=407435">Tennis Majors</a>, <a href="https://www.guinnessworldrecords.com/world-records/647688-first-grand-slam-tennis-tournament-to-be-played-in-the-open-era">Guinness</a>, <a href="https://en.wikipedia.org/wiki/Stade_Roland_Garros">Wikipedia</a>, <a href="https://info.fr/roland-garros-2026-bilan-record-727500-spectateurs/">info.fr</a>.</li>
-          <li>Títulos: <a href="https://www.atptour.com/en/news/roland-garros-2023-history-draw-schedule">ATP</a>, <a href="https://www.eurosport.com/tennis/roland-garros/2006/roland-garros-records_sto881228/story.shtml">Eurosport</a>.</li>
-          <li>Guga, 3 de junho de 2001: <a href="https://www.tennismajors.com/toto-news/june-3-2001-the-day-gustavo-kuerten-saved-match-point-and-gave-his-heart-to-roland-garros-261746.html">Tennis Majors</a>, <a href="https://www.tennis365.com/french-open/t365-recall-when-gustavo-kuerten-was-crowned-roland-garros-king-of-hearts">Tennis365</a>.</li>
-        </ul>
-      </section>
     </footer>
 
     <script type="module" src="/src/main.js"></script>

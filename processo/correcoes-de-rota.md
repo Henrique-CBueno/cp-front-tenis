@@ -209,3 +209,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - a bola e a sombra ficam acima do conteúdo, e as cenas opacas um nível acima dela;
   - a marca do tijolo foi para o meio exato;
   - 2 testes novos.
+
+## #35 · Voltei atrás: o site passa a usar o logo oficial (2026-10-10)
+- **Antes (rodada 1):** "sem o logo oficial", por causa da marca registrada.
+- **Agora:** pedi a identidade e os logos do torneio. A IA mostrou o risco (marca registrada da FFT, sem licença livre) e recomendou uma identidade própria. Escolhi o logo oficial assim mesmo (decisão 016).
+- **Mitigação:** aviso de tributo de fã e de projeto acadêmico sem vínculo, no topo e no rodapé. Recomendação de não publicar assim.

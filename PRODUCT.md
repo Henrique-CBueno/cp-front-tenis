@@ -48,7 +48,7 @@ instituição, sem promover uma edição específica.
 
 ## Brand Commitments
 
-- **Sem o logo oficial nem a marca da FFT:** um wordmark tipográfico próprio.
+- **Logo oficial de Roland-Garros (mudança da rodada 4, decisão 016):** usado no topo, no rodapé, no favicon e no cartão de compartilhamento, sempre com o aviso de tributo de fã e projeto acadêmico sem vínculo. É marca registrada da FFT, sem licença livre: risco assumido pelo aluno, e a recomendação é não publicar assim. O wordmark tipográfico "la trace" continua como assinatura do projeto.
 - Aviso discreto de "projeto acadêmico, sem vínculo com a Fédération Française de Tennis".
 - **Créditos/atribuições no rodapé**, obrigatórios pela licença CC BY-SA das fotos do Wikimedia.
 - Restrição visual dada pelo usuário: cores tradicionais do torneio (laranja saibro, verde, azul-marinho, creme/bege, branco) com linguagem das affiches. O detalhamento fica no DESIGN.md.

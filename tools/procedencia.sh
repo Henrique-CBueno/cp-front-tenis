@@ -32,3 +32,9 @@ for frame in public/frames/*/*.webp; do
   embed "$frame" "Origem: Mixkit 873 'Tennis player serving', Mixkit Free License. Quadro do trecho 2,4–6,8 s, recortado com rembg birefnet-general-lite e cortado na caixa do jogador por tools/saque.py."
 done
 echo "procedência gravada"
+
+# identidade (rodada 4, decisão 016): ícones e cartão gerados por tools/identidade.mjs a partir do logo oficial
+for f in public/favicon-32.png public/apple-touch-icon.png public/icon-192.png public/icon-512.png; do
+  embed "$f" "Gerado por tools/identidade.mjs a partir do logo oficial de Roland-Garros (marca registrada da FFT, versão do site oficial), usado sem licença em tributo de fã e projeto acadêmico (decisão 016)."
+done
+embed public/og.jpg "Cartão de compartilhamento: captura do hero da própria página (vídeo Mixkit, arquibancada Commons CC BY-SA 4.0, logo oficial de Roland-Garros da FFT, decisão 016), gerada por tools/identidade.mjs."
