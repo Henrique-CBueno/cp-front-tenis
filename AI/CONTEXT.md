@@ -5,7 +5,7 @@ Landing page-tributo a Roland-Garros feita por um fã brasileiro. A página é u
 ## A bola e o que ela deixa
 
 **Bola**:
-A única bola da página. Nasce no saque do hero e desce a página inteira; em cada momento só uma está à vista.
+A única bola da página. Nasce no saque do hero, desce a página inteira até o ingresso e, de lá, pode saltar para o Le Mur; em cada momento só uma está à vista.
 _Avoid_: bolinha, segunda bola, bola da Histoire
 
 **Traço**:
@@ -17,7 +17,7 @@ O instante em que a bola toca o saibro.
 _Avoid_: pingo, toque, bounce
 
 **Marca**:
-A depressão oval que um quique deixa no saibro. Uma vez feita, fica.
+A depressão oval que um quique deixa no saibro. Acompanha a bola: se desfaz quando a bola volta para antes dela e renasce quando ela passa de novo. No Le Mur, dura até o fim da partida.
 _Avoid_: pegada, sinal
 
 **Marca de capítulo**:
@@ -50,3 +50,21 @@ _Avoid_: estrato, material
 
 **Corte**:
 A vista final da escavação: as cinco camadas inteiras, em escala real, com a marca no topo.
+
+## O Le Mur
+
+**Le Mur**:
+O paredão do fim da página, depois do ingresso: a bola, vista de lado, sobe e cai no saibro, e quem visita a mantém no ar. É um epílogo, sem número de marca.
+_Avoid_: minigame, jogo do fim, paredão (como nome próprio)
+
+**Partida**:
+Uma tentativa completa no Le Mur, da primeira rebatida até o terceiro erro.
+_Avoid_: rodada, fase, nível
+
+**Rebatida**:
+O instante em que a raquete (ou o toque) devolve a bola para cima. O placar de uma partida é o total de rebatidas.
+_Avoid_: hit, toque (quando se fala da raquete), rebate
+
+**Erro**:
+Dois quiques seguidos sem rebatida, ou a bola fora da quadra pela lateral. Três erros encerram a partida.
+_Avoid_: queda, vida, falta

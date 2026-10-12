@@ -83,6 +83,18 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
 40. Como aluno, quero que a escolha do vídeo do saque e a comparação dos métodos de recorte fiquem registradas, para mostrar decisões baseadas em evidência.
 41. Como aluno, quero que o `DESIGN.md` seja gerado no fim a partir da página pronta, para documentar a identidade visual real.
 
+### Le Mur (epílogo, rodada 5)
+42. Como fã que chegou ao fim, quero que a Bola salte do ingresso para um paredão e espere minha rebatida, para continuar brincando com a mesma bola que abriu a página.
+43. Como fã no computador, quero rebater a Bola encostando o cursor-raquete nela, com mais força quando subo o mouse, para jogar com o gesto do tênis.
+44. Como fã no celular, quero rebater tocando perto da Bola, sem perder o arrastar para rolar a página, para jogar com uma mão.
+45. Como visitante só de teclado, quero um botão "Jogar" e o espaço para rebater, para que o jogo não seja a única parte da página fora do meu alcance.
+46. Como jogador, quero a regra do tênis (a bola pode quicar uma vez; dois quiques ou fora é erro; três erros encerram a partida), para que o jogo pareça tênis e não um minigame genérico.
+47. Como jogador, quero que acertar com o centro das cordas mande a Bola mais alto e que o jogo acelere a cada 5 rebatidas, para que a precisão conte e a partida tenha fim natural.
+48. Como jogador, quero ver as Marcas dos quiques se acumulando no saibro da partida, o placar e o meu recorde guardado, para ter motivo de jogar de novo.
+49. Como jogador, quero som de rebatida, quique, erro e recorde, com um botão para silenciar que lembre a minha escolha, para sentir o jogo sem ser incomodado.
+50. Como fã, quero que o jogo pause se eu rolar para longe e que a Bola volte ao rali quando eu subir, para que a página continue tendo uma bola só.
+51. Como visitante sensível a movimento, quero que, com `prefers-reduced-motion`, o Le Mur vire um estado parado com o meu recorde, para não receber um jogo de reflexo que não pedi.
+
 ## Implementation Decisions
 
 - **Stack:** Vite + HTML/CSS/JS puro (sem framework de UI), GSAP com ScrollTrigger (pin e scrub do saque, parallax, desenho do traço) e Lenis (scroll suave). Deploy estático na Vercel.
@@ -110,6 +122,12 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
 - **Reduced motion:** com `prefers-reduced-motion`, o módulo devolve o conjunto estático (um quadro do impacto), o pin e o parallax são desligados e as marcas e o traço aparecem já completos.
 - **Processo:** toda etapa gera um log de prompt em `processo/prompts/`, decisões em `processo/decisoes/` e desvios em `processo/correcoes-de-rota.md`, conforme o `CLAUDE.md`. O `DESIGN.md` e `.impeccable/design.json` são escritos no fim, pelo documenter da impeccable.
 
+- **Le Mur (epílogo, decisão 019):** uma seção depois de "Jeu, Set et Match" e antes do rodapé, fora do container do rali (o traço continua terminando no ingresso). Vista de lado: o saibro é o chão, e a Bola sobe e cai na vertical.
+  - **Módulo "Regras do Le Mur"** (`src/le-mur-rules.js`, lógica pura, sem DOM, é o seam de teste): a máquina de estados parado → jogando → pausado → fim; `step(dt)` com gravidade, quique com perda de energia, quiques desde a última rebatida e saída pela lateral; `hit({ quality, power })`; os erros, o placar total, a dificuldade a cada 5 rebatidas e o recorde (recebido e devolvido, sem storage).
+  - **Camada do jogo** (`src/le-mur.js`): o DOM, o loop no `gsap.ticker`, as Marcas (reusando `stamp`/`erase`/`dust`), o toque, o teclado, a pausa fora da tela e o recorde e o mute em localStorage.
+  - **Som** (`src/le-mur-sound.js`): Web Audio sintetizada, sem arquivos.
+  - **Cursor-raquete:** passa a aceitar uma lista de alvos, com a velocidade do ponteiro (força) e a distância ao sweet spot (qualidade). **Rali:** expõe `finished()`, o traço completo, que decide quando a Bola pertence ao jogo.
+
 ## Testing Decisions
 
 - **Bons testes verificam comportamento externo pela interface pública**, não detalhes internos. Nada de testar CSS, timings de animação ou estrutura do DOM.
@@ -125,6 +143,18 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
   - o CTA "Garanta seu ingresso" tem `href` do site oficial;
   - com reduced-motion emulado, o quadro estático é exibido e nenhum quadro da sequência é requisitado além dele;
   - no viewport mobile, só arquivos do conjunto mobile são requisitados.
+- **Seam 3: módulo Regras do Le Mur (Vitest, unitário),** com tempo simulado por `step(dt)`. Casos:
+  - parado: quiques não contam erro;
+  - a primeira rebatida começa a partida;
+  - um quique depois da rebatida é válido, e o segundo é erro;
+  - a Bola fora pela lateral é erro;
+  - o terceiro erro encerra a partida com o placar total;
+  - depois de um erro, espera a rebatida;
+  - a qualidade do contato muda a altura e o desvio, e a força muda a velocidade;
+  - a dificuldade sobe a cada 5 rebatidas;
+  - o recorde só sobe;
+  - pausado, `step` não avança.
+- **Le Mur no Playwright:** a Bola chega com o traço completo; uma passada da raquete conta uma rebatida; três erros mostram o placar; o recorde sobrevive ao recarregar; o toque perto da Bola rebate no celular; o estado parado com reduced-motion; nunca há duas bolas à vista.
 - **Fora dos testes automatizados:** parallax, tipografia, layout e motion. São verificados por screenshots desktop (1440) e mobile (390) nas etapas critique/audit/polish da impeccable e no finish review.
 - **Prior art:** nenhum. O repo é greenfield. Esses testes estabelecem o padrão.
 
@@ -136,6 +166,7 @@ Uma landing page única, em PT-BR com títulos em francês, em que **a página �
 - Logo, fotos e vídeos oficiais da FFT, ATP ou Getty.
 - Regressão visual automatizada.
 - WebGL/3D. O efeito é canvas 2D + parallax em camadas.
+- No Le Mur: placar compartilhado entre jogadores (exigiria servidor), adversário, vista de frente para o paredão e arquivos de áudio.
 - Histoire e Números ficam fora do MVP: entram só se sobrar tempo no dia 2.
 
 ## Further Notes
