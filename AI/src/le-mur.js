@@ -7,6 +7,7 @@ import { createMurRules } from './le-mur-rules.js';
 // Momentos da Bola aqui: away (no rali) → ticket (pousada no ingresso) → arriving (saltando) → court.
 const ARRIVAL = 0.9; // s, o salto do ingresso até o saibro
 const TOUCH_REACH = 60; // px, o raio do toque em volta do centro da Bola
+const STRONG_SWING = 25; // px por movimento subindo: daí para cima, a rebatida tem a força toda
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
@@ -107,10 +108,11 @@ export function createMur(section, { rally, racket = false }) {
   });
 
   // a distância do ponto (coordenadas da tela) ao centro da Bola
-  function distance(x, y) {
+  function center() {
     const box = ball.getBoundingClientRect();
-    return Math.hypot(box.left + box.width / 2 - x, box.top + box.height / 2 - y);
+    return { x: box.left + box.width / 2, y: box.top + box.height / 2 };
   }
+  const distance = (x, y) => Math.hypot(center().x - x, center().y - y);
 
   // no celular: tocar perto da Bola rebate, e quanto mais perto do centro, mais limpa a rebatida. O toque não
   // é cancelado, então arrastar a partir dali continua rolando a página.
@@ -119,7 +121,7 @@ export function createMur(section, { rally, racket = false }) {
     (event) => {
       if (event.pointerType === 'mouse' || moment !== 'court') return;
       const d = distance(event.clientX, event.clientY);
-      if (d <= TOUCH_REACH) rules.hit({ quality: 1 - d / TOUCH_REACH });
+      if (d <= TOUCH_REACH) rules.hit({ quality: 1 - d / TOUCH_REACH, side: Math.sign(center().x - event.clientX) });
     },
     { passive: true },
   );
@@ -143,11 +145,25 @@ export function createMur(section, { rally, racket = false }) {
   play.addEventListener('focus', () => (hint.textContent = 'Aperte espaço quando a bola estiver descendo, perto do chão'));
   play.addEventListener('blur', () => (hint.textContent = deviceHint));
 
-  // o alvo da raquete: as cordas encostam na bola (coordenadas da tela)
+  // o alvo da raquete: as cordas encostam na bola (coordenadas da tela). O contato: onde a Bola cai ao longo das
+  // cordas, ou seja, a distância na horizontal até o centro delas, dá a qualidade (o sweet spot) e o lado para onde a
+  // borda a manda. (A distância direta não serve: a bola caindo sempre encosta primeiro na borda do alcance.)
+  // Subir o mouse dá a força.
+  let racketReach = 26;
   return {
     cooldown: 250,
-    near: (x, y, reach) => moment === 'court' && distance(x, y) < reach + ball.offsetWidth / 2,
-    hit: () => rules.hit(),
+    near(x, y, reach) {
+      racketReach = reach;
+      return moment === 'court' && distance(x, y) < reach + ball.offsetWidth / 2;
+    },
+    hit({ x, vy = 0 }) {
+      const dx = center().x - x;
+      rules.hit({
+        quality: 1 - Math.abs(dx) / (racketReach + ball.offsetWidth / 2),
+        side: Math.sign(dx),
+        power: Math.min(1, Math.max(0, -vy / STRONG_SWING)),
+      });
+    },
   };
 }
 

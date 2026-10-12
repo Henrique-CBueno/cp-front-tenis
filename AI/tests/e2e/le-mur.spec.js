@@ -63,6 +63,31 @@ test('rebater e deixar cair três vezes encerra a partida com o placar', async (
   await expect(page.locator('[data-mur-status]')).toHaveText('Fim de partida: 3 rebatidas. Rebata para jogar de novo');
 });
 
+// a raquete parada no caminho da Bola, deslocada dx na horizontal; devolve a altura do pico depois da rebatida
+async function picoDaRebatida(page, dx) {
+  const floor = await page.locator('[data-mur-floor]').boundingBox();
+  const { ball } = await mur(page);
+  await page.mouse.move(ball.x + dx, floor.y - 60);
+  await expect.poll(async () => (await mur(page)).score, { timeout: 5000 }).toBe(1);
+  let top = Infinity;
+  for (let i = 0; i < 60; i++) {
+    top = Math.min(top, (await mur(page)).ball.y);
+    await page.waitForTimeout(20);
+  }
+  return floor.y - top;
+}
+
+test('uma passada pelo centro das cordas manda a Bola mais alto que uma pela borda', async ({ page }) => {
+  await page.goto('/');
+  await toTheEnd(page);
+  const center = await picoDaRebatida(page, 0);
+  await page.reload();
+  await page.waitForSelector('[data-loader]', { state: 'detached', timeout: 15000 });
+  await toTheEnd(page);
+  const edge = await picoDaRebatida(page, 26);
+  expect(center).toBeGreaterThan(edge * 1.15);
+});
+
 test('pelo teclado: Tab chega ao "Jogar" e o espaço rebate só com a Bola ao alcance', async ({ page }) => {
   await page.goto('/');
   await toTheEnd(page);

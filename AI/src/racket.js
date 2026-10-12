@@ -3,8 +3,9 @@ import { gsap } from 'gsap';
 // A raquete-cursor (só desktop com mouse, sem reduced-motion). O centro das cordas fica exatamente no ponteiro,
 // então o clique cai onde a raquete aponta. A mola fica no ângulo: o cabo vem atrasado, balançando com o movimento.
 // No clique, um impulso no ângulo faz o swing. Sobre links e botões, a raquete fica de pé ("posição de espera").
-// Quando as cordas passam pela bola de um alvo (o rali, o Le Mur), o alvo é rebatido (hit). Cada alvo tem o seu
-// intervalo mínimo entre duas rebatidas (cooldown, em ms).
+// Quando as cordas passam pela bola de um alvo (o rali, o Le Mur), o alvo é rebatido (hit), com o ponto das cordas
+// (x, y, onde fica o SPOT) e a velocidade vertical do ponteiro (vy, em px por movimento; negativa = subindo).
+// Cada alvo tem o seu intervalo mínimo entre duas rebatidas (cooldown, em ms).
 const SPOT = { x: 30, y: 32 }; // o sweet spot no viewBox da raquete
 const REST = -35; // em graus: o cabo para baixo e para a direita
 const READY = -8;
@@ -32,7 +33,7 @@ export function createRacket({ onHit } = {}) {
   document.body.append(racket);
   document.documentElement.classList.add('has-racket');
 
-  const pointer = { x: -200, y: -200, vx: 0, seen: false };
+  const pointer = { x: -200, y: -200, vx: 0, vy: 0, seen: false };
   let angle = REST;
   let spin = 0;
   let ready = false;
@@ -44,6 +45,7 @@ export function createRacket({ onHit } = {}) {
     (event) => {
       if (event.pointerType !== 'mouse') return;
       pointer.vx = event.clientX - pointer.x;
+      pointer.vy = event.clientY - pointer.y;
       pointer.x = event.clientX;
       pointer.y = event.clientY;
       pointer.seen = true;
@@ -63,6 +65,7 @@ export function createRacket({ onHit } = {}) {
     spin = (spin + (target - angle) * STIFFNESS) * DAMPING;
     angle += spin;
     pointer.vx *= 0.7;
+    pointer.vy *= 0.7;
 
     racket.classList.toggle('is-ready', ready);
     gsap.set(racket, {
@@ -79,7 +82,7 @@ export function createRacket({ onHit } = {}) {
       if (now - (lastHit.get(target) ?? 0) < (target.cooldown ?? 700)) continue;
       if (!target.near(pointer.x, pointer.y, 26)) continue;
       lastHit.set(target, now);
-      target.hit({ x: pointer.x, y: pointer.y });
+      target.hit({ x: pointer.x, y: pointer.y, vy: pointer.vy });
     }
   });
 

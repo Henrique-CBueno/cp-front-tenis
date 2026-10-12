@@ -135,3 +135,63 @@ describe('Le Mur: a regra do tênis', () => {
     expect(rules.state()).toMatchObject({ phase: 'over', score: 3, best: 10 });
   });
 });
+
+// o pico e o desvio lateral de uma rebatida
+function flight(hit, rules = createMurRules(court)) {
+  falling(rules);
+  const x0 = rules.state().x;
+  rules.hit(hit);
+  let top = 0;
+  run(rules, () => {
+    top = Math.max(top, rules.state().h);
+    return rules.state().vh < 0;
+  });
+  return { top, drift: rules.state().x - x0 };
+}
+
+describe('Le Mur: o contato e a dificuldade', () => {
+  it('o centro das cordas manda alto e reto; a borda, baixo e para o lado dela', () => {
+    const center = flight({ quality: 1, side: 1 });
+    const edge = flight({ quality: 0, side: 1 });
+    const left = flight({ quality: 0, side: -1 });
+    expect(center.top).toBeGreaterThan(edge.top * 1.2);
+    expect(Math.abs(center.drift)).toBeLessThan(1);
+    expect(edge.drift).toBeGreaterThan(40);
+    expect(left.drift).toBeLessThan(-40);
+  });
+
+  it('a força do gesto muda a velocidade: parado é fraco, subindo é forte', () => {
+    const still = flight({ power: 0 });
+    const strong = flight({ power: 1 });
+    expect(strong.top).toBeGreaterThan(still.top * 1.4);
+  });
+
+  it('a dificuldade sobe a cada 5 rebatidas, e não antes', () => {
+    const rules = createMurRules(court);
+    const levels = [];
+    for (let i = 0; i < 10; i++) {
+      falling(rules);
+      rules.hit();
+      levels.push(rules.state().level);
+    }
+    expect(levels).toEqual([0, 0, 0, 0, 1, 1, 1, 1, 1, 2]);
+  });
+
+  it('num nível acima, a bola sobe a mesma altura em menos tempo (cai mais rápido)', () => {
+    // o tempo da rebatida até o pico: depende só da gravidade e da altura do pico
+    const rise = (rules) => {
+      falling(rules);
+      rules.hit();
+      let t = 0;
+      run(rules, () => {
+        t += 1 / 60;
+        return rules.state().vh < 0;
+      });
+      return t;
+    };
+    const easy = createMurRules(court);
+    const hard = createMurRules(court);
+    for (let i = 0; i < 4; i++) rise(hard); // a 5ª rebatida já é no nível 1
+    expect(rise(hard)).toBeLessThan(rise(easy) - 2 / 60);
+  });
+});

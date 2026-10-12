@@ -264,3 +264,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - celular: nenhum quadro sem bola no saque;
   - desktop: a bola não some mais no meio da tela, mas sai pelo topo e volta no golpe.
 - **Por que o desktop ficou assim:** no desktop, o canvas começa no topo da tela, e o braço, a raquete e o ponto de contato ficam acima dela. A IA ofereceu encolher o jogador ~18% (recomendado) ou prender a bola no topo. **Escolhi deixar como está.**
+
+## #41 · O sweet spot pela distância direta não funcionava (2026-10-12)
+- **Erro da IA:** no ticket 30, a primeira versão media a qualidade da rebatida pela distância direta entre a Bola e o centro das cordas, como o ticket descrevia.
+- **Causa:** a Bola caindo encosta primeiro na borda do alcance da raquete, então quase toda rebatida contaria como de raspão, mesmo com a raquete bem embaixo da bola.
+- **Correção:** a qualidade passa a vir da distância **na horizontal**, isto é, do ponto das cordas onde a bola cai. O lado da borda (esquerda ou direita) decide para onde a bola desvia. No toque (celular) continua a distância direta, porque ali o que conta é a precisão do dedo.
+- **Teste:** E2E com a raquete parada no caminho da Bola, primeiro no centro e depois a 26 px dele: o centro sobe mais. Estável em 4 de 4 repetições.
