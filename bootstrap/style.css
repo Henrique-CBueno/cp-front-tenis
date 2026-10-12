@@ -1,0 +1,44 @@
+:root {
+  --brand: #8b5a2b;
+  --brand-escuro: #6f4722;
+}
+
+.text-brand {
+  color: var(--brand);
+}
+
+.btn-brand {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--brand);
+  --bs-btn-border-color: var(--brand);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--brand-escuro);
+  --bs-btn-hover-border-color: var(--brand-escuro);
+  --bs-btn-active-bg: var(--brand-escuro);
+  --bs-btn-active-border-color: var(--brand-escuro);
+}
+
+.navbar-brand .text-brand {
+  color: #c08a55;
+}
+
+.depoimento {
+  max-width: 640px;
+}
+
+.avatar {
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  background-color: #c08a55;
+}
+
+.carousel-indicators [data-bs-target] {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.carousel-dark .carousel-indicators .active {
+  background-color: var(--brand);
+}

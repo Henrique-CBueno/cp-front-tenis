@@ -1,9 +1,23 @@
+# Dependências e build (valem para todos os projetos: AI, bootstrap, revisao, tailwind)
 node_modules/
 dist/
+
+# Playwright
 test-results/
 playwright-report/
-.impeccable/*
-!.impeccable/design.json
-tools/.venv/
-tools/source/
-tools/work/
+
+# Vercel
+.vercel/
+
+# Impeccable: só o design.json é versionado
+AI/.impeccable/*
+!AI/.impeccable/design.json
+
+# Ferramentas de mídia (ambiente Python e arquivos pesados de trabalho)
+AI/tools/.venv/
+AI/tools/source/
+AI/tools/work/
+
+# Sistema e logs
+.DS_Store
+*.log
