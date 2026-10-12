@@ -9,6 +9,7 @@ const mur = (page) =>
       phase: section.dataset.phase,
       score: Number(section.dataset.score ?? 0),
       errors: Number(section.dataset.errors ?? 0),
+      marks: document.querySelectorAll('[data-mur-mark]').length,
       ball: { x: box.x + box.width / 2, y: box.y + box.height / 2 },
       visible: getComputedStyle(el).opacity !== '0',
     };
@@ -60,7 +61,62 @@ test('rebater e deixar cair três vezes encerra a partida com o placar', async (
     await expect.poll(async () => (await mur(page)).errors, { timeout: 5000 }).toBe(i);
   }
   expect(await mur(page)).toMatchObject({ phase: 'over', score: 3 });
+  // a primeira partida sempre bate o recorde (0)
+  await expect(page.locator('[data-mur-status]')).toHaveText('Novo recorde: 3 rebatidas. Rebata para jogar de novo');
+  await expect(page.locator('[data-mur-score]')).toHaveText('03 rebatidas · recorde 03');
+  await expect(page.locator('[data-mur-error].is-made')).toHaveCount(3);
+});
+
+test('cada quique válido deixa uma Marca, e a próxima partida limpa o saibro', async ({ page }) => {
+  await page.goto('/');
+  await toTheEnd(page);
+  for (let i = 1; i <= 3; i++) {
+    await rebater(page);
+    await page.mouse.move(5, 5);
+    // um quique válido (a Marca) e depois o segundo quique (o erro)
+    await expect.poll(async () => (await mur(page)).errors, { timeout: 5000 }).toBe(i);
+    expect((await mur(page)).marks).toBe(i);
+  }
+  await rebater(page); // começa outra partida
+  await expect.poll(async () => (await mur(page)).marks).toBe(0);
+});
+
+test('o recorde sobrevive ao recarregar', async ({ page }) => {
+  await page.goto('/');
+  await page.evaluate(() => localStorage.setItem('la-trace:le-mur:recorde', '18'));
+  await page.reload();
+  await page.waitForSelector('[data-loader]', { state: 'detached', timeout: 15000 });
+  await toTheEnd(page);
+  await rebater(page);
+  await expect(page.locator('[data-mur-score]')).toHaveText('01 rebatida · recorde 18');
+  for (let i = 1; i <= 3; i++) {
+    if (i > 1) await rebater(page);
+    await page.mouse.move(5, 5);
+    await expect.poll(async () => (await mur(page)).errors, { timeout: 5000 }).toBe(i);
+  }
   await expect(page.locator('[data-mur-status]')).toHaveText('Fim de partida: 3 rebatidas. Rebata para jogar de novo');
+  expect(await page.evaluate(() => localStorage.getItem('la-trace:le-mur:recorde'))).toBe('18');
+});
+
+test('com o storage bloqueado, o jogo funciona e só não lembra o recorde', async ({ page }) => {
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      get() {
+        throw new DOMException('bloqueado', 'SecurityError');
+      },
+    });
+  });
+  const errors = [];
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto('/');
+  await toTheEnd(page);
+  for (let i = 1; i <= 3; i++) {
+    await rebater(page);
+    await page.mouse.move(5, 5);
+    await expect.poll(async () => (await mur(page)).errors, { timeout: 5000 }).toBe(i);
+  }
+  await expect(page.locator('[data-mur-status]')).toHaveText('Novo recorde: 3 rebatidas. Rebata para jogar de novo');
+  expect(errors).toEqual([]);
 });
 
 // a raquete parada no caminho da Bola, deslocada dx na horizontal; devolve a altura do pico depois da rebatida

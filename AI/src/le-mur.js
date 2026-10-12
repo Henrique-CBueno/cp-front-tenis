@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { createMurRules } from './le-mur-rules.js';
+import { stamp, erase, dust } from './impact.js';
 
 // O Le Mur: o paredão do fim da página. A Bola só vem para cá quando o traço do rali chega ao ingresso
 // (rally.finished()): primeiro ela fica pousada no ingresso, e salta para o saibro do jogo quando a quadra
@@ -9,13 +10,34 @@ const ARRIVAL = 0.9; // s, o salto do ingresso até o saibro
 const TOUCH_REACH = 60; // px, o raio do toque em volta do centro da Bola
 const STRONG_SWING = 25; // px por movimento subindo: daí para cima, a rebatida tem a força toda
 
+const RECORD_KEY = 'la-trace:le-mur:recorde';
+
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
+const two = (n) => String(n).padStart(2, '0');
+
+// o recorde fica no navegador; sem storage (bloqueado, aba privada), o jogo funciona e só não lembra
+function loadBest() {
+  try {
+    return Math.max(0, Number.parseInt(localStorage.getItem(RECORD_KEY), 10) || 0);
+  } catch {
+    return 0;
+  }
+}
+function saveBest(best) {
+  try {
+    localStorage.setItem(RECORD_KEY, String(best));
+  } catch {
+    // sem storage: o recorde vale só até recarregar
+  }
+}
 
 export function createMur(section, { rally, racket = false }) {
   const court = section.querySelector('[data-mur-court]');
   const floor = section.querySelector('[data-mur-floor]');
   const status = section.querySelector('[data-mur-status]');
   const score = section.querySelector('[data-mur-score]');
+  const errorMarks = [...section.querySelectorAll('[data-mur-error]')];
+  const errorBox = section.querySelector('[data-mur-errors]');
   const hint = section.querySelector('[data-mur-hint]');
   const play = section.querySelector('[data-mur-play]');
   const ticketMark = document.querySelector('.ticket .mark__oval');
@@ -27,7 +49,9 @@ export function createMur(section, { rally, racket = false }) {
   court.append(ball);
 
   let rules = null;
-  let best = 0;
+  let best = loadBest();
+  let bestBefore = best; // o recorde quando a partida começou: o fim mostra se ele caiu
+  const marks = []; // as Marcas desta partida no saibro
   let moment = 'away';
   const arrival = { t: 0, from: null };
   let lastError = null;
@@ -53,19 +77,54 @@ export function createMur(section, { rally, racket = false }) {
   }
 
   function report() {
-    const { phase, score: total, errors } = rules.state();
+    const { phase, score: total, errors, best: record } = rules.state();
+    const isRecord = phase === 'over' && total > bestBefore;
     const text = {
       idle: 'Rebata para começar',
       playing: '',
       waiting: `${lastError === 'out' ? 'Fora' : 'Dois quiques'}. Rebata para continuar`,
-      over: `Fim de partida: ${plural(total, 'rebatida')}. Rebata para jogar de novo`,
+      over: `${isRecord ? 'Novo recorde' : 'Fim de partida'}: ${plural(total, 'rebatida')}. Rebata para jogar de novo`,
     }[phase];
-    const key = `${phase}|${total}|${errors}|${text}`;
+    const key = `${phase}|${total}|${errors}|${text}|${marks.length}`;
     if (key === shown) return;
     shown = key;
     status.textContent = text;
-    score.textContent = `${plural(total, 'rebatida')} · erros ${errors}/3`;
-    Object.assign(section.dataset, { phase, score: total, errors });
+    score.textContent = `${two(total)} rebatida${total === 1 ? '' : 's'}${record > 0 ? ` · recorde ${two(record)}` : ''}`;
+    errorMarks.forEach((mark, i) => mark.classList.toggle('is-made', i < errors));
+    errorBox.setAttribute('aria-label', `${plural(errors, 'erro')} de 3`);
+    section.classList.toggle('is-record', isRecord);
+    Object.assign(section.dataset, { phase, score: total, errors, marks: marks.length });
+  }
+
+  // cada quique válido deixa uma Marca no saibro, na linha de base, com o pó do quique
+  function leaveMark(x) {
+    const el = document.createElement('span');
+    el.className = 'rally__bounce mur__mark';
+    el.dataset.murMark = '';
+    el.style.left = `${x}px`;
+    el.style.top = `${floorY()}px`;
+    court.insertBefore(el, ball);
+    stamp(el);
+    dust(court, x, floorY());
+    marks.push(el);
+  }
+
+  // a próxima partida começa com o saibro limpo: as Marcas da anterior se recolhem
+  function clearMarks() {
+    for (const el of marks.splice(0)) {
+      erase(el);
+      gsap.delayedCall(0.35, () => el.remove());
+    }
+  }
+
+  // toda rebatida passa por aqui: a primeira de uma partida limpa o saibro
+  function strike(contact) {
+    const starting = ['idle', 'over'].includes(rules.state().phase);
+    if (!rules.hit(contact)) return;
+    if (starting) {
+      clearMarks();
+      bestBefore = rules.state().best;
+    }
   }
 
   gsap.ticker.add((_, deltaTime) => {
@@ -97,7 +156,11 @@ export function createMur(section, { rally, racket = false }) {
       return;
     }
 
-    for (const event of rules.step(dt)) if (event.type === 'error') lastError = event.reason;
+    for (const event of rules.step(dt)) {
+      if (event.type === 'error') lastError = event.reason;
+      if (event.type === 'bounce' && event.valid) leaveMark(event.x);
+      if (event.type === 'over' && event.best > bestBefore) saveBest(event.best);
+    }
     const { x, h } = rules.state();
     place({ x, y: floorY() - h - radius() });
     report();
@@ -121,14 +184,14 @@ export function createMur(section, { rally, racket = false }) {
     (event) => {
       if (event.pointerType === 'mouse' || moment !== 'court') return;
       const d = distance(event.clientX, event.clientY);
-      if (d <= TOUCH_REACH) rules.hit({ quality: 1 - d / TOUCH_REACH, side: Math.sign(center().x - event.clientX) });
+      if (d <= TOUCH_REACH) strike({ quality: 1 - d / TOUCH_REACH, side: Math.sign(center().x - event.clientX) });
     },
     { passive: true },
   );
 
   // no teclado: o botão "Jogar" rebate (espaço ou Enter), se a Bola estiver ao alcance, descendo e baixa
   function swing() {
-    if (moment === 'court' && rules.reachable()) rules.hit();
+    if (moment === 'court' && rules.reachable()) strike();
   }
   play.addEventListener('keydown', (event) => {
     if (event.key !== ' ' && event.key !== 'Enter') return;
@@ -158,7 +221,7 @@ export function createMur(section, { rally, racket = false }) {
     },
     hit({ x, vy = 0 }) {
       const dx = center().x - x;
-      rules.hit({
+      strike({
         quality: 1 - Math.abs(dx) / (racketReach + ball.offsetWidth / 2),
         side: Math.sign(dx),
         power: Math.min(1, Math.max(0, -vy / STRONG_SWING)),
@@ -170,6 +233,9 @@ export function createMur(section, { rally, racket = false }) {
 // sem movimento, o Le Mur é um estado parado (ticket 34 completa este estado)
 export function stillMur(section) {
   section.querySelector('[data-mur-status]').textContent = 'O jogo aparece com as animações ligadas';
+  const best = loadBest();
+  section.querySelector('[data-mur-score]').textContent = best > 0 ? `Recorde: ${two(best)} rebatidas` : '';
+  section.querySelector('[data-mur-errors]').hidden = true;
   section.querySelector('[data-mur-play]').hidden = true;
   section.querySelector('[data-mur-hint]').hidden = true;
   section.dataset.phase = 'still';

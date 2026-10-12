@@ -2578,3 +2578,32 @@ h3 {
   color: inherit;
   cursor: pointer;
 }
+
+/* os erros: três marcas ovais vazias, em giz, que se preenchem de saibro escuro a cada erro */
+.mur__errors {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0.15rem 0 0.25rem;
+}
+
+.mur__error {
+  width: 30px;
+  aspect-ratio: 2.2;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px rgb(246 239 226 / 0.7);
+  transition: background-color 300ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mur__error.is-made {
+  background: radial-gradient(ellipse at 45% 50%, #7c3013, var(--clay-deep) 70%);
+}
+
+.mur__mark {
+  z-index: 1;
+}
+
+/* o recorde caiu: o placar acende no amarelo do brilho da bola (#f3f7a2 sobre o saibro passa 5:1) */
+.mur.is-record .mur__score,
+.mur.is-record .mur__status {
+  color: #f3f7a2;
+}
