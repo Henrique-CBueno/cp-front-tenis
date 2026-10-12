@@ -1,5 +1,6 @@
 import { gsap } from 'gsap';
 import { stamp, erase } from './impact.js';
+import { completeBallTrack } from './ball-track.js';
 
 const { clamp, mapRange, interpolate } = gsap.utils;
 
@@ -25,6 +26,7 @@ export function createHero({ section, manifest, serveCanvas }) {
 
   const contactProgress = SERVE_END * manifest.impactProgress;
   let flight = null; // o arco contato → marca ({ to: a marca }), recalculado quando o layout muda
+  let ballTrack = manifest.ball; // o rastreio do vídeo com os buracos preenchidos (também depende do layout)
   let traceLength = 0;
   let lastP = null;
   let markMade = false;
@@ -39,6 +41,15 @@ export function createHero({ section, manifest, serveCanvas }) {
       y: mark.offsetTop + markOval.offsetTop + markOval.offsetHeight / 2,
     };
     const peak = { x: interpolate(from.x, to.x, 0.55), y: Math.min(from.y, to.y) - section.clientHeight * 0.08 };
+    // o lançamento sobe até 16% da altura da tela (em coordenadas do quadro do vídeo), para a bola não sair dela
+    const top = serveCanvas.pointAt([0, 0]).y;
+    const frameHeight = serveCanvas.pointAt([0, 1]).y - top;
+    ballTrack = completeBallTrack(manifest.ball, {
+      impactIndex: Math.round(manifest.impactProgress * (manifest.ball.length - 1)),
+      contact: manifest.contact,
+      // e sempre um pouco acima do contato, para a bola cair na raquete (e não subir até ela)
+      peakY: Math.min((section.clientHeight * 0.16 - top) / frameHeight, manifest.contact[1] - 0.08),
+    });
     trace.setAttribute('viewBox', `0 0 ${section.clientWidth} ${section.clientHeight}`);
     tracePath.setAttribute('d', `M${from.x},${from.y} Q${peak.x},${peak.y} ${to.x},${to.y}`);
     traceLength = tracePath.getTotalLength();
@@ -68,7 +79,7 @@ export function createHero({ section, manifest, serveCanvas }) {
       gsap.set(ball, { x: point.x, y: point.y, opacity: t < 1 || !handedOff ? 1 : 0 });
       return t;
     }
-    const tracked = manifest.ball[Math.round(frameProgress * (manifest.ball.length - 1))];
+    const tracked = ballTrack[Math.round(frameProgress * (ballTrack.length - 1))];
     const point = tracked && serveCanvas.pointAt(tracked);
     gsap.set(ball, point ? { x: point.x, y: point.y, opacity: 1 } : { opacity: 0 });
     return 0;

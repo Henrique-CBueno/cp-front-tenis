@@ -251,3 +251,16 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - nenhum quadro sem bola, no desktop e no celular;
   - na troca, as duas bolas a no máximo 1 px uma da outra, durante um único quadro.
 - **Teste novo:** "a bola não some na Marca 01", no desktop e no celular.
+
+## #40 · A bola ainda sumia: o rastreio do saque tinha buracos (2026-10-12)
+- **O que eu disse:** "a bola ainda esta sumindo".
+- **Erro da IA:** as medições da correção #39 olhavam só a transição na Marca 01. Rolando com a roda do mouse e amostrando quadro a quadro, apareceu o buraco maior, **durante o próprio saque**.
+- **Causa:** o rastreio da bola no vídeo cobre só os quadros 0 a 17 (mais 4 quadros soltos sem ponto). Do 18 ao contato (quadro 82), a bola está acima do recorte do jogador e não tinha posição, então sumia no ar, no meio da tela, em ~70% do saque.
+- **Correção** (`src/ball-track.js`, com 5 testes):
+  - os buracos soltos viram a média dos vizinhos;
+  - do quadro 18 ao contato, a bola sobe com a velocidade medida, freia até um pico a 16% da altura da tela e cai acelerando até o ponto de contato;
+  - a física pura (uma parábola só) levaria a bola 2,6 alturas do jogador acima da tela.
+- **Resultado medido:**
+  - celular: nenhum quadro sem bola no saque;
+  - desktop: a bola não some mais no meio da tela, mas sai pelo topo e volta no golpe.
+- **Por que o desktop ficou assim:** no desktop, o canvas começa no topo da tela, e o braço, a raquete e o ponto de contato ficam acima dela. A IA ofereceu encolher o jogador ~18% (recomendado) ou prender a bola no topo. **Escolhi deixar como está.**
