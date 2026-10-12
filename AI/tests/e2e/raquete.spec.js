@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 // o sweet spot da raquete na tela: o centro do aro (girar não muda o centro da caixa da elipse)
 const spotOf = (page) =>

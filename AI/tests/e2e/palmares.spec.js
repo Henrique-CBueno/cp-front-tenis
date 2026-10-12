@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 // a foto está revelada quando a máscara da onda subiu (posição 60%) e ela saiu do tom de saibro
 const revealed = (card) =>
@@ -69,5 +69,7 @@ test('no desktop, os campeões ficam dos dois lados de um vão central, por onde
   const lefts = await page.locator('.champion').evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().left)));
   expect(new Set(lefts).size).toBe(2);
   const lane = await page.locator('#palmares [data-lane]').boundingBox();
-  expect(Math.abs(lane.x + lane.width / 2 - 1440 / 2)).toBeLessThan(2);
+  // o centro da página, sem a calha reservada para a barra de rolagem
+  const width = await page.evaluate(() => document.body.getBoundingClientRect().width);
+  expect(Math.abs(lane.x + lane.width / 2 - width / 2)).toBeLessThan(2);
 });

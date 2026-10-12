@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test('a linha do tempo corre na horizontal enquanto a seção Histoire está presa', async ({ page }) => {
   await page.goto('/');

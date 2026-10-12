@@ -214,3 +214,20 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Antes (rodada 1):** "sem o logo oficial", por causa da marca registrada.
 - **Agora:** pedi a identidade e os logos do torneio. A IA mostrou o risco (marca registrada da FFT, sem licença livre) e recomendou uma identidade própria. Escolhi o logo oficial assim mesmo (decisão 016).
 - **Mitigação:** aviso de tributo de fã e de projeto acadêmico sem vínculo, no topo e no rodapé. Recomendação de não publicar assim.
+
+## #36 · A tela de carregamento ficava parada até o teto de 8 s (2026-10-12)
+- **O que a IA viu ao medir:** com tudo carregado em ~0,5 s, a tela só saía aos ~9,5 s.
+- **Causa:** cada etapa avisava o progresso com `.then(() => (x = 1, report()))`, e o `report()` devolvia a promessa do tween do contador. Quando um tween novo sobrescreve o anterior, o antigo nunca completa, então o `Promise.all` do essencial nunca resolvia, e só o teto de 8 s abria a página.
+- **Correção:** `progress()` não devolve mais nada; só a saída (`done()`) espera os próprios tweens, via `onComplete`. A tela agora sai em ~2,4 s no local (0,9 s de mínimo + o fechamento da linha + a subida).
+- **Efeito colateral bom:** a suíte E2E caiu de 2,5 min para 1,1 min.
+
+## #37 · A tela de carregamento não estava bonita, e o site pulava para o lado (2026-10-12)
+- **O que eu disse:** "a animacao nao esta bonita! gostaria que tivesse a logo de rg tbm, e depois de carregar aparece o scroll e o site da uma 'pulada para o lado'".
+- **Causa da pulada:** com o scroll travado (`overflow: hidden`), o navegador esconde a barra de rolagem. Quando ela volta, a página perde ~15 px de largura e tudo anda.
+- **Correção:**
+  - `scrollbar-gutter: stable` reserva a calha da barra desde o começo;
+  - medido com barras de rolagem de verdade, o título e o botão do topo ficam no mesmo lugar antes e depois;
+  - o fundo da tela termina na cor do `html`, para a calha não aparecer como uma faixa.
+- **Erro da IA no caminho:** a troca do HTML da tela deixou duas linhas do loader antigo (um segundo contador e um `</div>` a mais). O E2E pegou, e foi corrigido.
+- **Teste ajustado:** o do vão central do Palmarès media o centro por `1440 / 2`. Com a calha reservada, o centro é o da largura do `body`.
+- **Achado, não corrigido:** "a raquete rebate a bola do rali, e a bola volta ao traço" falha às vezes na suíte completa (5 a 11 px), **também no `main`**. Sozinho, passa 10 de 10. É uma instabilidade de tempo que já existia, fora do escopo desta etapa.

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 // Amostra o traço do rali e procura pontos dentro de caixas de texto visíveis. Fica de fora o que a bola
 // atravessa por trás de propósito (Sous la Terre, a Histoire e o Face-à-face, que são opacos).

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 const shiftOf = (page, i = 0) =>
   page.locator('[data-marquee-track]').nth(i).evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).m41);

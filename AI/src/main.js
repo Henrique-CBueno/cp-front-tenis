@@ -20,6 +20,7 @@ import { runSoil } from './sous-la-terre.js';
 import { revealTitles } from './titles.js';
 import { runMarquees } from './marquee.js';
 import { createRacket, racketAllowed } from './racket.js';
+import { createLoader } from './loader.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,6 +29,7 @@ for (const link of document.querySelectorAll('[data-cta]')) {
 }
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const loader = createLoader(document.querySelector('[data-loader]'), { reducedMotion });
 
 const sequence = createServeSequence({
   manifest,
@@ -35,7 +37,22 @@ const sequence = createServeSequence({
   viewport: { width: window.innerWidth, reducedMotion },
 });
 const serveCanvas = createServeCanvas(document.querySelector('[data-serve-canvas]'));
-sequence.preload();
+
+// O essencial para a primeira dobra não travar: os quadros-chave do saque, as fontes e a arquibancada.
+// O resto dos quadros continua chegando por trás, depois que a tela de carregamento sai.
+const loading = { serve: 0, fonts: 0, stadium: 0 };
+const report = () => loader.progress(0.7 * loading.serve + 0.15 * loading.fonts + 0.15 * loading.stadium);
+const essentials = Promise.all([
+  sequence.preload({ onProgress: (p) => ((loading.serve = p), report()) }),
+  document.fonts.ready.then(() => ((loading.fonts = 1), report())),
+  document
+    .querySelector('[data-stadium] img')
+    .decode()
+    .catch(() => {})
+    .then(() => ((loading.stadium = 1), report())),
+]);
+// numa rede ruim, a página abre assim mesmo: um quadro que falta é coberto pelo vizinho
+const giveUp = new Promise((resolve) => setTimeout(resolve, 8000));
 
 const hero = createHero({ section: document.querySelector('#le-service'), manifest, serveCanvas });
 const rallyContainer = document.querySelector('[data-rally]');
@@ -73,11 +90,12 @@ window.addEventListener('load', remeasure);
 drawHeart(document.querySelector('#guga'), { animate: !reducedMotion });
 runPalmares(document.querySelector('#palmares'));
 
+let lenis = null;
 if (reducedMotion) {
   rally.render(Infinity);
 } else {
-
-  const lenis = new Lenis({ anchors: true });
+  lenis = new Lenis({ anchors: true });
+  lenis.stop();
   lenis.on('scroll', ScrollTrigger.update);
   gsap.ticker.add((time) => lenis.raf(time * 1000));
   gsap.ticker.lagSmoothing(0);
@@ -106,3 +124,10 @@ if (reducedMotion) {
     rally.render(window.innerHeight / 2 - top);
   });
 }
+
+Promise.race([essentials, giveUp])
+  .then(() => loader.done())
+  .then(() => {
+    lenis?.start();
+    ScrollTrigger.refresh();
+  });

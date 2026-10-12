@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 // A geometria do pin (como em sous-la-terre.js): começa com a marca do tijolo no meio da tela;
 // pouso (0,3 tela), escavação (4 telas), pausa (0,2), o corte (1) e o salto (0,4).

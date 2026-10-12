@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test('o rodapé é compacto: no máximo 40% da altura da tela', async ({ page }) => {
   await page.goto('/');

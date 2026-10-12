@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures.js';
 
 test('a navegação leva até a seção escolhida', async ({ page }) => {
   await page.goto('/');
