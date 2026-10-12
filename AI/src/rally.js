@@ -304,5 +304,6 @@ export function createRally({ container, start }) {
       .to(kick, { y: 0, duration: 0.42, ease: 'bounce.out' });
   }
 
-  return { render, measure, near, hit, started: () => drawnNow > 0 };
+  // started: a bola do hero passa a vez; finished: a ponta chegou ao ingresso, e a Bola pode ir para o Le Mur
+  return { render, measure, near, hit, started: () => drawnNow > 0, finished: () => length > 0 && drawnNow >= length };
 }

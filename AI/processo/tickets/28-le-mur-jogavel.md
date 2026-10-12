@@ -13,10 +13,13 @@
 
 **Blocked by:** None
 
-**Status:** ready-for-agent
+**Status:** done
 
-- [ ] `src/le-mur-rules.test.js`: estados, quique válido, dois quiques, fora, terceiro erro, espera depois do erro, placar total (Vitest, antes da implementação)
-- [ ] `src/rally.js` expõe `finished()` (o traço completo)
-- [ ] Playwright: a Bola chega ao Le Mur com o traço completo; uma passada da raquete conta 1 rebatida; sem rebater, três erros mostram o placar
-- [ ] O traço do rali continua terminando no ingresso; nenhum teste antigo quebra
-- [ ] Log da etapa em `processo/prompts/`
+- [x] `src/le-mur-rules.test.js`: estados, quique válido, dois quiques, fora, terceiro erro, espera depois do erro, placar total, recorde (Vitest, antes da implementação)
+- [x] `src/rally.js` expõe `finished()` (o traço completo)
+- [x] Playwright: a Bola chega ao Le Mur com o traço completo; uma passada da raquete conta 1 rebatida; rebater e deixar cair três vezes mostra o placar (como depois de um erro a partida espera a rebatida, os três erros pedem três rebatidas)
+- [x] O traço do rali continua terminando no ingresso; nenhum teste antigo quebra
+- [x] Log da etapa em `processo/prompts/`
+
+## Comments
+- 2026-10-12: feito. Com reduced-motion, o Le Mur já mostra o aviso parado (o ticket 34 completa com o recorde). No celular, a Bola chega e quica, mas ainda não dá para rebater: é o ticket 29.

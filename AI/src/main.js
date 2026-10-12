@@ -21,6 +21,7 @@ import { revealTitles } from './titles.js';
 import { runMarquees } from './marquee.js';
 import { createRacket, racketAllowed } from './racket.js';
 import { createLoader } from './loader.js';
+import { createMur, stillMur } from './le-mur.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -93,8 +94,10 @@ drawHeart(document.querySelector('#guga'), { animate: !reducedMotion });
 runPalmares(document.querySelector('#palmares'));
 
 let lenis = null;
+const murSection = document.querySelector('[data-mur]');
 if (reducedMotion) {
   rally.render(Infinity);
+  stillMur(murSection);
 } else {
   lenis = new Lenis({ anchors: true });
   lenis.stop();
@@ -118,7 +121,9 @@ if (reducedMotion) {
   runCounters(document.querySelector('#numeros'));
   revealTitles([...document.querySelectorAll('.rally section h2:not(.face__line)')]);
   runMarquees([...document.querySelectorAll('[data-marquee]')]);
-  if (racketAllowed()) createRacket({ onHit: rally });
+  // a Bola termina no ingresso e, de lá, salta para o Le Mur: a raquete rebate as duas
+  const mur = createMur(murSection, { rally });
+  if (racketAllowed()) createRacket({ onHit: [rally, mur] });
 
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {

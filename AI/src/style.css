@@ -2507,3 +2507,57 @@ h3 {
     min-height: 100svh;
   }
 }
+
+
+/* Le Mur: o paredão do fim da página, um epílogo depois do ingresso. A bola, vista de lado, sobe e cai sobre a
+   linha de base, que é o chão. O texto fica no alto; a quadra ocupa a seção inteira por trás. */
+.mur {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  align-content: start;
+  gap: 1.25rem;
+  min-height: 100svh;
+  padding: clamp(6rem, 14svh, 9rem) var(--gutter) 0;
+  overflow: clip;
+}
+
+.mur__court {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.mur__floor {
+  top: auto;
+  bottom: 16%;
+}
+
+.mur__ball {
+  z-index: 2;
+}
+
+.mur__hud {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+
+.mur__score {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 600;
+  font-stretch: 80%;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.mur__status {
+  min-height: 1.5em;
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

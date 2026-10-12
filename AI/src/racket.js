@@ -3,7 +3,8 @@ import { gsap } from 'gsap';
 // A raquete-cursor (só desktop com mouse, sem reduced-motion). O centro das cordas fica exatamente no ponteiro,
 // então o clique cai onde a raquete aponta. A mola fica no ângulo: o cabo vem atrasado, balançando com o movimento.
 // No clique, um impulso no ângulo faz o swing. Sobre links e botões, a raquete fica de pé ("posição de espera").
-// Quando as cordas passam pela bola do rali, ela dá um pulinho e solta pó (hit).
+// Quando as cordas passam pela bola de um alvo (o rali, o Le Mur), o alvo é rebatido (hit). Cada alvo tem o seu
+// intervalo mínimo entre duas rebatidas (cooldown, em ms).
 const SPOT = { x: 30, y: 32 }; // o sweet spot no viewBox da raquete
 const REST = -35; // em graus: o cabo para baixo e para a direita
 const READY = -8;
@@ -35,7 +36,8 @@ export function createRacket({ onHit } = {}) {
   let angle = REST;
   let spin = 0;
   let ready = false;
-  let lastHit = 0;
+  const targets = [onHit].flat().filter(Boolean);
+  const lastHit = new Map();
 
   window.addEventListener(
     'pointermove',
@@ -71,9 +73,13 @@ export function createRacket({ onHit } = {}) {
       autoAlpha: pointer.seen ? 1 : 0,
     });
 
-    if (onHit && pointer.seen && performance.now() - lastHit > 700 && onHit.near(pointer.x, pointer.y, 26)) {
-      lastHit = performance.now();
-      onHit.hit();
+    if (!pointer.seen) return;
+    const now = performance.now();
+    for (const target of targets) {
+      if (now - (lastHit.get(target) ?? 0) < (target.cooldown ?? 700)) continue;
+      if (!target.near(pointer.x, pointer.y, 26)) continue;
+      lastHit.set(target, now);
+      target.hit({ x: pointer.x, y: pointer.y });
     }
   });
 
