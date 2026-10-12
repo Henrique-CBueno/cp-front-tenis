@@ -6,6 +6,9 @@ import { stamp, erase, dust } from './impact.js';
 // (rally.finished()): primeiro ela fica pousada no ingresso, e salta para o saibro do jogo quando a quadra
 // entra na tela. Daí em diante, as regras (le-mur-rules.js) conduzem a bola, e a raquete a rebate.
 // Momentos da Bola aqui: away (no rali) → ticket (pousada no ingresso) → arriving (saltando) → court.
+// Uma Bola só: se o traço desdesenha (subindo a página), a Bola volta ao rali e a partida pausa; descendo de novo,
+// ela salta outra vez do ingresso para onde estava. Fora da tela (ou com a aba escondida), a partida também pausa,
+// e só volta com um toque, um clique ou o espaço.
 const ARRIVAL = 0.9; // s, o salto do ingresso até o saibro
 const TOUCH_REACH = 60; // px, o raio do toque em volta do centro da Bola
 const STRONG_SWING = 25; // px por movimento subindo: daí para cima, a rebatida tem a força toda
@@ -48,6 +51,7 @@ export function createMur(section, { rally, racket = false }) {
   ball.dataset.murBall = '';
   court.append(ball);
 
+  const touch = window.matchMedia('(pointer: coarse)').matches;
   let rules = null;
   let best = loadBest();
   let bestBefore = best; // o recorde quando a partida começou: o fim mostra se ele caiu
@@ -83,6 +87,7 @@ export function createMur(section, { rally, racket = false }) {
       idle: 'Rebata para começar',
       playing: '',
       waiting: `${lastError === 'out' ? 'Fora' : 'Dois quiques'}. Rebata para continuar`,
+      paused: `Pausa. ${touch ? 'Toque' : 'Clique ou aperte espaço'} para continuar`,
       over: `${isRecord ? 'Novo recorde' : 'Fim de partida'}: ${plural(total, 'rebatida')}. Rebata para jogar de novo`,
     }[phase];
     const key = `${phase}|${total}|${errors}|${text}|${marks.length}`;
@@ -132,6 +137,7 @@ export function createMur(section, { rally, racket = false }) {
     const dt = Math.min(deltaTime / 1000, 1 / 30);
 
     if (!rally.finished()) {
+      rules.pause();
       moment = 'away';
       gsap.set(ball, { opacity: 0 });
       return;
@@ -149,7 +155,7 @@ export function createMur(section, { rally, racket = false }) {
     if (moment === 'arriving') {
       arrival.t = Math.min(1, arrival.t + dt / ARRIVAL);
       const { t, from } = arrival;
-      const to = { x: rules.state().x, y: floorY() - radius() };
+      const to = { x: rules.state().x, y: floorY() - rules.state().h - radius() }; // de volta para onde estava
       const lift = 4 * t * (1 - t) * 80; // um pulinho para fora do ingresso, e a queda até o saibro
       place({ x: from.x + (to.x - from.x) * t, y: from.y + (to.y - from.y) * t * t - lift });
       if (t >= 1) moment = 'court';
@@ -177,12 +183,26 @@ export function createMur(section, { rally, racket = false }) {
   }
   const distance = (x, y) => Math.hypot(center().x - x, center().y - y);
 
+  // a pausa: o Le Mur quase todo fora da tela, ou a aba escondida
+  new IntersectionObserver(([entry]) => entry.intersectionRatio < 0.3 && rules?.pause(), {
+    threshold: [0, 0.3],
+  }).observe(section);
+  document.addEventListener('visibilitychange', () => document.hidden && rules?.pause());
+
+  // a volta da pausa: um toque ou um clique em qualquer lugar do Le Mur, ou o espaço no "Jogar" (sem rebater)
+  const paused = () => moment === 'court' && rules.state().phase === 'paused';
+  function resume() {
+    if (!paused()) return false;
+    rules.resume();
+    return true;
+  }
+
   // no celular: tocar perto da Bola rebate, e quanto mais perto do centro, mais limpa a rebatida. O toque não
   // é cancelado, então arrastar a partir dali continua rolando a página.
   section.addEventListener(
     'pointerdown',
     (event) => {
-      if (event.pointerType === 'mouse' || moment !== 'court') return;
+      if (resume() || event.pointerType === 'mouse' || moment !== 'court') return;
       const d = distance(event.clientX, event.clientY);
       if (d <= TOUCH_REACH) strike({ quality: 1 - d / TOUCH_REACH, side: Math.sign(center().x - event.clientX) });
     },
@@ -191,6 +211,7 @@ export function createMur(section, { rally, racket = false }) {
 
   // no teclado: o botão "Jogar" rebate (espaço ou Enter), se a Bola estiver ao alcance, descendo e baixa
   function swing() {
+    if (resume()) return;
     if (moment === 'court' && rules.reachable()) strike();
   }
   play.addEventListener('keydown', (event) => {
@@ -202,7 +223,6 @@ export function createMur(section, { rally, racket = false }) {
   play.addEventListener('click', (event) => event.detail > 0 && swing());
 
   // a instrução muda por aparelho; com o foco no botão, vira a dica do espaço
-  const touch = window.matchMedia('(pointer: coarse)').matches;
   const deviceHint = racket ? 'Encoste a raquete na bola para rebater' : touch ? 'Toque perto da bola' : 'Use o botão Jogar';
   hint.textContent = deviceHint;
   play.addEventListener('focus', () => (hint.textContent = 'Aperte espaço quando a bola estiver descendo, perto do chão'));

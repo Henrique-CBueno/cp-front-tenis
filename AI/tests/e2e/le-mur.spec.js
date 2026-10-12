@@ -144,6 +144,60 @@ test('uma passada pelo centro das cordas manda a Bola mais alto que uma pela bor
   expect(center).toBeGreaterThan(edge * 1.15);
 });
 
+test('rolando para cima e para baixo no meio da partida, nunca há duas bolas à vista', async ({ page }) => {
+  await page.goto('/');
+  await toTheEnd(page);
+  await rebater(page);
+  await page.mouse.move(1400, 120); // longe do caminho da Bola (a raquete não rebate de novo)
+  // amostra cada quadro: quantas bolas estão visíveis (a do rali e a do Le Mur)
+  await page.evaluate(() => {
+    window.__balls = { max: 0, frames: 0, sawRally: false };
+    const visible = (sel) => Number(getComputedStyle(document.querySelector(sel)).opacity) > 0;
+    const sample = () => {
+      const rally = visible('[data-rally-ball]');
+      const n = Number(rally) + Number(visible('[data-mur-ball]'));
+      window.__balls.max = Math.max(window.__balls.max, n);
+      window.__balls.sawRally ||= rally;
+      window.__balls.frames++;
+      requestAnimationFrame(sample);
+    };
+    requestAnimationFrame(sample);
+  });
+  for (let i = 0; i < 20; i++) {
+    await page.mouse.wheel(0, -120);
+    await page.waitForTimeout(40);
+  }
+  await page.waitForTimeout(600);
+  for (let i = 0; i < 30; i++) {
+    await page.mouse.wheel(0, 120);
+    await page.waitForTimeout(40);
+  }
+  await expect.poll(async () => (await mur(page)).phase, { timeout: 8000 }).toBe('paused');
+  const balls = await page.evaluate(() => window.__balls);
+  expect(balls.sawRally).toBe(true); // a Bola voltou mesmo ao rali
+  expect(balls.frames).toBeGreaterThan(60);
+  expect(balls.max).toBe(1);
+  // a partida segue de onde parou
+  expect(await mur(page)).toMatchObject({ score: 1, errors: 0 });
+});
+
+test('sair da tela pausa a partida; voltar pede um toque para continuar', async ({ page }) => {
+  await page.goto('/');
+  await toTheEnd(page);
+  await rebater(page);
+  await page.mouse.move(5, 5);
+  await page.evaluate(() => window.scrollBy(0, -window.innerHeight * 1.2));
+  await expect.poll(async () => (await mur(page)).phase).toBe('paused');
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await expect(page.locator('[data-mur-status]')).toHaveText('Pausa. Clique ou aperte espaço para continuar', { timeout: 8000 });
+  // pausada, a bola não cai nem conta erro
+  await page.waitForTimeout(1500);
+  expect(await mur(page)).toMatchObject({ phase: 'paused', score: 1, errors: 0 });
+  await page.mouse.click(700, 300);
+  await expect.poll(async () => (await mur(page)).phase).not.toBe('paused');
+  expect((await mur(page)).score).toBe(1);
+});
+
 test('pelo teclado: Tab chega ao "Jogar" e o espaço rebate só com a Bola ao alcance', async ({ page }) => {
   await page.goto('/');
   await toTheEnd(page);

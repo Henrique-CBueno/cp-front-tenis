@@ -121,15 +121,16 @@ if (reducedMotion) {
   runCounters(document.querySelector('#numeros'));
   revealTitles([...document.querySelectorAll('.rally section h2:not(.face__line)')]);
   runMarquees([...document.querySelectorAll('[data-marquee]')]);
-  // a Bola termina no ingresso e, de lá, salta para o Le Mur: a raquete rebate as duas
-  const mur = createMur(murSection, { rally, racket: racketAllowed() });
-  if (racketAllowed()) createRacket({ onHit: [rally, mur] });
-
   // a ponta do traço acompanha o meio da tela
   gsap.ticker.add(() => {
     const top = rallyContainer.getBoundingClientRect().top;
     rally.render(window.innerHeight / 2 - top);
   });
+
+  // a Bola termina no ingresso e, de lá, salta para o Le Mur: a raquete rebate as duas. O Le Mur entra no ticker
+  // depois do rali, para ler rally.finished() do mesmo quadro (senão, na troca, as duas bolas apareceriam juntas)
+  const mur = createMur(murSection, { rally, racket: racketAllowed() });
+  if (racketAllowed()) createRacket({ onHit: [rally, mur] });
 }
 
 Promise.race([essentials, giveUp])

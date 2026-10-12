@@ -3,6 +3,7 @@
 // seguidos ou a bola fora pela lateral é erro; três erros encerram a partida. O placar é o total de rebatidas.
 //
 // Fases: idle (antes da primeira rebatida) → playing → waiting (depois de um erro, espera a rebatida) → over.
+// paused: a partida congelada no meio (o jogo saiu da tela, ou a Bola voltou ao rali); resume() a devolve a playing.
 // Em idle, waiting e over a bola quica parada no meio, e esses quiques não contam.
 // A dificuldade: a cada 5 rebatidas a gravidade sobe (a bola chega à mesma altura, mas cai mais rápido).
 const LEVEL_EVERY = 5;
@@ -41,6 +42,7 @@ export function createMurRules({ width, height, gravity: baseGravity = 2600, res
 
   function step(dt) {
     const events = [];
+    if (phase === 'paused') return events;
     ball.vh -= gravity * dt;
     ball.h += ball.vh * dt;
     ball.x += ball.vx * dt;
@@ -68,8 +70,15 @@ export function createMurRules({ width, height, gravity: baseGravity = 2600, res
   // baixo e para o lado em que a bola pegou (side: -1 esquerda, 1 direita). power vai de 0 (a raquete parada) a 1
   // (o gesto subindo), e 0,5 é o toque normal (celular, teclado). aim força o desvio (de -1 a 1).
   // Só vale com a bola descendo (ou parada no alto).
+  function pause() {
+    if (phase === 'playing') phase = 'paused';
+  }
+  function resume() {
+    if (phase === 'paused') phase = 'playing';
+  }
+
   function hit({ quality = 1, power = 0.5, side = 0, aim = side * (1 - clamp01(quality)) } = {}) {
-    if (ball.vh > 0) return false;
+    if (ball.vh > 0 || phase === 'paused') return false;
     if (phase === 'idle' || phase === 'over') {
       score = 0;
       errors = 0;
@@ -88,5 +97,5 @@ export function createMurRules({ width, height, gravity: baseGravity = 2600, res
   const reachable = () => ball.vh <= 0 && ball.h < height * reach;
 
   const state = () => ({ phase, score, errors, best, level: level(), x: ball.x, h: ball.h, vh: ball.vh });
-  return { step, hit, reachable, state };
+  return { step, hit, pause, resume, reachable, state };
 }

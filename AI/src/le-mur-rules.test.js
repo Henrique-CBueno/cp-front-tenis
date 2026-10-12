@@ -195,3 +195,38 @@ describe('Le Mur: o contato e a dificuldade', () => {
     expect(rise(hard)).toBeLessThan(rise(easy) - 2 / 60);
   });
 });
+
+describe('Le Mur: a pausa', () => {
+  it('pausado, step não avança; a partida retoma com o mesmo placar, os mesmos erros e a bola onde estava', () => {
+    const rules = createMurRules(court);
+    falling(rules);
+    rules.hit();
+    run(rules, (ev) => types(ev).includes('error'));
+    falling(rules);
+    rules.hit();
+    run(rules, () => false, 0.2);
+    rules.pause();
+    const frozen = rules.state();
+    expect(frozen.phase).toBe('paused');
+    expect(run(rules, () => false, 3)).toEqual([]);
+    expect(rules.state()).toEqual(frozen);
+    rules.resume();
+    expect(rules.state()).toMatchObject({ phase: 'playing', score: 2, errors: 1, x: frozen.x, h: frozen.h });
+  });
+
+  it('pausado, a rebatida não vale', () => {
+    const rules = createMurRules(court);
+    falling(rules);
+    rules.hit();
+    falling(rules);
+    rules.pause();
+    expect(rules.hit()).toBe(false);
+    expect(rules.state().score).toBe(1);
+  });
+
+  it('só pausa no meio da partida (parado, a bola segue quicando)', () => {
+    const rules = createMurRules(court);
+    rules.pause();
+    expect(rules.state().phase).toBe('idle');
+  });
+});
