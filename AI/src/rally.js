@@ -15,6 +15,7 @@ export function createRally({ container, start }) {
   const shadow = container.querySelector('[data-rally-shadow]');
   const ground = container.querySelector('[data-rally-ground]');
   let bounceMarks = [];
+  let drawnNow = 0; // quanto do traço já foi desenhado: a bola do hero passa a vez quando ele começa
   const marks = [...container.querySelectorAll('[data-chapter-mark]')].map((mark) => ({
     oval: mark.querySelector('.mark__oval'),
     caption: mark.querySelector('.mark__caption'),
@@ -237,6 +238,7 @@ export function createRally({ container, start }) {
     head = instant || head === null || !Number.isFinite(target) ? target : head + (target - head) * inertia;
 
     const drawn = lengthForY(head);
+    drawnNow = drawn;
     path.style.strokeDashoffset = length - drawn;
 
     // o traço é o chão (a sombra corre sobre ele); a bola sobe acima da sombra conforme a altura do arco
@@ -302,5 +304,5 @@ export function createRally({ container, start }) {
       .to(kick, { y: 0, duration: 0.42, ease: 'bounce.out' });
   }
 
-  return { render, measure, near, hit };
+  return { render, measure, near, hit, started: () => drawnNow > 0 };
 }

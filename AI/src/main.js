@@ -80,7 +80,9 @@ ScrollTrigger.addEventListener('refresh', remeasure);
 // Com reduced-motion, o estado final: o quadro estático, a bola já pousada, a marca no saibro.
 let progress = reducedMotion ? 1 : 0;
 gsap.ticker.add(() => {
-  const frameProgress = hero.render(progress);
+  // a bola do hero fica na Marca 01 até o traço do rali começar dali (o rali desenha no ticker seguinte: vale o
+  // quadro anterior); com reduced-motion, o traço já está inteiro
+  const frameProgress = hero.render(progress, { handedOff: rally.started() });
   serveCanvas.draw(sequence.frameAt(frameProgress));
 });
 

@@ -237,3 +237,17 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Agora:** pedi que as marcas voltem junto com a bola (decisão 018). Todas as marcas que a bola deixa se desfazem quando ela volta para antes delas.
 - **Teste trocado:** "as marcas ficam: rolando de volta para cima, nenhuma se desfaz" virou "as marcas voltam com a bola", e entrou "a marca se desfaz quando a bola volta para logo acima do contato".
 - **Erro da IA no caminho:** uma rodada de E2E rodou contra um servidor de preview antigo, que tinha sobrado de uma medição (o Playwright reaproveita o que está na porta 4173). Os testes novos "falharam" contra o código velho. O servidor foi derrubado e a suíte, refeita.
+
+## #39 · A bola sumia no meio da Marca 01 (2026-10-12)
+- **O que eu vi:** "na marca um a bolinha some no meio da marca".
+- **Causa (medida no navegador):**
+  - a bola do saque sumia ao tocar a marca, e a do rali só aparecia quando a marca cruzava o meio da tela;
+  - no desktop, do quique (90% do pin) até ~108% do scroll, não havia bola nenhuma na tela;
+  - no celular, o buraco era maior, porque o traço do rali nasce na borda de baixo do hero, e não na marca (o ingresso fica embaixo dela).
+- **Correção:**
+  - a bola fica pousada na Marca 01 até o traço do rali começar (`rally.started()`), e a troca acontece no mesmo ponto;
+  - no celular, depois do pin, a bola desce da marca até a borda do hero num quique curto, conduzido pelo scroll, e chega lá quando o traço do rali começa.
+- **Medido quadro a quadro, rolando:**
+  - nenhum quadro sem bola, no desktop e no celular;
+  - na troca, as duas bolas a no máximo 1 px uma da outra, durante um único quadro.
+- **Teste novo:** "a bola não some na Marca 01", no desktop e no celular.

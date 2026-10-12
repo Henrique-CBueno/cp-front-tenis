@@ -130,3 +130,31 @@ test('a bola quica por cima das marcas dos capítulos, sem sumir debaixo delas',
   });
   expect(top).toBe(true);
 });
+
+// entre o quique na Marca 01 e o começo do traço do rali, a bola não pode sumir
+for (const [name, viewport] of [['no desktop', { width: 1440, height: 900 }], ['no celular', { width: 390, height: 844 }]]) {
+  test.describe(name, () => {
+    test.use({ viewport });
+
+    test('a bola não some na Marca 01: fica pousada até a bola do rali assumir', async ({ page }) => {
+      await page.goto('/');
+      const visible = () =>
+        page.evaluate(() =>
+          ['[data-ball]', '[data-rally-ball]'].filter((sel) => getComputedStyle(document.querySelector(sel)).opacity !== '0'),
+        );
+      const pinEnd = viewport.height * 1.8;
+      for (const f of [0.92, 1, 1.06, 1.12, 1.2, 1.3]) {
+        await page.evaluate((y) => window.scrollTo(0, y), Math.round(pinEnd * f));
+        await page.waitForTimeout(700);
+        expect((await visible()).length, `${f * 100}% do pin`).toBeGreaterThan(0);
+      }
+      // logo depois do quique, a bola está sobre a marca
+      await page.evaluate((y) => window.scrollTo(0, y), Math.round(pinEnd * 0.95));
+      await page.waitForTimeout(700);
+      const [ball, oval] = await Promise.all(
+        ['[data-ball]', '.mark--hero .mark__oval'].map((sel) => page.locator(sel).boundingBox()),
+      );
+      expect(Math.abs(ball.y + ball.height / 2 - (oval.y + oval.height / 2))).toBeLessThan(6);
+    });
+  });
+}

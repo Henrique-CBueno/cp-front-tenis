@@ -24,7 +24,7 @@ export function createHero({ section, manifest, serveCanvas }) {
   const title = section.querySelector('h1');
 
   const contactProgress = SERVE_END * manifest.impactProgress;
-  let flight = null; // o arco contato → marca, recalculado quando o layout muda
+  let flight = null; // o arco contato → marca ({ to: a marca }), recalculado quando o layout muda
   let traceLength = 0;
   let lastP = null;
   let markMade = false;
@@ -43,16 +43,29 @@ export function createHero({ section, manifest, serveCanvas }) {
     tracePath.setAttribute('d', `M${from.x},${from.y} Q${peak.x},${peak.y} ${to.x},${to.y}`);
     traceLength = tracePath.getTotalLength();
     tracePath.style.strokeDasharray = `${traceLength} ${traceLength}`;
-    flight = true;
+    flight = { to };
     return true;
   }
 
-  // A bola: rastreada no vídeo durante o lançamento; depois do contato, segue o traço até a marca.
-  function placeBall(p, frameProgress) {
+  // Depois do quique, a bola espera na marca. No celular, o traço do rali nasce na borda de baixo do hero (o
+  // ingresso fica embaixo da marca): depois do pin, a bola desce da marca até a borda num quique curto, e chega
+  // lá quando a borda passa pelo meio da tela, que é quando o traço do rali começa.
+  function afterMark() {
+    const { to } = flight;
+    if (window.innerWidth > 720) return to;
+    const vh = window.innerHeight;
+    const f = clamp(0, 1, mapRange(vh, vh / 2, 0, 1, section.getBoundingClientRect().bottom));
+    const lift = 4 * f * (1 - f) * 40;
+    return { x: to.x, y: interpolate(to.y, section.clientHeight, f * f) - lift };
+  }
+
+  // A bola: rastreada no vídeo durante o lançamento; depois do contato, segue o traço até a marca e fica
+  // pousada nela até a bola do rali assumir (handedOff), no mesmo ponto: a bola nunca some no meio da marca.
+  function placeBall(p, frameProgress, handedOff) {
     if (p >= contactProgress) {
       const t = easeOut(phase(p, contactProgress, FLIGHT_END));
-      const point = tracePath.getPointAtLength(t * traceLength);
-      gsap.set(ball, { x: point.x, y: point.y, opacity: t < 1 ? 1 : 0 });
+      const point = t < 1 ? tracePath.getPointAtLength(t * traceLength) : afterMark();
+      gsap.set(ball, { x: point.x, y: point.y, opacity: t < 1 || !handedOff ? 1 : 0 });
       return t;
     }
     const tracked = manifest.ball[Math.round(frameProgress * (manifest.ball.length - 1))];
@@ -73,11 +86,11 @@ export function createHero({ section, manifest, serveCanvas }) {
     });
   }
 
-  function render(p) {
+  function render(p, { handedOff = false } = {}) {
     const frameProgress = phase(p, 0, SERVE_END);
     if (!flight && !measureFlight()) return frameProgress;
 
-    const flown = placeBall(p, frameProgress);
+    const flown = placeBall(p, frameProgress, handedOff);
     tracePath.style.strokeDashoffset = traceLength * (1 - flown);
     tracePath.style.opacity = flown > 0 ? 0.85 : 0;
 
