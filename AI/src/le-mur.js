@@ -6,14 +6,17 @@ import { createMurRules } from './le-mur-rules.js';
 // entra na tela. Daí em diante, as regras (le-mur-rules.js) conduzem a bola, e a raquete a rebate.
 // Momentos da Bola aqui: away (no rali) → ticket (pousada no ingresso) → arriving (saltando) → court.
 const ARRIVAL = 0.9; // s, o salto do ingresso até o saibro
+const TOUCH_REACH = 60; // px, o raio do toque em volta do centro da Bola
 
 const plural = (n, word) => `${n} ${word}${n === 1 ? '' : 's'}`;
 
-export function createMur(section, { rally }) {
+export function createMur(section, { rally, racket = false }) {
   const court = section.querySelector('[data-mur-court]');
   const floor = section.querySelector('[data-mur-floor]');
   const status = section.querySelector('[data-mur-status]');
   const score = section.querySelector('[data-mur-score]');
+  const hint = section.querySelector('[data-mur-hint]');
+  const play = section.querySelector('[data-mur-play]');
   const ticketMark = document.querySelector('.ticket .mark__oval');
 
   const ball = document.createElement('span');
@@ -103,14 +106,47 @@ export function createMur(section, { rally }) {
     if (rules && rules.state().phase !== 'playing') measure();
   });
 
+  // a distância do ponto (coordenadas da tela) ao centro da Bola
+  function distance(x, y) {
+    const box = ball.getBoundingClientRect();
+    return Math.hypot(box.left + box.width / 2 - x, box.top + box.height / 2 - y);
+  }
+
+  // no celular: tocar perto da Bola rebate, e quanto mais perto do centro, mais limpa a rebatida. O toque não
+  // é cancelado, então arrastar a partir dali continua rolando a página.
+  section.addEventListener(
+    'pointerdown',
+    (event) => {
+      if (event.pointerType === 'mouse' || moment !== 'court') return;
+      const d = distance(event.clientX, event.clientY);
+      if (d <= TOUCH_REACH) rules.hit({ quality: 1 - d / TOUCH_REACH });
+    },
+    { passive: true },
+  );
+
+  // no teclado: o botão "Jogar" rebate (espaço ou Enter), se a Bola estiver ao alcance, descendo e baixa
+  function swing() {
+    if (moment === 'court' && rules.reachable()) rules.hit();
+  }
+  play.addEventListener('keydown', (event) => {
+    if (event.key !== ' ' && event.key !== 'Enter') return;
+    event.preventDefault(); // sem o clique sintético e sem rolar a página
+    if (!event.repeat) swing();
+  });
+  play.addEventListener('keyup', (event) => event.key === ' ' && event.preventDefault());
+  play.addEventListener('click', (event) => event.detail > 0 && swing());
+
+  // a instrução muda por aparelho; com o foco no botão, vira a dica do espaço
+  const touch = window.matchMedia('(pointer: coarse)').matches;
+  const deviceHint = racket ? 'Encoste a raquete na bola para rebater' : touch ? 'Toque perto da bola' : 'Use o botão Jogar';
+  hint.textContent = deviceHint;
+  play.addEventListener('focus', () => (hint.textContent = 'Aperte espaço quando a bola estiver descendo, perto do chão'));
+  play.addEventListener('blur', () => (hint.textContent = deviceHint));
+
   // o alvo da raquete: as cordas encostam na bola (coordenadas da tela)
   return {
     cooldown: 250,
-    near(x, y, reach) {
-      if (moment !== 'court') return false;
-      const box = ball.getBoundingClientRect();
-      return Math.hypot(box.left + box.width / 2 - x, box.top + box.height / 2 - y) < reach + box.width / 2;
-    },
+    near: (x, y, reach) => moment === 'court' && distance(x, y) < reach + ball.offsetWidth / 2,
     hit: () => rules.hit(),
   };
 }
@@ -118,5 +154,7 @@ export function createMur(section, { rally }) {
 // sem movimento, o Le Mur é um estado parado (ticket 34 completa este estado)
 export function stillMur(section) {
   section.querySelector('[data-mur-status]').textContent = 'O jogo aparece com as animações ligadas';
+  section.querySelector('[data-mur-play]').hidden = true;
+  section.querySelector('[data-mur-hint]').hidden = true;
   section.dataset.phase = 'still';
 }

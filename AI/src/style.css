@@ -2520,6 +2520,7 @@ h3 {
   min-height: 100svh;
   padding: clamp(6rem, 14svh, 9rem) var(--gutter) 0;
   overflow: clip;
+  touch-action: manipulation; /* o toque rápido não espera o duplo toque do zoom; arrastar continua rolando */
 }
 
 .mur__court {
@@ -2560,4 +2561,20 @@ h3 {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.mur__hint {
+  margin: 0;
+  max-width: 34ch;
+  font-size: 0.9375rem;
+}
+
+.mur__play {
+  justify-self: start;
+  margin-top: 0.25rem;
+  background: none;
+  border-top: 0;
+  border-inline: 0;
+  color: inherit;
+  cursor: pointer;
 }

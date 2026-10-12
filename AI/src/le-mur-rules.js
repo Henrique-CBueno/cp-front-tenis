@@ -4,7 +4,7 @@
 //
 // Fases: idle (antes da primeira rebatida) → playing → waiting (depois de um erro, espera a rebatida) → over.
 // Em idle, waiting e over a bola quica parada no meio, e esses quiques não contam.
-export function createMurRules({ width, height, gravity = 2600, restitution = 0.6, idleApex = 0.3, hitApex = 0.62, best = 0 }) {
+export function createMurRules({ width, height, gravity = 2600, restitution = 0.6, idleApex = 0.3, hitApex = 0.62, reach = 0.35, best = 0 }) {
   const speedFor = (apex) => Math.sqrt(2 * gravity * apex * height);
   let phase = 'idle';
   let score = 0;
@@ -54,8 +54,9 @@ export function createMurRules({ width, height, gravity = 2600, restitution = 0.
     return events;
   }
 
-  // aim: de -1 (para a esquerda) a 1 (para a direita). Só vale com a bola descendo (ou parada no alto).
-  function hit({ aim = 0 } = {}) {
+  // aim: de -1 (para a esquerda) a 1 (para a direita). quality: de 0 (a borda) a 1 (o centro), a rebatida
+  // limpa sobe mais. Só vale com a bola descendo (ou parada no alto).
+  function hit({ aim = 0, quality = 1 } = {}) {
     if (ball.vh > 0) return false;
     if (phase === 'idle' || phase === 'over') {
       score = 0;
@@ -64,11 +65,14 @@ export function createMurRules({ width, height, gravity = 2600, restitution = 0.
     phase = 'playing';
     score++;
     bounces = 0;
-    ball.vh = speedFor(hitApex);
+    ball.vh = speedFor(hitApex * (0.75 + 0.25 * Math.min(1, Math.max(0, quality))));
     ball.vx = aim * width * 0.35;
     return true;
   }
 
+  // ao alcance: descendo e já no terço de baixo da quadra (a janela do teclado)
+  const reachable = () => ball.vh <= 0 && ball.h < height * reach;
+
   const state = () => ({ phase, score, errors, best, x: ball.x, h: ball.h, vh: ball.vh });
-  return { step, hit, state };
+  return { step, hit, reachable, state };
 }

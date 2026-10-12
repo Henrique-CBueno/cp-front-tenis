@@ -39,6 +39,32 @@ describe('Le Mur: parado', () => {
     expect(rules.hit()).toBe(false);
     expect(rules.state().score).toBe(0);
   });
+
+  it('a rebatida limpa (quality 1) sobe mais que a de raspão (quality 0)', () => {
+    const apex = (quality) => {
+      const rules = createMurRules(court);
+      falling(rules);
+      rules.hit({ quality });
+      let top = 0;
+      run(rules, () => {
+        top = Math.max(top, rules.state().h);
+        return rules.state().vh < 0;
+      });
+      return top;
+    };
+    expect(apex(1)).toBeGreaterThan(apex(0) * 1.2);
+  });
+
+  it('a bola só fica ao alcance descendo e no terço de baixo', () => {
+    const rules = createMurRules(court);
+    falling(rules);
+    rules.hit();
+    expect(rules.reachable()).toBe(false); // subindo
+    run(rules, () => rules.state().vh < 0);
+    expect(rules.reachable()).toBe(false); // no alto
+    run(rules, () => rules.state().h < 600 * 0.3);
+    expect(rules.reachable()).toBe(true);
+  });
 });
 
 describe('Le Mur: a regra do tênis', () => {

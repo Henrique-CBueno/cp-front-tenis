@@ -122,7 +122,7 @@ if (reducedMotion) {
   revealTitles([...document.querySelectorAll('.rally section h2:not(.face__line)')]);
   runMarquees([...document.querySelectorAll('[data-marquee]')]);
   // a Bola termina no ingresso e, de lá, salta para o Le Mur: a raquete rebate as duas
-  const mur = createMur(murSection, { rally });
+  const mur = createMur(murSection, { rally, racket: racketAllowed() });
   if (racketAllowed()) createRacket({ onHit: [rally, mur] });
 
   // a ponta do traço acompanha o meio da tela
