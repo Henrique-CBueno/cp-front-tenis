@@ -1,7 +1,8 @@
 import { gsap } from 'gsap';
 
 // O quique deixa a marca: ela nasce de uma vez no instante do toque, com um tranco (estica na largura, achata,
-// assenta), e depois escurece e afunda devagar, como o saibro assentando. Uma vez feita, fica.
+// assenta), e depois escurece e afunda devagar, como o saibro assentando. Se a bola volta para antes dela,
+// a marca se desfaz (erase).
 // instant: a marca já estava feita (reduced-motion, ou a página abriu com a bola mais abaixo).
 export function stamp(oval, { caption, instant = false } = {}) {
   const sunk = { filter: 'brightness(0.8)', scale: 0.96 };
@@ -17,6 +18,19 @@ export function stamp(oval, { caption, instant = false } = {}) {
     .to(oval, { scaleX: sunk.scale, scaleY: sunk.scale, filter: sunk.filter, duration: 2.4, ease: 'sine.inOut' }, '+=0.15');
   if (caption) tl.fromTo(caption, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.5, ease: 'expo.out' }, 0.12);
   return tl;
+}
+
+// O inverso do stamp: a bola voltou para antes do quique, e a marca se recolhe ao saibro (o CSS a deixa em
+// scale(0), e a legenda transparente). overwrite interrompe um stamp ainda em curso.
+export function erase(oval, { caption, instant = false } = {}) {
+  const gone = { scaleX: 0, scaleY: 0, filter: 'brightness(1)', overwrite: true };
+  if (instant) {
+    gsap.set(oval, gone);
+    if (caption) gsap.set(caption, { opacity: 0, y: 12, overwrite: true });
+    return;
+  }
+  gsap.to(oval, { ...gone, duration: 0.3, ease: 'power2.in' });
+  if (caption) gsap.to(caption, { opacity: 0, y: 12, duration: 0.25, ease: 'power2.in', overwrite: true });
 }
 
 // A nuvem de pó do quique: alguns grãos de saibro que saltam em leque e somem. Curta e barata.

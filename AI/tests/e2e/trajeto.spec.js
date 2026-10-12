@@ -67,20 +67,36 @@ test('a marca não aparece antes da bola: logo acima do contato, ainda não há 
   await expect.poll(scaleOf, { timeout: 3000 }).toBeGreaterThan(0.9);
 });
 
-test('as marcas ficam: rolando de volta para cima, nenhuma se desfaz', async ({ page }) => {
+test('as marcas voltam com a bola: rolando de volta ao topo, todas se desfazem', async ({ page }) => {
   await page.goto('/');
   await page.locator('#les-legendes').scrollIntoViewIfNeeded();
   const caption = page.locator('#terre-battue .mark__caption');
+  const heroMark = page.locator('.mark--hero .mark__oval');
+  const scaleOf = (locator) => locator.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).a);
   await expect(caption).toHaveCSS('opacity', '1', { timeout: 5000 });
   const made = () =>
-    page.locator('.rally__bounce').evaluateAll((els) => els.filter((el) => new DOMMatrix(getComputedStyle(el).transform).a > 0.9).length);
+    page.locator('.rally__bounce').evaluateAll((els) => els.filter((el) => new DOMMatrix(getComputedStyle(el).transform).a > 0.01).length);
   await expect.poll(made, { timeout: 5000 }).toBeGreaterThan(1);
-  const before = await made();
+  expect(await scaleOf(heroMark)).toBeGreaterThan(0.9);
 
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(1500);
-  expect(await made()).toBe(before);
-  await expect(caption).toHaveCSS('opacity', '1');
+  await expect.poll(made, { timeout: 5000 }).toBe(0);
+  await expect(caption).toHaveCSS('opacity', '0');
+  // a Marca 01 do hero também: a bola voltou para a mão do jogador
+  await expect.poll(() => scaleOf(heroMark), { timeout: 3000 }).toBe(0);
+});
+
+test('a marca se desfaz quando a bola volta para logo acima do contato', async ({ page }) => {
+  await page.goto('/');
+  const bounce = page.locator('.rally__bounce').first();
+  const y = await bounce.evaluate((el) => el.getBoundingClientRect().top + scrollY);
+  const scaleOf = () => bounce.evaluate((el) => new DOMMatrix(getComputedStyle(el).transform).a);
+
+  await scrollTipTo(page, y + 30); // a bola tocou
+  await expect.poll(scaleOf, { timeout: 3000 }).toBeGreaterThan(0.9);
+
+  await scrollTipTo(page, y - 30); // a bola voltou para 30 px acima do saibro
+  await expect.poll(scaleOf, { timeout: 3000 }).toBe(0);
 });
 
 test.describe('quiques com prefers-reduced-motion', () => {

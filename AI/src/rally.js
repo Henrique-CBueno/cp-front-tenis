@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { buildRallyPath } from './rally-path.js';
-import { stamp, dust as dustAt } from './impact.js';
+import { stamp, erase, dust as dustAt } from './impact.js';
 
 // quanto a ponta persegue o alvo a cada quadro: abaixo de 1, a bola desliza em vez de grudar no scroll
 const INERTIA = 0.16;
@@ -185,6 +185,8 @@ export function createRally({ container, start }) {
       entryPath.style.visibility = drawn > 0.5 ? 'visible' : 'hidden';
       exitPath.style.visibility = drawn - d.lout > 0.5 ? 'visible' : 'hidden';
 
+      // a bola voltou para antes da cena: as marcas dela se desfazem
+      if (!(head > d.inY)) d.dock.before?.();
       const near = head > d.offIn - 300 && head < d.bottom + 300;
       if (!near || !Number.isFinite(head)) {
         gsap.set(docked, { opacity: 0 });
@@ -264,13 +266,20 @@ export function createRally({ container, start }) {
       for (const c of rally.contacts) if (c.y > previous && c.y <= head) dust(c.x, c.y);
     }
 
-    // Cada marca nasce no instante em que a ponta cruza o contato, descendo; uma vez feita, fica.
-    // Sem um cruzamento de verdade (primeira medida, reduced-motion, salto), as que ficaram para trás já estão feitas.
-    const crossing = !instant && !settle && Number.isFinite(previous) && Number.isFinite(head) && head > previous;
+    // Cada marca nasce no instante em que a ponta cruza o contato, descendo, e se desfaz quando ela volta para
+    // antes dele, subindo: as marcas acompanham a bola. Sem um cruzamento de verdade (primeira medida,
+    // reduced-motion, salto), o estado vem pronto, sem animação.
+    const moving = !instant && !settle && Number.isFinite(previous) && Number.isFinite(head);
     for (const mark of [...marks, ...bounceMarks]) {
+      const reached = head >= mark.y;
+      if (mark.made && !reached) {
+        erase(mark.oval || mark.el, { caption: mark.caption, instant: !(moving && mark.y <= previous) });
+        mark.made = false;
+        continue;
+      }
       if (mark.made && !settle) continue;
-      if (!(head >= mark.y)) continue;
-      const live = crossing && mark.y > previous;
+      if (!reached) continue;
+      const live = moving && head > previous && mark.y > previous;
       if (!mark.made && live) gsap.fromTo(jolt, { v: 1 }, { v: 0, duration: 0.22, ease: 'power2.out', overwrite: true });
       stamp(mark.oval || mark.el, { caption: mark.caption, instant: mark.made || !live });
       mark.made = true;

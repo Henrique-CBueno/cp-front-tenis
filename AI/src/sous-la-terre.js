@@ -1,7 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LAYERS, depthAt, formatDepth } from './depth.js';
-import { stamp, dust } from './impact.js';
+import { stamp, erase, dust } from './impact.js';
 
 // Sous la Terre: a escavação. A seção fica presa; a bola pousa no tijolo e deixa a marca; o scroll cava as
 // cinco camadas (a pilha sobe uma tela por camada, cada textura com parallax) enquanto o medidor conta a
@@ -71,7 +71,7 @@ export function runSoil(section) {
     entryPath.style.opacity = String(1 - gsap.utils.clamp(0, 1, f * 8));
   }
 
-  // a marca do pouso e a marca no topo do corte nascem uma vez e ficam
+  // a marca do pouso e a marca no topo do corte nascem quando a bola chega nelas e se desfazem quando ela volta
   let landed = false;
   function land() {
     if (landed) return;
@@ -85,6 +85,17 @@ export function runSoil(section) {
     if (cutMarked) return;
     cutMarked = true;
     stamp(cutMark, { instant: true });
+  }
+  function unmarkCut() {
+    if (!cutMarked) return;
+    cutMarked = false;
+    erase(cutMark, { instant: true });
+  }
+  function unland() {
+    unmarkCut();
+    if (!landed) return;
+    landed = false;
+    erase(mark);
   }
 
   const anchorY = () => localOf(mark).y;
@@ -128,6 +139,7 @@ export function runSoil(section) {
       if (t < outStart) {
         if (c < 0.6) {
           // a bola fica na marca do tijolo e sobe com a superfície até sair da tela
+          unmarkCut();
           const at = onScreen(mark);
           place(at, { opacity: at.y > -20 ? 1 : 0 });
           return;
@@ -149,5 +161,6 @@ export function runSoil(section) {
       land();
       markCut();
     },
+    before: unland,
   };
 }

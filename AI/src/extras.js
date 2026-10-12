@@ -1,6 +1,6 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { stamp, dust } from './impact.js';
+import { stamp, erase, dust } from './impact.js';
 
 // A bola da Histoire. É a mesma bola do rali: ele a entrega à cena na primeira data e a recebe de volta na última
 // (ver as docas em rally.js). Entre as datas, ela quica de uma para a outra sobre a linha do tempo; cada data
@@ -64,7 +64,7 @@ export function runTimeline(section) {
   section.append(ball);
   section.dataset.dock = '';
 
-  // as datas são marcas: nascem quando a bola toca nelas
+  // as datas são marcas: nascem quando a bola toca nelas e se desfazem quando ela volta para antes delas
   // (o CSS já centra a data na linha com translateY(-50%); o GSAP assume esse deslocamento como yPercent)
   gsap.set(dots, { y: 0, yPercent: -50, scale: 0 });
   const made = dots.map(() => false);
@@ -76,12 +76,16 @@ export function runTimeline(section) {
     const [r, origin] = [dots[i].getBoundingClientRect(), section.getBoundingClientRect()];
     dust(section, r.left + r.width / 2 - origin.left, r.top + r.height / 2 - origin.top);
   }
-  let reached = -1;
+  function untouch(i) {
+    if (!made[i]) return;
+    made[i] = false;
+    erase(dots[i]);
+  }
   function hopTo(f, axis) {
     const clamped = gsap.utils.clamp(0, lastIndex, f);
     hopAlong(section, ball, dots, clamped, axis);
-    for (let i = reached + 1; i <= Math.floor(clamped + 0.06); i++) touch(i);
-    reached = Math.max(reached, Math.floor(clamped + 0.06));
+    const reached = Math.floor(clamped + 0.06);
+    dots.forEach((_, i) => (i <= reached ? touch(i) : untouch(i)));
   }
 
   const dotAt = (i) => {
@@ -91,6 +95,7 @@ export function runTimeline(section) {
   const trackAt = () => localOf(track, section);
   const shift = { entry: () => ({ x: -trackAt().x, y: -trackAt().y }) };
   const passed = () => dots.forEach((_, i) => touch(i));
+  const before = () => dots.forEach((_, i) => untouch(i));
 
   gsap.matchMedia().add('(max-width: 720px)', () => {
     section.rallyDock = {
@@ -117,6 +122,7 @@ export function runTimeline(section) {
         hopTo(i + gsap.utils.clamp(0, 1, (y - ys[i]) / (ys[i + 1] - ys[i])), 'y');
       },
       passed,
+      before,
     };
     return () => delete section.rallyDock;
   });
@@ -184,6 +190,7 @@ export function runTimeline(section) {
         });
       },
       passed,
+      before,
     };
     return () => {
       delete section.rallyDock;

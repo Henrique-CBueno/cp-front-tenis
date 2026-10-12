@@ -231,3 +231,9 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Erro da IA no caminho:** a troca do HTML da tela deixou duas linhas do loader antigo (um segundo contador e um `</div>` a mais). O E2E pegou, e foi corrigido.
 - **Teste ajustado:** o do vão central do Palmarès media o centro por `1440 / 2`. Com a calha reservada, o centro é o da largura do `body`.
 - **Achado, não corrigido:** "a raquete rebate a bola do rali, e a bola volta ao traço" falha às vezes na suíte completa (5 a 11 px), **também no `main`**. Sozinho, passa 10 de 10. É uma instabilidade de tempo que já existia, fora do escopo desta etapa.
+
+## #38 · Voltei atrás: as marcas não ficam mais na quadra (2026-10-12)
+- **Antes (rodada 1):** "uma vez feita, a marca fica"; rolar para cima não a desfazia.
+- **Agora:** pedi que as marcas voltem junto com a bola (decisão 018). Todas as marcas que a bola deixa se desfazem quando ela volta para antes delas.
+- **Teste trocado:** "as marcas ficam: rolando de volta para cima, nenhuma se desfaz" virou "as marcas voltam com a bola", e entrou "a marca se desfaz quando a bola volta para logo acima do contato".
+- **Erro da IA no caminho:** uma rodada de E2E rodou contra um servidor de preview antigo, que tinha sobrado de uma medição (o Playwright reaproveita o que está na porta 4173). Os testes novos "falharam" contra o código velho. O servidor foi derrubado e a suíte, refeita.

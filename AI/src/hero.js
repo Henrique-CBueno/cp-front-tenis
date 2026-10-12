@@ -1,5 +1,5 @@
 import { gsap } from 'gsap';
-import { stamp } from './impact.js';
+import { stamp, erase } from './impact.js';
 
 const { clamp, mapRange, interpolate } = gsap.utils;
 
@@ -61,6 +61,18 @@ export function createHero({ section, manifest, serveCanvas }) {
     return 0;
   }
 
+  // o título "estica" junto com a marca no saibro, e volta quando ela se desfaz
+  const stretch = { value: 62 };
+  function stretchTitle(value, live) {
+    gsap.to(stretch, {
+      value,
+      duration: live ? 0.6 : 0,
+      ease: 'expo.out',
+      overwrite: true,
+      onUpdate: () => (title.style.fontStretch = `${stretch.value}%`),
+    });
+  }
+
   function render(p) {
     const frameProgress = phase(p, 0, SERVE_END);
     if (!flight && !measureFlight()) return frameProgress;
@@ -69,19 +81,17 @@ export function createHero({ section, manifest, serveCanvas }) {
     tracePath.style.strokeDashoffset = traceLength * (1 - flown);
     tracePath.style.opacity = flown > 0 ? 0.85 : 0;
 
-    // A Marca 01 nasce no quique (o fim do voo) e fica. Se a página já abriu depois dele, ela já está feita.
+    // A Marca 01 nasce no quique (o fim do voo). Se a página já abriu depois dele, ela já está feita.
+    // Rolando de volta para antes do quique, ela se desfaz junto com o voo da bola.
+    const live = lastP !== null && Math.abs(p - lastP) < 0.2;
     if (!markMade && p >= FLIGHT_END) {
       markMade = true;
-      const live = lastP !== null && lastP < FLIGHT_END;
       stamp(markOval, { caption: markCaption, instant: !live });
-      // o título "estica" junto com a marca no saibro
-      const stretch = { value: 62 };
-      gsap.to(stretch, {
-        value: 72,
-        duration: live ? 0.6 : 0,
-        ease: 'expo.out',
-        onUpdate: () => (title.style.fontStretch = `${stretch.value}%`),
-      });
+      stretchTitle(72, live);
+    } else if (markMade && p < FLIGHT_END) {
+      markMade = false;
+      erase(markOval, { caption: markCaption, instant: !live });
+      stretchTitle(62, live);
     }
     lastP = p;
 

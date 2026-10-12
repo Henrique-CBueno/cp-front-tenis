@@ -279,7 +279,7 @@ A densidade é baixa e teatral: capítulos de altura de tela, títulos condensad
 - Fundo saibro contínuo; o rodapé e as faixas do marquee descem um tom (saibro escuro), nunca mudam de material.
 - Linhas da quadra (fitas creme de espessura `line`) como estrutura: linha de base e linha central no hero e no fechamento, linha de base ao pé de cada capítulo, a rede no Face-à-face.
 - Marcas ovais numeradas ("Marca 01…04") como sistema de seção; o mesmo oval sem número vira medida e chão (datas da linha do tempo, quiques do rali, o pouso no tijolo de Sous la Terre, base dos troféus).
-- Toda marca nasce no instante do quique, com um tranco, e afunda devagar; uma vez feita, fica (rolar para cima não a desfaz).
+- Toda marca nasce no instante do quique, com um tranco, e afunda devagar. As marcas acompanham a bola: rolando para cima, cada uma se recolhe ao saibro quando a bola volta para antes dela, e renasce na descida (decisão 018).
 - Um traço fino de 1,5px, creme, que é a trajetória da bola; a bola é o único elemento amarelo, e há uma só bola à vista. Nas cenas presas que recebem a bola, o rali a entrega à cena e a recebe de volta.
 - Tipografia que estica: Anybody em largura condensada (62%) nos títulos e expandida (140–150%) nos números, no marquee e no wordmark; os títulos entram em quadra letra a letra.
 - Movimento conduzido pelo scroll, com cenas presas (saque, Sous la Terre, Histoire, Face-à-face); com `prefers-reduced-motion`, o estado final completo e estático, sem raquete.
