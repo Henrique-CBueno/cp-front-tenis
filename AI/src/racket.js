@@ -12,11 +12,18 @@ const READY = -8;
 const STIFFNESS = 0.08;
 const DAMPING = 0.78;
 
+// as cordas terminam no aro: cada ponta cai na elipse da cabeça (centro 30,32), um pouco por dentro da linha do aro,
+// que cobre a emenda
+const HEAD = { cx: 30, cy: 32, rx: 22, ry: 27.5 };
+const half = (d, r, other) => +(other * Math.sqrt(1 - (d / r) ** 2)).toFixed(2);
+const across = (y) => half(y - HEAD.cy, HEAD.ry, HEAD.rx);
+const along = (x) => half(x - HEAD.cx, HEAD.rx, HEAD.ry);
+
 const SVG = `
 <svg viewBox="0 0 60 130" width="60" height="130" aria-hidden="true">
   <g class="racket__strings">
-    ${[14, 20, 26, 32, 38, 44, 50].map((y) => `<line x1="6" y1="${y}" x2="54" y2="${y}" />`).join('')}
-    ${[12, 18, 24, 30, 36, 42, 48].map((x) => `<line x1="${x}" y1="2" x2="${x}" y2="62" />`).join('')}
+    ${[14, 20, 26, 32, 38, 44, 50].map((y) => `<line x1="${HEAD.cx - across(y)}" y1="${y}" x2="${HEAD.cx + across(y)}" y2="${y}" />`).join('')}
+    ${[12, 18, 24, 30, 36, 42, 48].map((x) => `<line x1="${x}" y1="${HEAD.cy - along(x)}" x2="${x}" y2="${HEAD.cy + along(x)}" />`).join('')}
   </g>
   <ellipse class="racket__face" cx="30" cy="32" rx="22" ry="28" />
   <path class="racket__frame" d="M30 4 C 44 4 53 17 53 32 C 53 47 44 60 30 60 C 16 60 7 47 7 32 C 7 17 16 4 30 4 Z M22 59 L30 80 L38 59" />

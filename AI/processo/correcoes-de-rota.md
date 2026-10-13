@@ -279,3 +279,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
   - o ar da bola passou a ir até 45% da altura da tela, e não até o topo da seção.
   
   Medido no fim da página: a 1440 px, o pico mais alto fica em y=138; a 390 px, o toque leva a bola no máximo a y≈94. Numa tela de 360×640, o pico do toque passaria do topo; ali é preciso rolar um pouco para cima.
+
+## #43 · As cordas da raquete passavam do aro (2026-10-12)
+- **O que eu disse:** "no svg da raquete, a corda esta para fora do aro da raquete".
+- **Erro da IA:** as cordas eram linhas retas recortadas por `clip-path: ellipse(22px 28px at 30px 32px)` no grupo SVG. Num elemento SVG, essa posição é medida a partir da caixa do próprio grupo, que começa em (6, 2), e não do desenho inteiro. O recorte ficava 6 px para a direita e 2 px para baixo, e as cordas escapavam do aro à esquerda e em cima.
+- **Correção:** sem recorte. As pontas de cada corda são calculadas no aro, numa elipse de centro (30, 32) e raios 22 × 27,5, e a linha do aro cobre a emenda. Conferido num print ampliado 4×.

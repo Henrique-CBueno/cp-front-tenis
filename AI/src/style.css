@@ -1677,9 +1677,8 @@ h3 {
   transition: fill 160ms ease-out;
 }
 
-/* as cordas ficam dentro do aro */
+/* as cordas ficam dentro do aro (as pontas são calculadas no racket.js) */
 .racket__strings {
-  clip-path: ellipse(22px 28px at 30px 32px);
   stroke: var(--chalk);
   stroke-width: 0.8;
   opacity: 0.75;
