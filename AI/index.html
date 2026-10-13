@@ -490,26 +490,31 @@
       <section id="le-mur" class="mur" aria-labelledby="titulo-mur" data-mur>
         <div class="mur__court" data-mur-court aria-hidden="true">
           <div class="court__grain"></div>
-          <span class="court__line court__line--base mur__floor" data-mur-floor></span>
         </div>
-        <button class="mur__sound" type="button" data-mur-sound aria-pressed="true">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path class="mur__speaker" d="M4 9h4l5-4v14l-5-4H4z" />
-            <path class="mur__waves" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" />
-            <path class="mur__slash" d="M16 9l5 6M21 9l-5 6" />
-          </svg>
-          <span>Som</span>
-        </button>
         <h2 id="titulo-mur">Le Mur</h2>
         <p class="chapter__lede">A bola desceu a página inteira. Agora ela é sua: mantenha-a no ar.</p>
+        <!-- a linha de base é o chão do jogo; o painel fica embaixo dela, à vista mesmo com o rodapé na tela -->
+        <span class="court__line court__line--base mur__floor" data-mur-floor aria-hidden="true"></span>
         <div class="mur__hud">
-          <p class="mur__score" data-mur-score>00 rebatidas</p>
-          <p class="mur__errors" role="img" aria-label="0 erros de 3" data-mur-errors>
-            <span class="mur__error" data-mur-error></span><span class="mur__error" data-mur-error></span><span class="mur__error" data-mur-error></span>
-          </p>
-          <p class="mur__status" data-mur-status aria-live="polite">Rebata para começar</p>
-          <p class="mur__hint" id="mur-dica" data-mur-hint>Encoste a raquete na bola para rebater</p>
-          <button class="cta cta--quiet mur__play" type="button" data-mur-play aria-describedby="mur-dica">Jogar</button>
+          <div class="mur__board">
+            <p class="mur__score" data-mur-score>00 rebatidas</p>
+            <p class="mur__errors" role="img" aria-label="0 erros de 3" data-mur-errors>
+              <span class="mur__error" data-mur-error></span><span class="mur__error" data-mur-error></span><span class="mur__error" data-mur-error></span>
+            </p>
+            <button class="mur__sound" type="button" data-mur-sound aria-pressed="true">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path class="mur__speaker" d="M4 9h4l5-4v14l-5-4H4z" />
+                <path class="mur__waves" d="M16 9.5a4 4 0 0 1 0 5M18.5 7a7.5 7.5 0 0 1 0 10" />
+                <path class="mur__slash" d="M16 9l5 6M21 9l-5 6" />
+              </svg>
+              <span>Som</span>
+            </button>
+          </div>
+          <div class="mur__help">
+            <p class="mur__status" data-mur-status aria-live="polite">Rebata para começar</p>
+            <p class="mur__hint" id="mur-dica" data-mur-hint>Encoste a raquete na bola para rebater</p>
+            <button class="cta cta--quiet mur__play" type="button" data-mur-play aria-describedby="mur-dica">Jogar</button>
+          </div>
         </div>
       </section>
     </main>

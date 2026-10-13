@@ -2515,6 +2515,7 @@ h3 {
   position: relative;
   isolation: isolate;
   display: grid;
+  grid-template-rows: auto auto 1fr auto auto;
   align-content: start;
   gap: 1.25rem;
   min-height: 100svh;
@@ -2529,9 +2530,12 @@ h3 {
   z-index: -1;
 }
 
+/* o chão: a linha de base de borda a borda, na quarta linha da grade (a terceira é o ar da bola) */
 .mur__floor {
-  top: auto;
-  bottom: 16%;
+  position: relative;
+  grid-row: 4;
+  inset: auto;
+  margin-inline: calc(-1 * var(--gutter));
 }
 
 .mur__ball {
@@ -2539,9 +2543,19 @@ h3 {
 }
 
 .mur__hud {
+  grid-row: 5;
   display: grid;
-  gap: 0.35rem;
-  margin-top: 0.5rem;
+  align-content: start;
+  gap: 0.6rem;
+  padding-bottom: clamp(1.5rem, 5svh, 3rem);
+}
+
+.mur__board,
+.mur__help {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1.25rem;
 }
 
 .mur__score {
@@ -2570,8 +2584,6 @@ h3 {
 }
 
 .mur__play {
-  justify-self: start;
-  margin-top: 0.25rem;
   background: none;
   border-top: 0;
   border-inline: 0;
@@ -2583,7 +2595,7 @@ h3 {
 .mur__errors {
   display: flex;
   gap: 0.5rem;
-  margin: 0.15rem 0 0.25rem;
+  margin: 0;
 }
 
 .mur__error {
@@ -2602,18 +2614,17 @@ h3 {
   z-index: 1;
 }
 
-/* o recorde caiu: o placar acende no amarelo do brilho da bola (#f3f7a2 sobre o saibro passa 5:1) */
-.mur.is-record .mur__score,
-.mur.is-record .mur__status {
-  color: #f3f7a2;
+/* o recorde caiu: o placar ganha um risco de giz por baixo (o amarelo é só da bola) */
+.mur.is-record .mur__score {
+  text-decoration: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 0.14em;
 }
 
 /* o botão de som, no canto do Le Mur: alto-falante com ondas (ligado) ou com um x (desligado) */
 .mur__sound {
-  position: absolute;
-  top: clamp(5rem, 12svh, 7.5rem);
-  right: var(--gutter);
   display: inline-flex;
+  margin-left: auto;
   align-items: center;
   gap: 0.4em;
   min-height: 44px;
@@ -2653,4 +2664,9 @@ h3 {
 
 .mur__sound[aria-pressed='false'] {
   opacity: 0.75;
+}
+
+/* os controles do jogo somem com reduced-motion (hidden), mesmo com display próprio */
+.mur [hidden] {
+  display: none;
 }

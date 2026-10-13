@@ -328,4 +328,23 @@ test.describe('com prefers-reduced-motion', () => {
     await page.goto('/');
     await expect(page.locator('[data-mur-status]')).toHaveText('O jogo aparece com as animações ligadas');
   });
+
+  test('o estado parado mostra o recorde guardado, e nenhuma Bola anda nem há controles do jogo', async ({ page }) => {
+    await page.goto('/');
+    await page.evaluate(() => localStorage.setItem('la-trace:le-mur:recorde', '18'));
+    await page.reload();
+    await page.waitForSelector('[data-loader]', { state: 'detached', timeout: 15000 });
+    await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+    await expect(page.locator('[data-mur-score]')).toHaveText('Recorde: 18 rebatidas');
+    await expect(page.locator('[data-mur-ball]')).toHaveCount(0);
+    for (const control of ['[data-mur-play]', '[data-mur-sound]', '[data-mur-errors]', '[data-mur-hint]']) {
+      await expect(page.locator(control)).toBeHidden();
+    }
+    // a bola do rali também fica parada: duas leituras com um intervalo dão o mesmo lugar
+    const where = () => page.locator('[data-rally-ball]').evaluate((el) => el.style.transform);
+    const before = await where();
+    await page.waitForTimeout(800);
+    expect(await where()).toBe(before);
+    expect(await page.evaluate(() => typeof window.__contexts)).toBe('undefined');
+  });
 });

@@ -505,7 +505,7 @@ O visitante é o jogador: com mouse, o cursor do sistema dá lugar a uma raquete
 - **Swing:** no clique, um impulso de −26° no ângulo; a mola traz de volta.
 - **Posição de espera:** sobre links, botões e elementos focáveis, a raquete fica de pé (−8°), encolhe para 90% e as cordas se enchem de cal a 0,25.
 - **Sobre cal:** em superfícies de cal marcadas como escuras para a raquete (o ticket), aro, cordas e grip trocam para saibro escuro.
-- **Rebatida:** quando as cordas passam a 26px da bola do rali, a bola dá um pulinho (70px, volta com `bounce.out`) e solta pó; no máximo uma vez a cada 700ms.
+- **Rebatida:** quando as cordas passam a 26px da bola do rali, a bola dá um pulinho (70px, volta com `bounce.out`) e solta pó; no máximo uma vez a cada 700ms. No Le Mur, a raquete é o controle do jogo (ver "O Le Mur"), com intervalo de 250ms.
 - **Quando existe:** só com `(hover: hover) and (pointer: fine)` e sem `prefers-reduced-motion`; em toque e em reduced-motion, fica o cursor do sistema.
 
 ### A Escavação (Sous la Terre)
@@ -522,6 +522,24 @@ Uma cena presa e opaca, logo depois de Terre Battue: o scroll desce pelas cinco 
 ### O Coração do Guga
 Um único traço (`groove`, 9px, ponta e junção redondas) desenhado com o scroll, como a ponta da raquete riscando o saibro. Legenda em label.
 
+### O Le Mur
+O epílogo, depois de "Jeu, Set et Match" e antes do rodapé: um paredão contra a gravidade, jogado com a própria Bola da página (decisão 019). Fica fora do container do rali; o traço continua terminando no ingresso. Sem número de Marca.
+- **Estrutura:** uma tela de altura (`100svh`), saibro com grão, título em `headline` e a frase de abertura. Abaixo, o ar da Bola e a linha de base em cal (`line`), de borda a borda, que é o chão. O painel fica **embaixo** da linha: no fim da página, o rodapé empurra o topo da seção para fora da tela, e o chão e o painel continuam à vista. Nenhum texto fica no ar da Bola.
+- **A chegada:** com o traço completo, a Bola fica pousada no oval do ingresso. Quando o topo do Le Mur passa de 45% da tela, ela salta (0,9s, um arco de 80px) até o chão. Se o traço desdesenha, ela volta ao rali e a partida pausa: nunca há duas bolas à vista.
+- **A física:** a bola vista de lado, só na vertical e um pouco na lateral, com gravidade de 2600px/s² e perda de 40% no quique. O ar vai até 45% da altura da tela. A cada 5 rebatidas a gravidade sobe 10% (no máximo 8 vezes).
+- **O contato:** com a raquete, o centro das cordas (pela distância horizontal) manda a bola alto e reto, e a borda manda baixa e para o lado; subir o mouse ao encostar dá força. No toque, a até 60px do centro da Bola. No teclado, espaço no botão "Jogar", com a bola descendo e no terço de baixo do ar.
+- **O painel:**
+  - o placar em `headline` reduzido (`clamp(1.75rem, 4vw, 3rem)`, Anybody a 80%, números tabulares): "07 rebatidas · recorde 18";
+  - os erros como três ovais de 30px com anel de cal, que se enchem com o degradê da Marca, sem corações nem "vidas";
+  - o status em label (caixa alta, 0,8125rem, `aria-live`);
+  - a instrução por aparelho;
+  - o "Jogar" (CTA quieto) e o botão "Som" (pílula com anel de cal de 2px, ícone de alto-falante com ondas ou com um x, `aria-pressed`, 44px de altura).
+- **As Marcas da partida:** cada quique válido deixa uma mini marca (a receita do quique do rali, 34px) na linha, com o Quique e o pó. Elas duram a partida e se recolhem quando a próxima começa.
+- **O recorde:** o placar ganha um sublinhado de cal de 4px e o status diz "Novo recorde". O amarelo continua só da bola. O recorde e o mudo ficam no navegador.
+- **O som:** sintetizado (rebatida, quique, erro, torcida do recorde). Só existe no Le Mur e só depois de um gesto de verdade e da primeira rebatida.
+- **Pausa:** com menos de 30% da seção à vista, ou com a aba escondida. Volta com um toque, um clique ou o espaço, sem contar rebatida.
+- **Reduced-motion:** estado parado. O título, a frase, "O jogo aparece com as animações ligadas" e o recorde, se houver. Sem Bola, sem controles, sem som.
+
 ## Do's and Don'ts
 
 ### Do:
@@ -533,9 +551,9 @@ Um único traço (`groove`, 9px, ponta e junção redondas) desenhado com o scro
 - **Do** usar o Anybody condensado (62%) nos títulos e expandido (125–150%) em números, marquee e wordmark.
 - **Do** usar a curva `cubic-bezier(0.16, 1, 0.3, 1)` em 220ms para estados e em 0,6s (`--rise`) para revelações, o Quique (tranco `power3.out` + `elastic.out(1, 0.45)` e afundar em 2,4s) para toda marca que a bola faz, `expo.out` para letras que entram e pó, e easing linear (`scrub`) para parallax e cenas presas.
 - **Do** tratar toda cena presa que recebe a bola como doca do rali: ela dá a entrada e a saída, o rali desenha esses trechos por cima dela e entrega a bola, para nunca haver duas bolas à vista.
-- **Do** manter toda marca feita: ela nasce no quique e não se desfaz no scroll para cima.
+- **Do** fazer as marcas acompanharem a bola: cada uma nasce no quique, se desfaz quando a bola volta para antes dela (scroll para cima) e renasce quando ela passa de novo. No Le Mur, duram a partida.
 - **Do** tingir fotos de pessoas com o duotone de saibro e liberar a cor só num gesto (encontro, revelação).
-- **Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas, Sous la Terre como pilha de camadas com o corte no fim (sem pin nem doca; o traço passa por trás), números no valor final, Face-à-face no estado final, marquee parado e cursor do sistema.
+- **Do** entregar, com `prefers-reduced-motion`, o estado final completo: traço desenhado, marcas visíveis, quadro estático do saque, linha do tempo quebrada em linhas, Sous la Terre como pilha de camadas com o corte no fim (sem pin nem doca; o traço passa por trás), números no valor final, Face-à-face no estado final, marquee parado, Le Mur parado (com o recorde, se houver) e cursor do sistema.
 
 ### Don't:
 - **Don't** colocar conteúdo em cartões, caixas arredondadas ou fundos claros; fora das fotos e das camadas de Sous la Terre, o único creme sólido é o ticket e a linha do Guga.

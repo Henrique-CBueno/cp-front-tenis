@@ -72,12 +72,13 @@ export function createMur(section, { rally, racket = false }) {
   let lastError = null;
   let shown = '';
 
-  // a quadra: a largura inteira, e a altura do topo até a linha de base (o chão)
+  // a quadra: a largura inteira, e a altura do ar acima da linha de base (o chão). O ar vai até 45% da tela, e não
+  // até o topo da seção: no fim da página o rodapé empurra o topo do Le Mur para fora, e a bola sumiria lá em cima.
   const floorY = () => floor.offsetTop;
   const radius = () => ball.offsetWidth / 2;
   function measure() {
     best = rules ? rules.state().best : best;
-    rules = createMurRules({ width: court.clientWidth, height: floorY(), best });
+    rules = createMurRules({ width: court.clientWidth, height: Math.min(floorY(), window.innerHeight * 0.45), best });
   }
 
   // o centro do oval do ingresso, nas coordenadas da quadra (os dois rolam juntos: a distância não muda)
@@ -276,7 +277,7 @@ export function createMur(section, { rally, racket = false }) {
 export function stillMur(section) {
   section.querySelector('[data-mur-status]').textContent = 'O jogo aparece com as animações ligadas';
   const best = loadBest();
-  section.querySelector('[data-mur-score]').textContent = best > 0 ? `Recorde: ${two(best)} rebatidas` : '';
+  section.querySelector('[data-mur-score]').textContent = best > 0 ? `Recorde: ${two(best)} rebatida${best === 1 ? '' : 's'}` : '';
   section.querySelector('[data-mur-errors]').hidden = true;
   section.querySelector('[data-mur-play]').hidden = true;
   section.querySelector('[data-mur-sound]').hidden = true;

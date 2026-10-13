@@ -17,7 +17,7 @@ O instante em que a bola toca o saibro.
 _Avoid_: pingo, toque, bounce
 
 **Marca**:
-A depressão oval que um quique deixa no saibro. Acompanha a bola: se desfaz quando a bola volta para antes dela e renasce quando ela passa de novo. No Le Mur, dura até o fim da partida.
+A depressão oval que um quique deixa no saibro. Acompanha a bola: se desfaz quando a bola volta para antes dela e renasce quando ela passa de novo. No Le Mur, fica no saibro até a próxima partida começar.
 _Avoid_: pegada, sinal
 
 **Marca de capítulo**:
@@ -62,7 +62,7 @@ Uma tentativa completa no Le Mur, da primeira rebatida até o terceiro erro.
 _Avoid_: rodada, fase, nível
 
 **Rebatida**:
-O instante em que a raquete (ou o toque) devolve a bola para cima. O placar de uma partida é o total de rebatidas.
+O instante em que a raquete (ou o toque, ou o espaço) devolve a bola para cima. Só vale com a bola descendo. O placar de uma partida é o total de rebatidas.
 _Avoid_: hit, toque (quando se fala da raquete), rebate
 
 **Erro**:

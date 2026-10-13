@@ -270,3 +270,12 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **Causa:** a Bola caindo encosta primeiro na borda do alcance da raquete, então quase toda rebatida contaria como de raspão, mesmo com a raquete bem embaixo da bola.
 - **Correção:** a qualidade passa a vir da distância **na horizontal**, isto é, do ponto das cordas onde a bola cai. O lado da borda (esquerda ou direita) decide para onde a bola desvia. No toque (celular) continua a distância direta, porque ali o que conta é a precisão do dedo.
 - **Teste:** E2E com a raquete parada no caminho da Bola, primeiro no centro e depois a 26 px dele: o centro sobe mais. Estável em 4 de 4 repetições.
+
+## #42 · Três falhas do Le Mur achadas na revisão final (2026-10-12)
+- **O amarelo da bola no recorde (erro da IA, ticket 31):** o destaque de "Novo recorde" usava `#f3f7a2`, o brilho da bola. O `DESIGN.md` proíbe o amarelo da bola em qualquer outro elemento. **Correção:** o placar ganha um sublinhado de cal de 4px.
+- **`hidden` sem efeito (erro da IA, tickets 29 e 33):** com reduced-motion, o "Jogar", o "Som" e as ovais de erro recebiam `hidden`, mas o `display` próprio deles (`inline-flex`, `flex`) vencia, e eles continuavam na tela. Nenhum teste olhava isso. **Correção:** `.mur [hidden] { display: none }`, e um teste novo exige os controles escondidos.
+- **O painel fora da tela no fim da página (design):** a seção tinha o painel no topo. No fim da página, o rodapé empurra o topo do Le Mur para fora; no celular, só o "Jogar" aparecia, sem placar nem status. **Correção:**
+  - o painel foi para baixo da linha de base, e o chão virou uma linha da grade da seção;
+  - o ar da bola passou a ir até 45% da altura da tela, e não até o topo da seção.
+  
+  Medido no fim da página: a 1440 px, o pico mais alto fica em y=138; a 390 px, o toque leva a bola no máximo a y≈94. Numa tela de 360×640, o pico do toque passaria do topo; ali é preciso rolar um pouco para cima.
