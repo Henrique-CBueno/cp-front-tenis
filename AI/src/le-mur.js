@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
 import { createMurRules } from './le-mur-rules.js';
 import { stamp, erase, dust } from './impact.js';
+import { createMurSound } from './le-mur-sound.js';
 
 // O Le Mur: o paredão do fim da página. A Bola só vem para cá quando o traço do rali chega ao ingresso
 // (rally.finished()): primeiro ela fica pousada no ingresso, e salta para o saibro do jogo quando a quadra
@@ -43,6 +44,16 @@ export function createMur(section, { rally, racket = false }) {
   const errorBox = section.querySelector('[data-mur-errors]');
   const hint = section.querySelector('[data-mur-hint]');
   const play = section.querySelector('[data-mur-play]');
+  const soundButton = section.querySelector('[data-mur-sound]');
+
+  // o som: o botão no canto liga e desliga (aria-pressed = som ligado), e a escolha fica guardada
+  const sound = createMurSound();
+  const showSound = () => soundButton.setAttribute('aria-pressed', String(!sound.muted()));
+  showSound();
+  soundButton.addEventListener('click', () => {
+    sound.setMuted(!sound.muted());
+    showSound();
+  });
   const ticketMark = document.querySelector('.ticket .mark__oval');
 
   const ball = document.createElement('span');
@@ -126,6 +137,8 @@ export function createMur(section, { rally, racket = false }) {
   function strike(contact) {
     const starting = ['idle', 'over'].includes(rules.state().phase);
     if (!rules.hit(contact)) return;
+    sound.wake();
+    sound.hit(contact?.power ?? 0.5);
     if (starting) {
       clearMarks();
       bestBefore = rules.state().best;
@@ -163,9 +176,18 @@ export function createMur(section, { rally, racket = false }) {
     }
 
     for (const event of rules.step(dt)) {
-      if (event.type === 'error') lastError = event.reason;
-      if (event.type === 'bounce' && event.valid) leaveMark(event.x);
-      if (event.type === 'over' && event.best > bestBefore) saveBest(event.best);
+      if (event.type === 'error') {
+        lastError = event.reason;
+        sound.error();
+      }
+      if (event.type === 'bounce' && event.valid) {
+        leaveMark(event.x);
+        sound.bounce();
+      }
+      if (event.type === 'over' && event.best > bestBefore) {
+        saveBest(event.best);
+        sound.record();
+      }
     }
     const { x, h } = rules.state();
     place({ x, y: floorY() - h - radius() });
@@ -257,6 +279,7 @@ export function stillMur(section) {
   section.querySelector('[data-mur-score]').textContent = best > 0 ? `Recorde: ${two(best)} rebatidas` : '';
   section.querySelector('[data-mur-errors]').hidden = true;
   section.querySelector('[data-mur-play]').hidden = true;
+  section.querySelector('[data-mur-sound]').hidden = true;
   section.querySelector('[data-mur-hint]').hidden = true;
   section.dataset.phase = 'still';
 }

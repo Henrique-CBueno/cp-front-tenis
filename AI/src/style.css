@@ -2607,3 +2607,50 @@ h3 {
 .mur.is-record .mur__status {
   color: #f3f7a2;
 }
+
+/* o botão de som, no canto do Le Mur: alto-falante com ondas (ligado) ou com um x (desligado) */
+.mur__sound {
+  position: absolute;
+  top: clamp(5rem, 12svh, 7.5rem);
+  right: var(--gutter);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  min-height: 44px;
+  padding: 0 0.75em;
+  border: 2px solid rgb(246 239 226 / 0.6);
+  border-radius: 999px;
+  background: none;
+  color: inherit;
+  font: 700 0.75rem/1 var(--font-text);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.mur__sound:hover {
+  border-color: var(--chalk);
+}
+
+.mur__sound svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mur__speaker {
+  fill: currentColor;
+}
+
+.mur__sound[aria-pressed='true'] .mur__slash,
+.mur__sound[aria-pressed='false'] .mur__waves {
+  display: none;
+}
+
+.mur__sound[aria-pressed='false'] {
+  opacity: 0.75;
+}

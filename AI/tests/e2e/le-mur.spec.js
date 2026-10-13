@@ -198,10 +198,62 @@ test('sair da tela pausa a partida; voltar pede um toque para continuar', async 
   expect((await mur(page)).score).toBe(1);
 });
 
+// conta os AudioContext criados e os avisos de autoplay
+async function espiarAudio(page) {
+  const warnings = [];
+  page.on('console', (msg) => /AudioContext/i.test(msg.text()) && warnings.push(msg.text()));
+  await page.addInitScript(() => {
+    // o page.evaluate do Playwright conta como gesto do usuário; aqui a ativação é controlada pelo teste
+    window.__active = false;
+    Object.defineProperty(navigator, 'userActivation', { get: () => ({ hasBeenActive: window.__active, isActive: false }) });
+    window.__contexts = 0;
+    const Original = window.AudioContext;
+    window.AudioContext = class extends Original {
+      constructor(...args) {
+        super(...args);
+        window.__contexts++;
+      }
+    };
+  });
+  return warnings;
+}
+
+test('o som só nasce na primeira rebatida depois de uma interação, sem aviso de autoplay', async ({ page }) => {
+  const warnings = await espiarAudio(page);
+  await page.goto('/');
+  await toTheEnd(page);
+  // só a raquete encostando (sem clique nem tecla): o navegador não libera o áudio, e o jogo segue mudo
+  await rebater(page);
+  expect(await page.evaluate(() => window.__contexts)).toBe(0);
+  // um clique libera; a próxima rebatida liga o som
+  await page.evaluate(() => (window.__active = true));
+  await page.mouse.move(5, 5);
+  await expect.poll(async () => (await mur(page)).errors, { timeout: 5000 }).toBe(1);
+  await rebater(page);
+  expect(await page.evaluate(() => window.__contexts)).toBe(1);
+  expect(warnings).toEqual([]);
+});
+
+test('o botão de som alterna, tem nome e estado, e a escolha sobrevive ao recarregar', async ({ page }) => {
+  await page.goto('/');
+  await toTheEnd(page);
+  const button = page.getByRole('button', { name: 'Som' });
+  await expect(button).toHaveAttribute('aria-pressed', 'true');
+  await button.click();
+  await expect(button).toHaveAttribute('aria-pressed', 'false');
+  await page.reload();
+  await page.waitForSelector('[data-loader]', { state: 'detached', timeout: 15000 });
+  await expect(page.getByRole('button', { name: 'Som' })).toHaveAttribute('aria-pressed', 'false');
+  await page.getByRole('button', { name: 'Som' }).click();
+  await expect(page.getByRole('button', { name: 'Som' })).toHaveAttribute('aria-pressed', 'true');
+});
+
 test('pelo teclado: Tab chega ao "Jogar" e o espaço rebate só com a Bola ao alcance', async ({ page }) => {
   await page.goto('/');
   await toTheEnd(page);
   await page.locator('.ticket').focus();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('[data-mur-sound]')).toBeFocused(); // o botão de som, no canto, vem primeiro
   await page.keyboard.press('Tab');
   await expect(page.locator('[data-mur-play]')).toBeFocused();
   await expect(page.locator('[data-mur-hint]')).toContainText('espaço');
