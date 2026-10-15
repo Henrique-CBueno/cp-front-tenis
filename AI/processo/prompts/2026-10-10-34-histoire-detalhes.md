@@ -14,8 +14,3 @@
   - o teste de "uma bola só" agora confere também o último pulo;
   - total: 51 E2E e 20 unitários.
 - Evidências: `processo/evidencias/23/detalhe-pouso-e-saida.png` (o pouso em 1891, a espera em 2020, o último pulo e a queda da ponta da linha), além das sequências.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

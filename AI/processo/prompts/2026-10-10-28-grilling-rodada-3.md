@@ -15,8 +15,3 @@ Ver `../03-grilling-rodada-3.md`: a bola sumindo na Histoire, as marcas sem cara
   - fixou o vocabulário: "pingo" = **quique** (o toque) e **marca** = o que fica;
   - criou o glossário `CONTEXT.md` na raiz, como o CLAUDE.md pede.
 - **Escreveu a spec da rodada 3** (`../spec-rodada-3.md`) e os **tickets 22–25**.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

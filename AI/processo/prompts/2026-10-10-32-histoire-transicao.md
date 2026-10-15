@@ -21,8 +21,3 @@
   - total: 50 E2E e 20 unitários.
 - **Fluidez:** no trecho da Histoire, 60 fps a 4x de CPU.
 - Evidências: `processo/evidencias/23/desktop-sequencia.png` (chegando, início do pin, planando, pousou, pulos, em 2020, saltando, fim do pin, descendo) e `mobile-sequencia.png`.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

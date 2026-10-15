@@ -22,8 +22,3 @@
   - total: 50 E2E e 20 unitários.
 - **Fluidez:** no trecho da Histoire, 60 fps a 4x de CPU.
 - Evidências refeitas em `processo/evidencias/23/` (`desktop-sequencia.png`, `mobile-sequencia.png`).
-
-## Minha avaliação
-<!-- Preencher -->
-
--

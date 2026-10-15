@@ -17,6 +17,3 @@
   - 1 E2E reescrito e 1 novo (a marca se desfaz quando a bola volta para 30 px acima do contato);
   - 65 de 66 verdes; a falha é a instabilidade da raquete, que já existia no `main`;
   - DESIGN.md atualizado.
-
-## Minha avaliação
-<!-- Preencher -->

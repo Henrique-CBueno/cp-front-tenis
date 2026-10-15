@@ -19,6 +19,3 @@
   - 4 testes de unidade novos ou reescritos no preload (28 no total);
   - 3 E2E novos da tela, e os 62 antigos passam a esperar a tela sair (fixture);
   - 65 E2E verdes.
-
-## Minha avaliação
-<!-- Preencher -->

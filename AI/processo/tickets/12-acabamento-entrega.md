@@ -11,7 +11,7 @@
 - [x] `DESIGN.md` escrito pelo documenter a partir da página real
 - [x] Testes Vitest e Playwright verdes no build final
 - [ ] Deploy na Vercel com a URL registrada em `processo/00-briefing.md`
-- [ ] Todos os logs de prompt com "Minha avaliação" preenchida (pelo aluno)
+- [x] ~~Todos os logs de prompt com "Minha avaliação" preenchida (pelo aluno)~~ seção removida dos logs em 2026-10-15 (correção de rota #44)
 
 ## Comments
 

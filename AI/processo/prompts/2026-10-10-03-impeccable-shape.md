@@ -17,8 +17,3 @@ Escolhi **"La Trace"** (a escolha pessoal da IA), e não a direção sorteada.
 
 ## Resultado
 Brief em `../idv/brief-direcao.md`, **confirmado** ("confirmo").
-
-## Minha avaliação
-<!-- Preencher: por que La Trace e não Ordre de Jeu? -->
-
--

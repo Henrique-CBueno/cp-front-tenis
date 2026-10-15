@@ -20,8 +20,3 @@ Respondi **"1"** à lista de próximos passos. Era ambíguo: podia ser o primeir
 4. Escreveu o `PRODUCT.md` na raiz: usuários, propósito, posicionamento, restrições, compromissos de marca, princípios, acessibilidade.
 5. **Não** escreveu cores nem tipografia: a skill proíbe isso no `init`, porque essas definições ficam para o `shape` / `DESIGN.md`.
 6. Sem ferramenta de geração de imagem nesta sessão, o fluxo de construção é **code-first** (nada foi gravado em config). O live mode ficou para depois, porque ainda não há projeto rodando.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

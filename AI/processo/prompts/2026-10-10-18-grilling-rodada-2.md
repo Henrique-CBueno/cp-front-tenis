@@ -12,8 +12,3 @@ Ver `../02-grilling-rodada-2.md`: a bola na borda e sumindo na Histoire; mais an
   - ela não passa pela borda, e sim por um espaço reservado dentro da seção;
   - **o cursor vira uma raquete** (ideia minha, que resolve o problema das "duas bolas").
 - Escreveu a **spec da rodada 2** (`../spec-rodada-2.md`, 43 histórias, 2 seams de teste) e os **tickets 13–21**.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

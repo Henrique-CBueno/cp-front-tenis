@@ -284,3 +284,8 @@ Registro do que mudou de direção, saiu errado ou foi corrigido ao revisar a en
 - **O que eu disse:** "no svg da raquete, a corda esta para fora do aro da raquete".
 - **Erro da IA:** as cordas eram linhas retas recortadas por `clip-path: ellipse(22px 28px at 30px 32px)` no grupo SVG. Num elemento SVG, essa posição é medida a partir da caixa do próprio grupo, que começa em (6, 2), e não do desenho inteiro. O recorte ficava 6 px para a direita e 2 px para baixo, e as cordas escapavam do aro à esquerda e em cima.
 - **Correção:** sem recorte. As pontas de cada corda são calculadas no aro, numa elipse de centro (30, 32) e raios 22 × 27,5, e a linha do aro cobre a emenda. Conferido num print ampliado 4×.
+
+## #44 · Os logs de prompt perdem a "Minha avaliação" (2026-10-15)
+- **O que eu disse:** "quero tirar a parte de analize do prompts".
+- **Mudança de rumo:** desde o grilling (Q8), cada log em `processo/prompts/` terminava com uma seção "Minha avaliação" para eu preencher. Nenhuma das 55 chegou a ser preenchida. **Decisão:** a seção sai dos 55 logs e da regra do `CLAUDE.md`; os logs novos ficam só com o prompt e o que a IA fez. A "Nota" do log 08 foi mantida.
+- **Ficou como histórico:** a história 39 da `spec.md` e a Q8 do `01-grilling.md` continuam citando a seção, porque registram o que foi decidido na época.

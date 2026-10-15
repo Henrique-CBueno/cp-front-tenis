@@ -20,8 +20,3 @@
 
   Total: 58 E2E e 26 unitários.
 - Evidência: `processo/evidencias/25/marca-bola-por-cima.png`.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

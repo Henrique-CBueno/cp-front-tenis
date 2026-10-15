@@ -11,8 +11,3 @@
 - Me perguntou duas coisas: rótulos de triagem (**padrão**) e arquivo de instruções (**CLAUDE.md**).
 - Criou `CLAUDE.md` (com a regra de registro do processo para as próximas sessões) e `docs/agents/` (issue-tracker, triage-labels, domain).
 - Adaptou o template padrão (`.scratch/`) para `processo/spec.md` e `processo/tickets/`.
-
-## Minha avaliação
-<!-- Preencher -->
-
--

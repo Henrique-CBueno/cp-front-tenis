@@ -11,6 +11,3 @@
 - **Completou a trajetória** (`src/ball-track.js`, com testes primeiro): buracos soltos interpolados, e a subida até um pico dentro da tela seguida da descida até a raquete.
 - **Achou um limite de composição:** no desktop, o golpe acontece acima da tela. Ofereceu três caminhos, e **eu escolhi deixar como está**.
 - **Testes:** 33 de unidade e 68 de 68 E2E verdes.
-
-## Minha avaliação
-<!-- Preencher -->

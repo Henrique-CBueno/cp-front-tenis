@@ -12,6 +12,3 @@
   - a velocidade do enchimento é limitada, para não saltar quando muita coisa chega junto.
 - **Medido no navegador:** em rede rápida e em rede lenta simulada, o maior salto do contador caiu de 12% para 2% por quadro. O site é liberado aos ~3,9 s numa rede rápida.
 - **Testes:** 28 de unidade e 65 de 65 E2E verdes.
-
-## Minha avaliação
-<!-- Preencher -->

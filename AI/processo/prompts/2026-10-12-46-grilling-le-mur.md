@@ -26,6 +26,3 @@ Depois de aprovar o plano:
   - os tickets 28 a 34, em fatias verticais com `Blocked by`;
   - a decisão 019;
   - o glossário atualizado.
-
-## Minha avaliação
-<!-- Preencher -->

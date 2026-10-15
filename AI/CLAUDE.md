@@ -6,7 +6,7 @@ Landing page-tributo a Roland Garros, com parallax e um saque real conduzido pel
 ## Registro do processo (obrigatório)
 
 O professor avalia o processo tanto quanto a página. Ao fim de cada etapa:
-- registrar o prompt literal do usuário, o que a IA fez e uma seção vazia "Minha avaliação" em `processo/prompts/AAAA-MM-DD-NN-tema.md`;
+- registrar o prompt literal do usuário e o que a IA fez em `processo/prompts/AAAA-MM-DD-NN-tema.md`;
 - registrar decisões novas em `processo/decisoes/NNN-tema.md` (contexto → opções → escolha → porquê);
 - registrar recomendações recusadas, erros e mudanças de rumo em `processo/correcoes-de-rota.md`.
 

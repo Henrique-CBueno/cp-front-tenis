@@ -26,7 +26,7 @@ bolinha e saca, com a animação conduzida pelo scroll.
 | Caminho | Conteúdo |
 |---|---|
 | `01-grilling.md` | Entrevista inicial com a IA: todas as perguntas, recomendações e minhas respostas |
-| `prompts/` | Log cronológico de prompts (prompt exato → o que a IA entregou → minha avaliação) |
+| `prompts/` | Log cronológico de prompts (prompt exato → o que a IA entregou) |
 | `decisoes/` | Uma decisão por arquivo (contexto → opções → escolha → porquê) |
 | `correcoes-de-rota.md` | O que saiu errado ou mudou de direção, e como corrigi |
 | `pesquisa/` | Assets avaliados, licenças, técnicas, referências |

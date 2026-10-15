@@ -16,6 +16,3 @@
 - **Nova saída:** o logo voa e pousa sobre o logo do topo, enquanto o saibro da tela se desfaz.
 - **Erros no caminho** (correção #37): sobra do HTML antigo (pega pelo E2E) e um teste do Palmarès que assumia a largura de 1440.
 - **Testes:** 28 de unidade verdes. Nos E2E, 64 de 65; a falha é a instabilidade da raquete, que **também falha no `main`** e passa 10 de 10 sozinha.
-
-## Minha avaliação
-<!-- Preencher -->

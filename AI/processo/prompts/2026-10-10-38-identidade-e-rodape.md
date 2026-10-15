@@ -42,8 +42,3 @@
   - o `.impeccable/design.json` não foi regerado;
   - a recomendação de **não publicar com o logo oficial** continua de pé.
 - Evidências em `processo/evidencias/26/`.
-
-## Minha avaliação
-<!-- Preencher -->
-
--
